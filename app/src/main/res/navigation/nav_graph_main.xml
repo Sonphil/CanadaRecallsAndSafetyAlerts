@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/fragment_recent">
+    <fragment
+        android:id="@+id/fragment_recent"
+        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.recent.RecentFragment"
+        android:label="@string/title_recent"
+        tools:layout="@layout/fragment_recent"></fragment>
+    <fragment
+        android:id="@+id/fragment_my_recalls"
+        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.my_recalls.MyRecallsFragment"
+        android:label="@string/title_my_recalls"
+        tools:layout="@layout/fragment_my_recalls"></fragment>
+</navigation>
