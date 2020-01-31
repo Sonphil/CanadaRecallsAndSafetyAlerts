@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_recent">Récent</string>
+    <string name="title_my_recalls">Mes rappels</string>
+</resources>
