@@ -4,8 +4,8 @@ import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
-import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
+import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -29,14 +29,9 @@ class RecallRepository @Inject constructor(
         categories: List<Category>
     ): Flow<StateData<List<RecallAndBookmark>>> = flow {
 
-        val currentValues = dao.getAllRecallsAndBookmarks()
-            .catch {
-                emit(StateData.error(it.message, emptyList()))
-            }
+        val currentValues = dao.getAllRecallsAndBookmarksByCategories(categories)
+            .catch { }
             .first()
-            .filter {
-                it.recall.category in categories
-            }
 
         emit(StateData.loading(currentValues))
 
@@ -47,7 +42,7 @@ class RecallRepository @Inject constructor(
 
             dao.insertAll(apiValues)
 
-            emitAll(dao.getAllRecallsAndBookmarks().map { recalls ->
+            emitAll(dao.getAllRecallsAndBookmarksByCategories(categories).map { recalls ->
                 StateData.success(recalls)
             })
         } catch (cause: Throwable) {

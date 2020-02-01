@@ -4,8 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.sonphil.canadarecallsandsafetyalerts.db.CategoryTypeConverter
 
 /**
  * Created by Sonphil on 31-01-20.
@@ -17,7 +15,6 @@ import com.sonphil.canadarecallsandsafetyalerts.db.CategoryTypeConverter
     childColumns = ["recallId"],
     onDelete = CASCADE
 )])
-@TypeConverters(CategoryTypeConverter::class)
 data class RecallDetails(
     val category: Category,
     val datePublished: Int?,
