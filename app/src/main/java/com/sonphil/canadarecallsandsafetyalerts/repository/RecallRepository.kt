@@ -6,7 +6,6 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -48,5 +47,13 @@ class RecallRepository @Inject constructor(
         } catch (cause: Throwable) {
             emit(StateData.error(cause.message, currentValues))
         }
-    }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun refreshRecallsAndBookmarks(lang: String) {
+        val apiValues = api
+            .recentRecalls(lang)
+            .toRecalls()
+
+        dao.insertAll(apiValues)
+    }
 }
