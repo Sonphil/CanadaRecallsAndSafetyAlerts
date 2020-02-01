@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.Flow
  */
 
 @Dao
-@TypeConverters(CategoryTypeConverter::class)
 interface RecallDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recalls: List<Recall>)
 
+    @Transaction
     @Query("SELECT * FROM recall WHERE category IN (:categories)")
     fun getAllRecallsAndBookmarksByCategories(categories: List<Category>): Flow<List<RecallAndBookmark>>
 }

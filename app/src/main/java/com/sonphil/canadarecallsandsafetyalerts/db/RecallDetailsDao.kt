@@ -1,7 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.db;
 
-import androidx.room.*
-
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetails
 import kotlinx.coroutines.flow.Flow
 
@@ -10,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
  */
 
 @Dao
-@TypeConverters(CategoryTypeConverter::class)
 interface RecallDetailsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recall: RecallDetails)
@@ -18,6 +19,6 @@ interface RecallDetailsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recallDetails: List<RecallDetails>)
 
-    @Query("SELECT * FROM recall")
+    @Query("SELECT * FROM recalldetails")
     fun getAll(): Flow<List<RecallDetails>>
 }

@@ -14,6 +14,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
     buildTypes {
         release {
@@ -54,6 +60,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle_viewmodel_ktx"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
     implementation "androidx.room:room-runtime:$versions.room"
+    implementation "androidx.room:room-ktx:$versions.room"
     kapt "androidx.room:room-compiler:$versions.room"
 
     // Glide
