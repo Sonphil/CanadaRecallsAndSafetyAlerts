@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ApiRecentRecallsResponse(
     @Json(name = "results")
-    val results: ApiRecentRecallsResults?
+    val results: ApiRecentRecallsResults
 )

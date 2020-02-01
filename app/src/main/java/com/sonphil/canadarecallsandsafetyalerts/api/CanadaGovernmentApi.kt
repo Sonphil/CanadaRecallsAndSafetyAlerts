@@ -15,7 +15,7 @@ import javax.inject.Singleton
  * https://canadiensensante.gc.ca/connect-connectez/data-donnees/recall-alert-rappel-avis-fra.php
  */
 @Singleton
-interface CanadaApi {
+interface CanadaGovernmentApi {
     /**
      * Returns the 15 latest recalls in each category
      *

@@ -26,7 +26,7 @@ class StateData<T> private constructor(val status: Status, val data: T?, val mes
 
     companion object {
         fun <T> success(data: T): StateData<T> = StateData(Status.SUCCESS, data, null)
-        fun <T> error(msg: String, data: T?): StateData<T> = StateData(Status.ERROR, data, msg)
+        fun <T> error(msg: String?, data: T?): StateData<T> = StateData(Status.ERROR, data, msg)
         fun <T> loading(data: T?): StateData<T> = StateData(Status.LOADING, data, null)
     }
 

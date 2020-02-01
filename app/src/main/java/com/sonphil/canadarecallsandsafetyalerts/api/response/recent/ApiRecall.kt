@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ApiRecall(
     @Json(name = "category")
-    val category: List<String?>?,
+    val category: Int,
     @Json(name = "date_published")
     val datePublished: Int?,
     @Json(name = "recallId")
