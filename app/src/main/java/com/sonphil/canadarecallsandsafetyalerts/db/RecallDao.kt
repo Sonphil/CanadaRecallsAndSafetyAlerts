@@ -16,6 +16,6 @@ interface RecallDao {
     suspend fun insertAll(recalls: List<Recall>)
 
     @Transaction
-    @Query("SELECT * FROM recall WHERE category IN (:categories)")
+    @Query("SELECT * FROM recall WHERE category IN (:categories) ORDER BY datePublished DESC")
     fun getAllRecallsAndBookmarksByCategories(categories: List<Category>): Flow<List<RecallAndBookmark>>
 }
