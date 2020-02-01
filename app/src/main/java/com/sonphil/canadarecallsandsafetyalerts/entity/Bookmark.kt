@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.model
+package com.sonphil.canadarecallsandsafetyalerts.entity
 
 import androidx.room.PrimaryKey
 

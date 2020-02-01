@@ -1,8 +1,8 @@
 package com.sonphil.canadarecallsandsafetyalerts.api
 
-import com.sonphil.canadarecallsandsafetyalerts.api.response.details.ApiRecallDetailsResponse
-import com.sonphil.canadarecallsandsafetyalerts.api.response.recent.ApiRecentRecallsResponse
-import com.sonphil.canadarecallsandsafetyalerts.api.response.search.ApiSearchResponse
+import com.sonphil.canadarecallsandsafetyalerts.api.details.ApiRecallDetailsResponse
+import com.sonphil.canadarecallsandsafetyalerts.api.recent.ApiRecentRecallsResponse
+import com.sonphil.canadarecallsandsafetyalerts.api.search.ApiSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -50,7 +50,7 @@ interface CanadaGovernmentApi {
      */
     @GET("{id}/{locale}")
     suspend fun searchRecall(
-        @Query("text") text: String,
+        @Query("text") text: String?,
         @Query("lang") lang: String?,
         @Query("cat") category: Int?,
         @Query("lim") lim: Int?,

@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.api.response.search
+package com.sonphil.canadarecallsandsafetyalerts.api.search
 
 
 import com.squareup.moshi.Json

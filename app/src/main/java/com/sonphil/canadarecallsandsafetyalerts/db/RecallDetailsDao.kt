@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
-import com.sonphil.canadarecallsandsafetyalerts.model.RecallDetails
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetails
 import kotlinx.coroutines.flow.Flow
 
 /**

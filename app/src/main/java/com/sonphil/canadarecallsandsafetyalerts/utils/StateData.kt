@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.sonphil.canadarecallsandsafetyalerts.model
+package com.sonphil.canadarecallsandsafetyalerts.utils
 
 class StateData<T> private constructor(val status: Status, val data: T?, val message: String?) {
     enum class Status {
@@ -25,12 +25,32 @@ class StateData<T> private constructor(val status: Status, val data: T?, val mes
     }
 
     companion object {
-        fun <T> success(data: T): StateData<T> = StateData(Status.SUCCESS, data, null)
-        fun <T> error(msg: String?, data: T?): StateData<T> = StateData(Status.ERROR, data, msg)
-        fun <T> loading(data: T?): StateData<T> = StateData(Status.LOADING, data, null)
+        fun <T> success(data: T): StateData<T> =
+            StateData(
+                Status.SUCCESS,
+                data,
+                null
+            )
+        fun <T> error(msg: String?, data: T?): StateData<T> =
+            StateData(
+                Status.ERROR,
+                data,
+                msg
+            )
+        fun <T> loading(data: T?): StateData<T> =
+            StateData(
+                Status.LOADING,
+                data,
+                null
+            )
     }
 
-    fun <T> copyStatusAndMessage(data: T?): StateData<T> = StateData(status, data, message)
+    fun <T> copyStatusAndMessage(data: T?): StateData<T> =
+        StateData(
+            status,
+            data,
+            message
+        )
 
     override fun equals(other: Any?): Boolean {
         // If this and other point to the same object ...

@@ -2,9 +2,9 @@ package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
-import com.sonphil.canadarecallsandsafetyalerts.model.Category
-import com.sonphil.canadarecallsandsafetyalerts.model.RecallAndBookmark
-import com.sonphil.canadarecallsandsafetyalerts.model.StateData
+import com.sonphil.canadarecallsandsafetyalerts.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

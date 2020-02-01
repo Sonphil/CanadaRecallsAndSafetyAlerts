@@ -1,16 +1,16 @@
 package com.sonphil.canadarecallsandsafetyalerts.repository.mapper
 
-import com.sonphil.canadarecallsandsafetyalerts.api.response.recent.ApiRecall
-import com.sonphil.canadarecallsandsafetyalerts.api.response.recent.ApiRecentRecallsResponse
-import com.sonphil.canadarecallsandsafetyalerts.model.Category
-import com.sonphil.canadarecallsandsafetyalerts.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.api.recent.ApiRecall
+import com.sonphil.canadarecallsandsafetyalerts.api.recent.ApiRecentRecallsResponse
+import com.sonphil.canadarecallsandsafetyalerts.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 
 /**
  * Created by Sonphil on 01-02-20.
  */
 
 fun ApiRecall.toRecall() = Recall(
-    Category.values()[category - 1],
+    Category.values()[category.first() - 1],
     datePublished,
     recallId,
     title,

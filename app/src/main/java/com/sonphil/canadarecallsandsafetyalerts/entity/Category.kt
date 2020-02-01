@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.model
+package com.sonphil.canadarecallsandsafetyalerts.entity
 
 /**
  * Created by Sonphil on 01-02-20.
