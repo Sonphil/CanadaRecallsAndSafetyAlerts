@@ -1,9 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recent
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
@@ -16,12 +16,12 @@ import javax.inject.Inject
  */
 
 class RecentViewModel @Inject constructor(
-    application: Application,
+    private val app: App,
     private val recallRepository: RecallRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
     private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmark>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val currentLang = LocaleUtils.getCurrentLanguage(getApplication())
+            val currentLang = LocaleUtils.getCurrentLanguage(app)
             val categories = Category.values().asList()
 
             val source = recallRepository
@@ -44,7 +44,7 @@ class RecentViewModel @Inject constructor(
     }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        val currentLang = LocaleUtils.getCurrentLanguage(getApplication())
+        val currentLang = LocaleUtils.getCurrentLanguage(app)
 
         recallRepository.refreshRecallsAndBookmarks(currentLang)
     }

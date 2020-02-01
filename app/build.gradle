@@ -83,5 +83,8 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$versions.retrofit"
     api "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
 
+    // Android Debug Database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
 }
