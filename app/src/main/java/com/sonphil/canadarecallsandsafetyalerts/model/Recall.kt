@@ -12,8 +12,7 @@ data class Recall(
     val category: Category,
     val datePublished: Int?,
     @PrimaryKey
-    val recallId: String?,
+    val id: String,
     val title: String?,
-    val url: String?,
-    val bookMarked: Boolean = false
+    val url: String?
 )

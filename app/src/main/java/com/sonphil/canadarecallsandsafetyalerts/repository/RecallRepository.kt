@@ -3,9 +3,10 @@ package com.sonphil.canadarecallsandsafetyalerts.repository
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
 import com.sonphil.canadarecallsandsafetyalerts.model.Category
-import com.sonphil.canadarecallsandsafetyalerts.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.model.RecallAndBookmark
 import com.sonphil.canadarecallsandsafetyalerts.model.StateData
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -18,23 +19,23 @@ class RecallRepository @Inject constructor(
     private val dao: RecallDao
 ) {
     /**
-     * Returns the recent recalls
+     * Returns the recent recalls and their bookmarks
      *
      * @param lang Whether the response is in English (en) or French (fr)
      * @param categories Categories to filter the recalls by
      */
-    fun getRecentRecalls(
+    fun getRecallsAndBookmarks(
         lang: String,
         categories: List<Category>
-    ): Flow<StateData<List<Recall>>> = flow {
+    ): Flow<StateData<List<RecallAndBookmark>>> = flow {
 
-        val currentValues = dao.getAll()
+        val currentValues = dao.getAllRecallsAndBookmarks()
             .catch {
                 emit(StateData.error(it.message, emptyList()))
             }
             .first()
             .filter {
-                it.category in categories
+                it.recall.category in categories
             }
 
         emit(StateData.loading(currentValues))
@@ -44,14 +45,13 @@ class RecallRepository @Inject constructor(
                 .recentRecalls(lang)
                 .toRecalls()
 
-            dao.deleteNotBookmarked()
             dao.insertAll(apiValues)
 
-            emitAll(dao.getAll().map { recalls ->
+            emitAll(dao.getAllRecallsAndBookmarks().map { recalls ->
                 StateData.success(recalls)
             })
         } catch (cause: Throwable) {
             emit(StateData.error(cause.message, currentValues))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

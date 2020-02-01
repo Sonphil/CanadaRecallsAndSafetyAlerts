@@ -11,7 +11,7 @@ data class ApiRecall(
     @Json(name = "date_published")
     val datePublished: Int?,
     @Json(name = "recallId")
-    val recallId: String?,
+    val recallId: String,
     @Json(name = "title")
     val title: String?,
     @Json(name = "url")

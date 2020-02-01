@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sonphil.canadarecallsandsafetyalerts.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.model.RecallAndBookmark
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -19,12 +20,6 @@ interface RecallDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recalls: List<Recall>)
 
-    @Query("DELETE FROM recall WHERE bookMarked = 0")
-    suspend fun deleteNotBookmarked()
-
     @Query("SELECT * FROM recall")
-    fun getAll(): Flow<List<Recall>>
-
-    @Query("SELECT * FROM recall WHERE bookMarked = 1")
-    fun getAllBookmarked(): Flow<List<Recall>>
+    fun getAllRecallsAndBookmarks(): Flow<List<RecallAndBookmark>>
 }
