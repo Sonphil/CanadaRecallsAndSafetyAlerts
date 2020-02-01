@@ -25,7 +25,6 @@ data class RecallDetails(
     val summary: String?,
     val whatToDo: String?,
     val productDescription: String,
-    //val images: List<RecallDetailsImage>,
     @PrimaryKey
     val recallId: String,
     val startDate: Int?,

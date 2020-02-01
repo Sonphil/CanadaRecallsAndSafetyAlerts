@@ -10,9 +10,6 @@ import androidx.room.Relation
 data class RecallAndBookmark(
     @Embedded
     val recall: Recall,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "recallId"
-    )
+    @Relation(parentColumn = "id", entityColumn = "recallId", entity = Bookmark::class)
     val bookmark: Bookmark?
 )
