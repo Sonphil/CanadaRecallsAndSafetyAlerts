@@ -3,7 +3,6 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
 import dagger.android.support.DaggerAppCompatActivity
@@ -29,7 +28,11 @@ class MainActivity : DaggerAppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(topLevelDestinations)
 
         setSupportActionBar(toolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        collapsing_toolbar_layout.setupWithNavController(
+            toolbar,
+            navController,
+            appBarConfiguration
+        )
     }
 
     private fun setupBottomNavigation() {
