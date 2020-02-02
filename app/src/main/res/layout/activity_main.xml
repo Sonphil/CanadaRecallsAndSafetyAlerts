@@ -49,10 +49,12 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/label_filter"
         android:textColor="@color/colorAccent"
+        android:visibility="gone"
         app:icon="@drawable/ic_filter_list_white_24dp"
+        app:iconTint="@color/colorAccent"
         app:layout_anchor="@id/bottom_navigation_view"
         app:layout_anchorGravity="bottom|right|end"
-        app:iconTint="@color/colorAccent" />
+        tools:visibility="visible" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
