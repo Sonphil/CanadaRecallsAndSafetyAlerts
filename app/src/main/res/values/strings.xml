@@ -3,6 +3,7 @@
 
     <string name="title_recent">Recent Recalls</string>
     <string name="title_my_recalls">My Recalls</string>
+    <string name="title_more">More</string>
     <string name="label_category_food">Food</string>
     <string name="label_category_vehicle">Vehicle</string>
     <string name="label_category_health_product">Health Product</string>

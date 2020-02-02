@@ -14,4 +14,9 @@
         android:title="@string/title_my_recalls"
         app:showAsAction="always|withText" />
 
+    <item
+        android:id="@+id/fragment_more"
+        android:icon="@drawable/ic_menu_black_24dp"
+        android:title="@string/title_more"
+        app:showAsAction="always|withText" />
 </menu>

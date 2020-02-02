@@ -21,7 +21,11 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupActionBar() {
-        val topLevelDestinations = setOf(R.id.fragment_recent, R.id.fragment_my_recalls)
+        val topLevelDestinations = setOf(
+            R.id.fragment_recent,
+            R.id.fragment_my_recalls,
+            R.id.fragment_more
+        )
         val appBarConfiguration = AppBarConfiguration(topLevelDestinations)
 
         setSupportActionBar(toolbar)
