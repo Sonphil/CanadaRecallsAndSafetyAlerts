@@ -28,11 +28,13 @@ class RecallRepository @Inject constructor(
         categories: List<Category>
     ): Flow<StateData<List<RecallAndBookmark>>> = flow {
 
-        val currentValues = dao.getAllRecallsAndBookmarksByCategories(categories)
+        val dBValues = dao.getAllRecallsAndBookmarksByCategories(categories)
             .catch { }
             .first()
 
-        emit(StateData.loading(currentValues))
+        emit(StateData.loading(dBValues))
+
+        dao.deleteNotBookmarkedRecalls()
 
         try {
             val apiValues = api
@@ -45,7 +47,7 @@ class RecallRepository @Inject constructor(
                 StateData.success(recalls)
             })
         } catch (cause: Throwable) {
-            emit(StateData.error(cause.message, currentValues))
+            emit(StateData.error(cause.message, dBValues))
         }
     }
 
