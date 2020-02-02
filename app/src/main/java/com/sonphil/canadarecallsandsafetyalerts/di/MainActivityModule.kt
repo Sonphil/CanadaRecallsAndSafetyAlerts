@@ -2,9 +2,10 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 
 import androidx.lifecycle.ViewModel
 import com.sonphil.canadarecallsandsafetyalerts.presentation.more.MoreFragment
-import com.sonphil.canadarecallsandsafetyalerts.presentation.my_recalls.MyRecallsFragment
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recent.RecentFragment
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recent.RecentViewModel
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsViewModel
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -22,6 +23,11 @@ interface MainActivityModule {
 
     @ContributesAndroidInjector
     fun contributeRecentFragment(): RecentFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyRecallsViewModel::class)
+    fun bindMyRecallsViewModel(myRecallsViewModel: MyRecallsViewModel): ViewModel
 
     @ContributesAndroidInjector
     fun contributeMyRecallsFragment(): MyRecallsFragment

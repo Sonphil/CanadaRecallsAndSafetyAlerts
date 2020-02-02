@@ -1,10 +1,10 @@
-package com.sonphil.canadarecallsandsafetyalerts.presentation.recent
+package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
@@ -20,11 +20,12 @@ import javax.inject.Inject
 class RecentViewModel @Inject constructor(
     private val app: App,
     private val recallRepository: RecallRepository,
-    private val bookmarkRepository: BookmarkRepository
-) : ViewModel() {
+    bookmarkRepository: BookmarkRepository
+) : RecallBaseViewModel(bookmarkRepository) {
     private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmark>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             val currentLang = LocaleUtils.getCurrentLanguage(app)
+            // TODO: Let user filter by categories
             val categories = Category.values().asList()
 
             val source = recallRepository
@@ -68,12 +69,6 @@ class RecentViewModel @Inject constructor(
         } catch (t: Throwable) {
             _loading.postValue(false)
             _error.postValue(t.message)
-        }
-    }
-
-    fun updateBookmark(recall: Recall, bookmarked: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            bookmarkRepository.updateBookmark(recall, bookmarked)
         }
     }
 }

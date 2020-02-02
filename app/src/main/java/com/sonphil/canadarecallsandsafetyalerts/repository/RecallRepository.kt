@@ -56,4 +56,10 @@ class RecallRepository @Inject constructor(
 
         dao.insertAll(apiValues)
     }
+
+    fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmark>>> = flow {
+        emitAll(dao.getBookmarkedRecalls().map { recalls ->
+            StateData.success(recalls)
+        })
+    }
 }

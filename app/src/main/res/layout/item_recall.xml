@@ -21,11 +21,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toStartOf="@+id/btn_recall_bookmark"
         app:layout_constraintStart_toEndOf="@+id/iv_recall_category_icon"
-        app:layout_constraintTop_toTopOf="@+id/iv_recall_category_icon"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Santé Canada fixe une nouvelle limite de cyanure pour atténuer les risques associés à la consommation d'amandes d'abricot" />
 
     <TextView

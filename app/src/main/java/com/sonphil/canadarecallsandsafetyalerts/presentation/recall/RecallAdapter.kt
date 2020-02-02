@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.presentation.recent
+package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -23,23 +23,25 @@ import java.util.*
  * Created by Sonphil on 01-02-20.
  */
 
-class RecentRecallAdapter(
+class RecallAdapter(
     context: Context,
-    private val viewModel: RecentViewModel
-) : ListAdapter<RecallAndBookmark, RecentRecallAdapter.RecentRecallViewHolder>(DiffCallback()) {
+    private val viewModel: RecallBaseViewModel
+) : ListAdapter<RecallAndBookmark, RecallAdapter.RecallViewHolder>(
+    DiffCallback()
+) {
 
     private val dateFormat = SimpleDateFormat.getDateInstance(
         DateFormat.MEDIUM,
         LocaleUtils.getCurrentLocale(context)
     )
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentRecallViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecallViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.item_recall,
             parent,
             false
         )
-        val holder = RecentRecallViewHolder(view)
+        val holder = RecallViewHolder(view)
 
         holder.btn_recall_bookmark.setOnClickListener {
             val item = getItem(holder.adapterPosition)
@@ -51,7 +53,7 @@ class RecentRecallAdapter(
         return holder
     }
 
-    override fun onBindViewHolder(holder: RecentRecallViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecallViewHolder, position: Int) {
         val item = getItem(position)
         val recall = item.recall
         val bookmark = item.bookmark
@@ -108,6 +110,6 @@ class RecentRecallAdapter(
         ): Boolean = oldItem == newItem
     }
 
-    inner class RecentRecallViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    inner class RecallViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer
 }

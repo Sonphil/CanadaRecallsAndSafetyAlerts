@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.presentation.recent
+package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_recent.*
 import javax.inject.Inject
@@ -23,7 +24,12 @@ class RecentFragment : DaggerFragment() {
     }
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val adapter by lazy { RecentRecallAdapter(requireContext(), viewModel) }
+    private val adapter by lazy {
+        RecallAdapter(
+            requireContext(),
+            viewModel
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,6 +77,7 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
+            // TODO: Display errors in a nicer way
             error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
         })
     }

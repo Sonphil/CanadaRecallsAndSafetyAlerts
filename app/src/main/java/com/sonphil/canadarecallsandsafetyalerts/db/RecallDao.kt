@@ -18,4 +18,7 @@ interface RecallDao {
     @Transaction
     @Query("SELECT * FROM recall WHERE category IN (:categories) ORDER BY datePublished DESC")
     fun getAllRecallsAndBookmarksByCategories(categories: List<Category>): Flow<List<RecallAndBookmark>>
+
+    @Query("SELECT * FROM recall WHERE EXISTS (SELECT 1 FROM bookmark WHERE recall.id = recallId)")
+    fun getBookmarkedRecalls(): Flow<List<RecallAndBookmark>>
 }
