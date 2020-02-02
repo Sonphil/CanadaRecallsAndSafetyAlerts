@@ -8,4 +8,5 @@
     <string name="label_category_health_product">Produit de santé</string>
     <string name="label_category_consumer_product">Produit de consommation</string>
     <string name="text_empty_bookmark">Aucun rappel sauvegardé</string>
+    <string name="label_filter">Filtrer</string>
 </resources>

@@ -40,6 +40,20 @@
         app:navGraph="@navigation/nav_graph_main"
         tools:background="@color/colorPrimary" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_filter_recalls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="72dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/label_filter"
+        android:textColor="@color/colorAccent"
+        app:icon="@drawable/ic_filter_list_white_24dp"
+        app:layout_anchor="@id/bottom_navigation_view"
+        app:layout_anchorGravity="bottom|right|end"
+        app:iconTint="@color/colorAccent" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"

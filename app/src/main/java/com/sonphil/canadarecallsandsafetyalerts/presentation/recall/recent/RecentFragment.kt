@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_recent.*
 import javax.inject.Inject
 
@@ -29,6 +32,9 @@ class RecentFragment : DaggerFragment() {
             requireContext(),
             viewModel
         )
+    }
+    private val filterButton: ExtendedFloatingActionButton by lazy {
+        requireActivity().btn_filter_recalls
     }
 
     override fun onCreateView(
@@ -46,7 +52,16 @@ class RecentFragment : DaggerFragment() {
 
         swipe_refresh_layout_recent_recalls.setupSwipeRefreshLayout()
 
+        setupFilterButton()
+
         subscribeUI()
+    }
+
+    private fun setupFilterButton() {
+        filterButton.show()
+        filterButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Not implemented yet", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun RecyclerView.setupRecyclerView() {
@@ -57,6 +72,21 @@ class RecentFragment : DaggerFragment() {
         addItemDecoration(divider)
 
         adapter = this@RecentFragment.adapter
+
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    filterButton.shrink()
+                }
+
+                val firstVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
+
+                // Extend the button when the user reaches the top of the RecyclerView
+                if (firstVisibleItem == 0) {
+                    filterButton.extend()
+                }
+            }
+        })
     }
 
     private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
@@ -81,5 +111,11 @@ class RecentFragment : DaggerFragment() {
             // TODO: Display errors in a nicer way
             error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
         })
+    }
+
+    override fun onDestroyView() {
+        filterButton.isVisible = false
+
+        super.onDestroyView()
     }
 }
