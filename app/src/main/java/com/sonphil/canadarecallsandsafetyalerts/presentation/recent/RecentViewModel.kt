@@ -38,18 +38,37 @@ class RecentViewModel @Inject constructor(
         stateData.data
     }
 
-    val loading = recentRecallsWithLoadState.map { stateData ->
-        stateData.status == StateData.Status.LOADING
-    }
+    private val _loading = MediatorLiveData<Boolean>().apply {
+        val source= recentRecallsWithLoadState.map { stateData ->
+            stateData.status == StateData.Status.LOADING
+        }
 
-    val error = recentRecallsWithLoadState.map { stateData ->
-        stateData.message
+        addSource(source) { loading ->
+            value = loading
+        }
     }
+    val loading: LiveData<Boolean> = _loading
+
+    private val _error = MediatorLiveData<String>().apply {
+        val source = recentRecallsWithLoadState.map { stateData ->
+            stateData.message
+        }
+
+        addSource(source) { errorMessage ->
+            value = errorMessage
+        }
+    }
+    val error: LiveData<String> = _error
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        val currentLang = LocaleUtils.getCurrentLanguage(app)
+        try {
+            val currentLang = LocaleUtils.getCurrentLanguage(app)
 
-        recallRepository.refreshRecallsAndBookmarks(currentLang)
+            recallRepository.refreshRecallsAndBookmarks(currentLang)
+        } catch (t: Throwable) {
+            _loading.postValue(false)
+            _error.postValue(t.message)
+        }
     }
 
     fun updateBookmark(recall: Recall, bookmarked: Boolean) {

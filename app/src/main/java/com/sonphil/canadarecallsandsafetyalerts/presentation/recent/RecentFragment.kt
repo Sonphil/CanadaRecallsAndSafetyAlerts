@@ -71,7 +71,7 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
-            error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT) }
+            error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
         })
     }
 }
