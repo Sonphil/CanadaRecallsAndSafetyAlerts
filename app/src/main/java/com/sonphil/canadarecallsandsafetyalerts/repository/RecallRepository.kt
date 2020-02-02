@@ -36,7 +36,7 @@ class RecallRepository @Inject constructor(
 
         try {
             val apiValues = api
-                .recentRecalls(lang)
+                .searchRecall("", lang, "", 50, 0)
                 .toRecalls()
 
             dao.insertAll(apiValues)
@@ -51,7 +51,7 @@ class RecallRepository @Inject constructor(
 
     suspend fun refreshRecallsAndBookmarks(lang: String) {
         val apiValues = api
-            .recentRecalls(lang)
+            .searchRecall("", lang, "", 50, 0)
             .toRecalls()
 
         dao.insertAll(apiValues)

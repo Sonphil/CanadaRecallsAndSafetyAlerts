@@ -12,7 +12,7 @@ data class ApiSearchResult(
     @Json(name = "department")
     val department: String?,
     @Json(name = "recallId")
-    val recallId: String?,
+    val recallId: String,
     @Json(name = "title")
     val title: String?,
     @Json(name = "url")

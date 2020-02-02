@@ -40,7 +40,7 @@ interface CanadaGovernmentApi {
     /**
      * Search based on a text
      *
-     * @param text The text string to search the database for
+     * @param search The text string to search the remote database for
      * @param lang Whether the response is in English (en) or French (fr). Not required, but
      * defaults to English if not specified
      * @param category Selects specific categories to search. Searches all categories if not
@@ -48,11 +48,11 @@ interface CanadaGovernmentApi {
      * @param lim Limits the number of results. Defaults to 5 if not specified.
      * @param offset Offsets the search results. Defaults to 0 if not specified.
      */
-    @GET("{id}/{locale}")
+    @GET("search")
     suspend fun searchRecall(
-        @Query("text") text: String?,
+        @Query("search") search: String?,
         @Query("lang") lang: String?,
-        @Query("cat") category: Int?,
+        @Query("cat") category: String?,
         @Query("lim") lim: Int?,
         @Query("off") offset: Int?
     ): ApiSearchResponse
