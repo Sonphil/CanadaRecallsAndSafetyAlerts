@@ -34,5 +34,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun setupBottomNavigation() {
         bottom_navigation_view.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            app_bar_layout.setExpanded(true, true)
+        }
     }
 }
