@@ -11,5 +11,5 @@ import androidx.room.PrimaryKey
 data class Bookmark(
     @PrimaryKey
     val recallId: String,
-    val date: Int
+    val date: Long
 )

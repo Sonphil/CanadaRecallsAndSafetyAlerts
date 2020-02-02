@@ -3,6 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 import android.app.Application
 import androidx.room.Room
 import com.sonphil.canadarecallsandsafetyalerts.db.AppDatabase
+import com.sonphil.canadarecallsandsafetyalerts.db.BookmarkDao
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDetailsDao
 import dagger.Module
@@ -23,6 +24,9 @@ internal open class DatabaseModule {
 
     @Singleton @Provides
     fun provideRecallDao(db: AppDatabase): RecallDao = db.recallDao()
+
+    @Singleton @Provides
+    fun provideBookmarkDao(db: AppDatabase): BookmarkDao = db.bookmarkDao()
 
     @Singleton @Provides
     fun provideRecallDetailsDao(db: AppDatabase): RecallDetailsDao = db.recallDetailsDao()

@@ -24,5 +24,6 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetailsImage
 @TypeConverters(CategoryTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
+    abstract fun bookmarkDao(): BookmarkDao
     abstract fun recallDetailsDao(): RecallDetailsDao
 }

@@ -23,7 +23,10 @@ import java.util.*
  * Created by Sonphil on 01-02-20.
  */
 
-class RecentRecallAdapter(context: Context) : ListAdapter<RecallAndBookmark, RecentRecallAdapter.RecentRecallViewHolder>(DiffCallback()) {
+class RecentRecallAdapter(
+    context: Context,
+    private val viewModel: RecentViewModel
+) : ListAdapter<RecallAndBookmark, RecentRecallAdapter.RecentRecallViewHolder>(DiffCallback()) {
 
     private val dateFormat = SimpleDateFormat.getDateInstance(
         DateFormat.MEDIUM,
@@ -36,8 +39,16 @@ class RecentRecallAdapter(context: Context) : ListAdapter<RecallAndBookmark, Rec
             parent,
             false
         )
+        val holder = RecentRecallViewHolder(view)
 
-        return RecentRecallViewHolder(view)
+        holder.btn_recall_bookmark.setOnClickListener {
+            val item = getItem(holder.adapterPosition)
+            val isBookmarked = item.bookmark != null
+
+            viewModel.updateBookmark(item.recall, !isBookmarked)
+        }
+
+        return holder
     }
 
     override fun onBindViewHolder(holder: RecentRecallViewHolder, position: Int) {

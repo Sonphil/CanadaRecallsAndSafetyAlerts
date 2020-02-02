@@ -23,7 +23,7 @@ class RecentFragment : DaggerFragment() {
     }
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val adapter by lazy { RecentRecallAdapter(requireContext()) }
+    private val adapter by lazy { RecentRecallAdapter(requireContext(), viewModel) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
