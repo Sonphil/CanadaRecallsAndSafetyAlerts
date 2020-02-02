@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <LinearLayout
+        android:id="@+id/empty_view_bookmarked_recalls"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/design_bottom_navigation_height"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_empty_bookmark"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_bookmark_border_black_24dp" />
+
+        <TextView
+            android:id="@+id/tv_empty_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/text_empty_bookmark"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+</merge>

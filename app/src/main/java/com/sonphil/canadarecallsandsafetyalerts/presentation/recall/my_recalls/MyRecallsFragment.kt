@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,6 +14,7 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_my_recalls.*
+import kotlinx.android.synthetic.main.include_empty_view_my_recalls.*
 import javax.inject.Inject
 
 class MyRecallsFragment : DaggerFragment() {
@@ -58,6 +60,11 @@ class MyRecallsFragment : DaggerFragment() {
     private fun subscribeUI() {
         viewModel.bookmarkedRecalls.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
+        })
+
+        viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { visible ->
+            rv_bookmarked_recalls.isVisible = !visible
+            empty_view_bookmarked_recalls.isVisible = visible
         })
     }
 }

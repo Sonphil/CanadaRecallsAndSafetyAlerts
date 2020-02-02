@@ -29,4 +29,8 @@ class MyRecallsViewModel @Inject constructor(
     val bookmarkedRecalls = bookmarkedRecallsWithLoadState.map { stateData ->
         stateData.data
     }
+
+    val emptyViewVisible = bookmarkedRecalls.map { list ->
+        list.orEmpty().isEmpty()
+    }
 }
