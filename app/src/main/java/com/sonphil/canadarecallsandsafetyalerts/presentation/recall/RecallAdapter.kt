@@ -57,7 +57,7 @@ class RecallAdapter(
         val recall = item.recall
         val bookmark = item.bookmark
 
-        with (holder) {
+        with(holder) {
             when (recall.category) {
                 Category.FOOD -> {
                     iv_recall_category_icon.setImageResource(R.drawable.ic_restaurant_black_24dp)
@@ -97,7 +97,7 @@ class RecallAdapter(
         }
     }
 
-    private class DiffCallback: DiffUtil.ItemCallback<RecallAndBookmark>() {
+    private class DiffCallback : DiffUtil.ItemCallback<RecallAndBookmark>() {
         override fun areItemsTheSame(
             oldItem: RecallAndBookmark,
             newItem: RecallAndBookmark
@@ -109,6 +109,7 @@ class RecallAdapter(
         ): Boolean = oldItem == newItem
     }
 
-    inner class RecallViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    inner class RecallViewHolder(override val containerView: View) :
+        RecyclerView.ViewHolder(containerView),
         LayoutContainer
 }

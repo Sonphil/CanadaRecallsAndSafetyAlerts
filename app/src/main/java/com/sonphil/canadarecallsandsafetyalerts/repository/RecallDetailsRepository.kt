@@ -11,5 +11,4 @@ import javax.inject.Inject
 class RecallDetailsRepository @Inject constructor(
     private val api: CanadaGovernmentApi,
     private val dao: RecallDetailsDao
-) {
-}
+)

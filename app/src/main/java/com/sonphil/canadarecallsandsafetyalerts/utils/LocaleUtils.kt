@@ -19,6 +19,5 @@ object LocaleUtils {
             config.locale
         }
     }
-    
     fun getCurrentLanguage(context: Context): String = getCurrentLocale(context).language
 }

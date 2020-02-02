@@ -40,7 +40,7 @@ class RecentViewModel @Inject constructor(
     }
 
     private val _loading = MediatorLiveData<Boolean>().apply {
-        val source= recentRecallsWithLoadState.map { stateData ->
+        val source = recentRecallsWithLoadState.map { stateData ->
             stateData.status == StateData.Status.LOADING
         }
 
