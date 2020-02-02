@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Recall(
     val category: Category,
-    val datePublished: Int?,
+    val datePublished: Long?,
     @PrimaryKey
     val id: String,
     val title: String?,

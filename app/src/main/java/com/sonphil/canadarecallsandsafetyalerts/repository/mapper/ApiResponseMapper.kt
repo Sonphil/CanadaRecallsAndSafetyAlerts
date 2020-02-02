@@ -11,7 +11,7 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 
 fun ApiRecall.toRecall() = Recall(
     Category.values()[category.first() - 1],
-    datePublished,
+    datePublished?.times(1000L),
     recallId,
     title,
     url
@@ -19,13 +19,4 @@ fun ApiRecall.toRecall() = Recall(
 
 fun List<ApiRecall>.toRecalls() = map { it.toRecall() }
 
-fun ApiRecentRecallsResponse.toRecalls(): List<Recall> {
-    val recallList = mutableListOf<Recall>()
-
-    recallList.addAll(results.cps?.toRecalls() ?: emptyList())
-    recallList.addAll(results.food?.toRecalls() ?: emptyList())
-    recallList.addAll(results.health?.toRecalls() ?: emptyList())
-    recallList.addAll(results.vehicle?.toRecalls() ?: emptyList())
-
-    return recallList
-}
+fun ApiRecentRecallsResponse.toRecalls(): List<Recall> = results.all?.toRecalls().orEmpty()

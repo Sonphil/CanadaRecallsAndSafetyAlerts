@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/fragment_my_recalls"
-        android:icon="@drawable/ic_bookmark_white_24dp"
+        android:icon="@drawable/ic_bookmark_red_24dp"
         android:title="@string/title_my_recalls"
         app:showAsAction="always|withText" />
 

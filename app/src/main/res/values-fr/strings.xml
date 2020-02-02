@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_recent">Récent</string>
+    <string name="title_recent">Rappels récents</string>
     <string name="title_my_recalls">Mes rappels</string>
+    <string name="label_category_food">Aliment</string>
+    <string name="label_category_vehicle">Véhicule</string>
+    <string name="label_category_health_product">Produit de santé</string>
+    <string name="label_category_consumer_product">Produit de consommation</string>
 </resources>
