@@ -14,7 +14,7 @@ class BookmarkRepository @Inject constructor(
 ) {
     suspend fun updateBookmark(recall: Recall, bookmarked: Boolean) {
         if (bookmarked) {
-            val bookmark = Bookmark(recall.id, System.currentTimeMillis() / 1000L)
+            val bookmark = Bookmark(recall.id, System.currentTimeMillis())
 
             dao.insertBookmark(bookmark)
         } else {
