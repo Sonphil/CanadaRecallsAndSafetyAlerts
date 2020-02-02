@@ -17,15 +17,19 @@
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:expandedTitleGravity="top"
-            app:layout_scrollFlags="scroll"
-            app:titleEnabled="false">
+            android:theme="@style/AppTheme.CollapsingToolbarLayout"
+            app:expandedTitleGravity="bottom|center_horizontal"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="160dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                app:titleTextColor="@android:color/white"
+                app:layout_collapseMode="pin"
                 tools:title="Title" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
