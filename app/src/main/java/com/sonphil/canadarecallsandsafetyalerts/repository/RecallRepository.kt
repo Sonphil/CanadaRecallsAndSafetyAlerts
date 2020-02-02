@@ -34,14 +34,12 @@ class RecallRepository @Inject constructor(
 
         emit(StateData.loading(dBValues))
 
-        dao.deleteNotBookmarkedRecalls()
-
         try {
             val apiValues = api
                 .searchRecall("", lang, "", 50, 0)
                 .toRecalls()
 
-            dao.insertAll(apiValues)
+            dao.refreshRecalls(apiValues)
         } catch (cause: Throwable) {
             emit(StateData.error(cause.message, dBValues))
         } finally {

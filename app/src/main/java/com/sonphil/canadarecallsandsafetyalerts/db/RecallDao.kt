@@ -34,11 +34,12 @@ interface RecallDao {
     )
     fun getBookmarkedRecalls(): Flow<List<RecallAndBookmark>>
 
-    @Query(
-        """
-            DELETE FROM recall 
-            WHERE NOT EXISTS (SELECT 1 FROM bookmark WHERE recall.id = recallId)
-        """
-    )
-    suspend fun deleteNotBookmarkedRecalls()
+    @Query("DELETE FROM recall")
+    suspend fun deleteAll()
+
+    @Transaction
+    suspend fun refreshRecalls(recalls: List<Recall>) {
+        deleteAll()
+        insertAll(recalls)
+    }
 }
