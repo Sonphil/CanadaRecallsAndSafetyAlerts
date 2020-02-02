@@ -48,10 +48,10 @@
         android:layout_marginBottom="72dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/label_filter"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:visibility="gone"
         app:icon="@drawable/ic_filter_list_white_24dp"
-        app:iconTint="@color/colorAccent"
+        app:iconTint="@android:color/white"
         app:layout_anchor="@id/bottom_navigation_view"
         app:layout_anchorGravity="bottom|right|end"
         tools:visibility="visible" />

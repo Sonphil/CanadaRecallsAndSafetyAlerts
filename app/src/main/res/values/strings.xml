@@ -8,6 +8,7 @@
     <string name="label_category_vehicle">Vehicle</string>
     <string name="label_category_health_product">Health Product</string>
     <string name="label_category_consumer_product">Consumer Product</string>
-    <string name="text_empty_bookmark">No recalls saved</string>
+    <string name="title_empty_bookmark">No recalls saved</string>
+    <string name="text_empty_bookmark">Save a recall and it will show up here</string>
     <string name="label_filter">Filter</string>
 </resources>
