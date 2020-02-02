@@ -18,6 +18,7 @@ import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapte
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_recent.*
+import kotlinx.android.synthetic.main.include_empty_view_recent_recalls.*
 import javax.inject.Inject
 
 class RecentFragment : DaggerFragment() {
@@ -50,11 +51,15 @@ class RecentFragment : DaggerFragment() {
 
         rv_recent_recalls.setupRecyclerView()
 
+        subscribeUI()
+
         swipe_refresh_layout_recent_recalls.setupSwipeRefreshLayout()
 
         setupFilterButton()
 
-        subscribeUI()
+        btn_retry_recent_recalls.setOnClickListener {
+            viewModel.refresh()
+        }
     }
 
     private fun setupFilterButton() {
@@ -110,6 +115,12 @@ class RecentFragment : DaggerFragment() {
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
             // TODO: Display errors in a nicer way
             error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+        })
+
+        viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { emptyViewVisible ->
+            rv_recent_recalls.isVisible = !emptyViewVisible
+            filterButton.isVisible = !emptyViewVisible
+            empty_view_recent_recalls.isVisible = emptyViewVisible
         })
     }
 

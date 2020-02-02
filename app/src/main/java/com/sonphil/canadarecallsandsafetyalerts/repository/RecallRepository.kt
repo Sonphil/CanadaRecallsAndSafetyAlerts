@@ -42,12 +42,13 @@ class RecallRepository @Inject constructor(
                 .toRecalls()
 
             dao.insertAll(apiValues)
-
+        } catch (cause: Throwable) {
+            emit(StateData.error(cause.message, dBValues))
+        } finally {
+            // Always emit DB values because the user might try again on failure
             emitAll(dao.getAllRecallsAndBookmarksByCategories(categories).map { recalls ->
                 StateData.success(recalls)
             })
-        } catch (cause: Throwable) {
-            emit(StateData.error(cause.message, dBValues))
         }
     }
 

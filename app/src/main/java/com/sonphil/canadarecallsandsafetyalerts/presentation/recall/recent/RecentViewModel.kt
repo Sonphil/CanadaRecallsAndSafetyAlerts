@@ -61,8 +61,14 @@ class RecentViewModel @Inject constructor(
     }
     val error: LiveData<String> = _error
 
+    val emptyViewVisible = recentRecallsWithLoadState.map { stateData ->
+        stateData.status != StateData.Status.LOADING && stateData.data.isNullOrEmpty()
+    }
+
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
         try {
+            _loading.postValue(true)
+
             val currentLang = LocaleUtils.getCurrentLanguage(app)
 
             recallRepository.refreshRecallsAndBookmarks(currentLang)

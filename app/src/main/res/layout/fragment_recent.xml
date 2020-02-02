@@ -19,5 +19,7 @@
             android:paddingBottom="80dp"
             tools:ignore="PrivateResource"
             tools:listitem="@layout/item_recall" />
+
+        <include layout="@layout/include_empty_view_recent_recalls" />
     </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
