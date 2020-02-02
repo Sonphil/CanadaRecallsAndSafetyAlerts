@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.db;
+package com.sonphil.canadarecallsandsafetyalerts.db
 
 import androidx.room.Dao
 import androidx.room.Insert

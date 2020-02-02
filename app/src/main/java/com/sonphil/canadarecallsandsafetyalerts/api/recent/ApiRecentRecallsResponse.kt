@@ -1,6 +1,5 @@
 package com.sonphil.canadarecallsandsafetyalerts.api.recent
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
