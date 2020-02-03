@@ -18,12 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:theme="@style/AppTheme.CollapsingToolbarLayout"
-            app:expandedTitleGravity="bottom|center_horizontal"
+            app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <Space
                 android:layout_width="0dp"
-                android:layout_height="160dp" />
+                android:layout_height="200dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
