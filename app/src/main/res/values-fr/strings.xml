@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Rappels et avis de sécurité</string>
+
     <string name="title_recent">Rappels récents</string>
     <string name="title_my_recalls">Mes rappels</string>
     <string name="title_more">Plus</string>
