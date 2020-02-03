@@ -51,6 +51,8 @@ class RecentFragment : DaggerFragment() {
 
         rv_recent_recalls.setupRecyclerView()
 
+        requireActivity().iv_section_icon.setImageResource(R.drawable.ic_access_time_white_24dp)
+
         subscribeUI()
 
         swipe_refresh_layout_recent_recalls.setupSwipeRefreshLayout()

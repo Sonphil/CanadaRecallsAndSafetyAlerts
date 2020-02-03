@@ -18,12 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:theme="@style/AppTheme.CollapsingToolbarLayout"
+            app:contentScrim="@color/colorPrimary"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="200dp" />
+            <ImageView
+                android:id="@+id/iv_section_icon"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="-40dp"
+                android:layout_marginBottom="-40dp"
+                android:alpha="0.3"
+                android:tint="@android:color/white"
+                tools:src="@drawable/ic_access_time_white_24dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
