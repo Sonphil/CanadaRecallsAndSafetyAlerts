@@ -55,7 +55,7 @@ class RecallRepository @Inject constructor(
             .searchRecall("", lang, "", 80, 0)
             .toRecalls()
 
-        dao.insertAll(apiValues)
+        dao.refreshRecalls(apiValues)
     }
 
     fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmark>>> = flow {
