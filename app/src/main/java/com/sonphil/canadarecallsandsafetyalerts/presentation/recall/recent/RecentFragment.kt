@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.circularreveal.cardview.CircularRevealCardView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_recent.*
+import kotlinx.android.synthetic.main.include_categories_filter.*
+import kotlinx.android.synthetic.main.include_categories_filter.view.*
 import kotlinx.android.synthetic.main.include_empty_view_recent_recalls.*
 import javax.inject.Inject
 
@@ -34,8 +37,11 @@ class RecentFragment : DaggerFragment() {
             viewModel
         )
     }
-    private val filterButton: ExtendedFloatingActionButton by lazy {
+    private val filterButton: FloatingActionButton by lazy {
         requireActivity().btn_filter_recalls
+    }
+    private val filterCardView: CircularRevealCardView by lazy {
+        requireActivity().card_view_categories_filter
     }
 
     override fun onCreateView(
@@ -51,23 +57,30 @@ class RecentFragment : DaggerFragment() {
 
         rv_recent_recalls.setupRecyclerView()
 
-        requireActivity().iv_section_icon.setImageResource(R.drawable.ic_access_time_white_24dp)
+        requireActivity()
+            .iv_section_icon
+            .setImageResource(R.drawable.ic_access_time_white_24dp)
 
         subscribeUI()
 
         swipe_refresh_layout_recent_recalls.setupSwipeRefreshLayout()
 
-        setupFilterButton()
+        setupFilter()
 
         btn_retry_recent_recalls.setOnClickListener {
             viewModel.refresh()
         }
     }
 
-    private fun setupFilterButton() {
+    private fun setupFilter() {
         filterButton.show()
+        filterButton.isExpanded = false
         filterButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Not implemented yet", Toast.LENGTH_SHORT).show()
+            filterButton.isExpanded = true
+        }
+        filterCardView.visibility = View.INVISIBLE
+        filterCardView.btn_categories_filter_done.setOnClickListener {
+            filterButton.isExpanded = false
         }
     }
 
@@ -79,21 +92,6 @@ class RecentFragment : DaggerFragment() {
         addItemDecoration(divider)
 
         adapter = this@RecentFragment.adapter
-
-        addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    filterButton.shrink()
-                }
-
-                val firstVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
-
-                // Extend the button when the user reaches the top of the RecyclerView
-                if (firstVisibleItem == 0) {
-                    filterButton.extend()
-                }
-            }
-        })
     }
 
     private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
@@ -121,13 +119,13 @@ class RecentFragment : DaggerFragment() {
 
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { emptyViewVisible ->
             rv_recent_recalls.isVisible = !emptyViewVisible
-            filterButton.isVisible = !emptyViewVisible
             empty_view_recent_recalls.isVisible = emptyViewVisible
         })
     }
 
     override fun onDestroyView() {
-        filterButton.isVisible = false
+        filterButton.hide()
+        filterCardView.visibility = View.INVISIBLE
 
         super.onDestroyView()
     }

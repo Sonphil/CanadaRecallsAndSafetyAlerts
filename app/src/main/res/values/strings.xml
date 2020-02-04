@@ -13,4 +13,6 @@
     <string name="title_empty_recent_recall">Unable to retrieve recalls</string>
     <string name="label_retry">Retry</string>
     <string name="label_filter">Filter</string>
+    <string name="title_filters">Filters</string>
+    <string name="label_done">Done</string>
 </resources>

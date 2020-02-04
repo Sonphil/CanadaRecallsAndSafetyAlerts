@@ -14,4 +14,6 @@
     <string name="title_empty_recent_recall">Impossible de récupérer les rappels</string>
     <string name="label_retry">Réessayer</string>
     <string name="label_filter">Filtrer</string>
+    <string name="title_filters">Filtres</string>
+    <string name="label_done">Terminé</string>
 </resources>
