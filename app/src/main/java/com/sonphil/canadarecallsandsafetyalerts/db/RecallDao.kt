@@ -20,7 +20,7 @@ interface RecallDao {
         """
         SELECT * FROM recall 
         WHERE category IN (:categories) 
-        ORDER BY datePublished DESC
+        ORDER BY datePublished DESC, id DESC
         """
     )
     fun getAllRecallsAndBookmarksByCategories(categories: List<Category>): Flow<List<RecallAndBookmark>>

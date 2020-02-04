@@ -52,7 +52,7 @@ class RecallRepository @Inject constructor(
 
     suspend fun refreshRecallsAndBookmarks(lang: String) {
         val apiValues = api
-            .searchRecall("", lang, "", 50, 0)
+            .searchRecall("", lang, "", 80, 0)
             .toRecalls()
 
         dao.insertAll(apiValues)
