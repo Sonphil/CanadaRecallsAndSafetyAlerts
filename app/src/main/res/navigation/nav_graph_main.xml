@@ -9,11 +9,18 @@
         android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentFragment"
         android:label="@string/title_recent"
         tools:layout="@layout/fragment_recent"></fragment>
+
     <fragment
         android:id="@+id/fragment_my_recalls"
         android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsFragment"
         android:label="@string/title_my_recalls"
         tools:layout="@layout/fragment_my_recalls"></fragment>
+
+    <fragment
+        android:id="@+id/fragment_notifications"
+        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications"></fragment>
 
     <fragment
         android:id="@+id/fragment_more"

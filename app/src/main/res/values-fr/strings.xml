@@ -4,6 +4,7 @@
 
     <string name="title_recent">Rappels récents</string>
     <string name="title_my_recalls">Mes rappels</string>
+    <string name="title_notifications">Notifications</string>
     <string name="title_more">Plus</string>
     <string name="label_category_food">Aliment</string>
     <string name="label_category_vehicle">Véhicule</string>

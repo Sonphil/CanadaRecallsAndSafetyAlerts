@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 
 import androidx.lifecycle.ViewModel
 import com.sonphil.canadarecallsandsafetyalerts.presentation.more.MoreFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsViewModel
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentFragment
@@ -31,6 +32,9 @@ interface MainActivityModule {
 
     @ContributesAndroidInjector
     fun contributeMyRecallsFragment(): MyRecallsFragment
+
+    @ContributesAndroidInjector
+    fun contributeNotificationFragment(): NotificationsFragment
 
     @ContributesAndroidInjector
     fun contributeMoreFragment(): MoreFragment
