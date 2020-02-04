@@ -90,5 +90,8 @@ dependencies {
     // Android Debug Database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
 }
