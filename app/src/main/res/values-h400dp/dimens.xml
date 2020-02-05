@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_view_section_icon_size">160dp</dimen>
+    <dimen name="image_view_section_icon_margin_top">40dp</dimen>
+    <dimen name="image_view_section_icon_margin_end">-40dp</dimen>
+    <dimen name="image_view_section_icon_margin_bottom">-40dp</dimen>
+</resources>

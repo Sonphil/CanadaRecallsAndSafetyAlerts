@@ -24,12 +24,12 @@
 
             <ImageView
                 android:id="@+id/iv_section_icon"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="@dimen/image_view_section_icon_size"
+                android:layout_height="@dimen/image_view_section_icon_size"
                 android:layout_gravity="bottom|end"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="-40dp"
-                android:layout_marginBottom="-40dp"
+                android:layout_marginTop="@dimen/image_view_section_icon_margin_top"
+                android:layout_marginEnd="@dimen/image_view_section_icon_margin_end"
+                android:layout_marginBottom="@dimen/image_view_section_icon_margin_bottom"
                 android:alpha="0.3"
                 android:tint="@android:color/white"
                 tools:src="@drawable/ic_access_time_white_24dp" />
