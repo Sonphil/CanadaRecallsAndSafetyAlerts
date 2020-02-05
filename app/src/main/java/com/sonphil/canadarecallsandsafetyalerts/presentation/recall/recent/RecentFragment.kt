@@ -49,6 +49,8 @@ class RecentFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        inflater.inflate(R.layout.include_categories_filter, requireActivity().root, true)
+
         return inflater.inflate(R.layout.fragment_recent, container, false)
     }
 
@@ -70,17 +72,12 @@ class RecentFragment : DaggerFragment() {
         btn_retry_recent_recalls.setOnClickListener {
             viewModel.refresh()
         }
-
-
     }
 
     private fun setupFilter() {
-        filterButton.show()
-        filterButton.isExpanded = false
         filterButton.setOnClickListener {
             filterButton.isExpanded = true
         }
-        filterCardView.visibility = View.INVISIBLE
         filterCardView.btn_categories_filter_done.setOnClickListener {
             filterButton.isExpanded = false
         }
@@ -133,8 +130,8 @@ class RecentFragment : DaggerFragment() {
     }
 
     override fun onDestroyView() {
-        filterButton.hide()
-        filterCardView.visibility = View.INVISIBLE
+        requireActivity().root.removeView(filterCardView)
+        requireActivity().root.removeView(filterButton)
 
         super.onDestroyView()
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/test"
     tools:parentTag="androidx.coordinatorlayout.widget.CoordinatorLayout">
 
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
@@ -106,11 +107,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="72dp"
         android:contentDescription="@string/label_filter"
-        android:visibility="gone"
         app:backgroundTint="@color/colorPrimary"
         app:layout_anchor="@id/bottom_navigation_view"
         app:layout_anchorGravity="bottom|right|end"
         app:srcCompat="@drawable/ic_filter_list_white_24dp"
-        app:tint="@android:color/white"
-        tools:visibility="visible" />
+        app:tint="@android:color/white" />
 </merge>
