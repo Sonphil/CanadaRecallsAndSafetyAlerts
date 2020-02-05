@@ -70,6 +70,8 @@ class RecentFragment : DaggerFragment() {
         btn_retry_recent_recalls.setOnClickListener {
             viewModel.refresh()
         }
+
+
     }
 
     private fun setupFilter() {
@@ -121,6 +123,13 @@ class RecentFragment : DaggerFragment() {
             rv_recent_recalls.isVisible = !emptyViewVisible
             empty_view_recent_recalls.isVisible = emptyViewVisible
         })
+
+        viewModel.emptyProgressBarVisible.observe(
+            viewLifecycleOwner,
+            Observer { emptyProgressBarVisible ->
+                progress_bar_empty_recent_recalls.isVisible = emptyProgressBarVisible
+            }
+        )
     }
 
     override fun onDestroyView() {

@@ -20,6 +20,15 @@
             tools:ignore="PrivateResource"
             tools:listitem="@layout/item_recall" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar_empty_recent_recalls"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
         <include layout="@layout/include_empty_view_recent_recalls" />
     </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
