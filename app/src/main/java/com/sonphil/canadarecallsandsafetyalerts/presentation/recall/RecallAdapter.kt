@@ -44,9 +44,10 @@ class RecallAdapter(
 
         holder.btn_recall_bookmark.setOnClickListener {
             val item = getItem(holder.adapterPosition)
-            val isBookmarked = item.bookmark != null
+            val isCurrentlyBookmarked = item.bookmark != null
 
-            viewModel.updateBookmark(item.recall, !isBookmarked)
+            holder.bindBookmark(!isCurrentlyBookmarked)
+            viewModel.updateBookmark(item.recall, !isCurrentlyBookmarked)
         }
 
         return holder
@@ -77,12 +78,7 @@ class RecallAdapter(
                 }
             }
 
-            val bookmarkDrawableRes = if (bookmark == null) {
-                R.drawable.ic_bookmark_border_black_24dp
-            } else {
-                R.drawable.ic_bookmark_red_24dp
-            }
-            btn_recall_bookmark.setImageResource(bookmarkDrawableRes)
+            this.bindBookmark(bookmark != null)
 
             tv_recall_title.text = recall.title
 
@@ -95,6 +91,16 @@ class RecallAdapter(
                 tv_recall_date.isVisible = true
             }
         }
+    }
+
+    private fun RecallViewHolder.bindBookmark(bookmarked: Boolean) {
+        val bookmarkDrawableRes = if (bookmarked) {
+            R.drawable.ic_bookmark_red_24dp
+        } else {
+            R.drawable.ic_bookmark_border_black_24dp
+        }
+
+        btn_recall_bookmark.setImageResource(bookmarkDrawableRes)
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<RecallAndBookmark>() {
