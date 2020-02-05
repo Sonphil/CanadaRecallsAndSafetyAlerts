@@ -1,8 +1,11 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation
 
 import android.os.Bundle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
 import dagger.android.support.DaggerAppCompatActivity
@@ -10,6 +13,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
     private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }
+    /** Last destination selected **/
+    private val _selectedDestinationId = MutableLiveData<Int>()
+    val selectedDestinationId: LiveData<Int> = _selectedDestinationId
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,17 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun setupBottomNavigation() {
         bottom_navigation_view.setupWithNavController(navController)
+        bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
+            _selectedDestinationId.value = item.itemId
+
+            if (item.itemId == navController.currentDestination?.id) {
+                false
+            } else {
+                NavigationUI.onNavDestinationSelected(item, navController)
+
+                true
+            }
+        }
 
         navController.addOnDestinationChangedListener { _, _, _ ->
             app_bar_layout.setExpanded(true, true)

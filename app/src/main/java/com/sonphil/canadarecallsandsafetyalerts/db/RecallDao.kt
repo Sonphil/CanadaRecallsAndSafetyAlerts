@@ -25,6 +25,7 @@ interface RecallDao {
     )
     fun getAllRecallsAndBookmarksByCategories(categories: List<Category>): Flow<List<RecallAndBookmark>>
 
+    @Transaction
     @Query(
         """
             SELECT * FROM recall 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,6 +62,12 @@ class MyRecallsFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
+        (requireActivity() as MainActivity).selectedDestinationId.observe(viewLifecycleOwner, Observer { destinationId ->
+            if (destinationId == R.id.fragment_my_recalls) {
+                rv_bookmarked_recalls.smoothScrollToPosition(0)
+            }
+        })
+
         viewModel.bookmarkedRecalls.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })

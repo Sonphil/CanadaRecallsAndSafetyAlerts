@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.circularreveal.cardview.CircularRevealCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -101,6 +102,12 @@ class RecentFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
+        (requireActivity() as MainActivity).selectedDestinationId.observe(viewLifecycleOwner, Observer { destinationId ->
+            if (destinationId == R.id.fragment_recent) {
+                rv_recent_recalls.smoothScrollToPosition(0)
+            }
+        })
+
         viewModel.recentRecalls.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
