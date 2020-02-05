@@ -43,8 +43,11 @@ androidExtensions {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Support libraries
+    // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+
+    // Support libraries
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation "com.google.android.material:material:$versions.material_components"
     implementation "androidx.browser:browser:$versions.support"
@@ -93,5 +96,6 @@ dependencies {
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    // Toasty
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
 }

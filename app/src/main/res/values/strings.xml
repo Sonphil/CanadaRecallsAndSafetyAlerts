@@ -16,4 +16,6 @@
     <string name="label_filter">Filter</string>
     <string name="title_filters">Filters</string>
     <string name="label_done">Done</string>
+    <string name="error_generic">An error has occurred</string>
+    <string name="error_offline">No Internet Connection</string>
 </resources>

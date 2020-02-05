@@ -1,8 +1,10 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
 import androidx.lifecycle.*
+import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
@@ -50,7 +52,7 @@ class RecentViewModel @Inject constructor(
     }
     val loading: LiveData<Boolean> = _loading
 
-    private val _error = MediatorLiveData<String>().apply {
+    private val _error = MediatorLiveData<String?>().apply {
         val source = recentRecallsWithLoadState.map { stateData ->
             stateData.message
         }
@@ -59,7 +61,20 @@ class RecentViewModel @Inject constructor(
             value = errorMessage
         }
     }
-    val error: LiveData<String> = _error
+    val genericError: LiveData<String?> = _error.map { error ->
+        if (app.isDeviceConnected && !error.isNullOrBlank()) {
+            app.getString(R.string.error_generic)
+        } else {
+            null
+        }
+    }
+    val networkError: LiveData<String?> = _error.map {
+        if (!app.isDeviceConnected) {
+            app.getString(R.string.error_offline)
+        } else {
+            null
+        }
+    }
 
     val emptyViewVisible = recentRecallsWithLoadState.map { stateData ->
         stateData.status != StateData.Status.LOADING && stateData.data.isNullOrEmpty()

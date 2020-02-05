@@ -17,4 +17,6 @@
     <string name="label_filter">Filtrer</string>
     <string name="title_filters">Filtres</string>
     <string name="label_done">Terminé</string>
+    <string name="error_generic">Une erreur est survenue</string>
+    <string name="error_offline">Pas de connexion Internet</string>
 </resources>

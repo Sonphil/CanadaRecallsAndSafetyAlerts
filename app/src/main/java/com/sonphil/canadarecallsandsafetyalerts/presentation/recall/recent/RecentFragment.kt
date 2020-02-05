@@ -18,6 +18,7 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_recent.*
 import kotlinx.android.synthetic.main.include_categories_filter.*
@@ -118,9 +119,18 @@ class RecentFragment : DaggerFragment() {
             }
         })
 
-        viewModel.error.observe(viewLifecycleOwner, Observer { error ->
-            // TODO: Display errors in a nicer way
-            error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
+        viewModel.genericError.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                Toasty.error(requireContext(), error, Toast.LENGTH_SHORT, true).show()
+            }
+        })
+
+        viewModel.networkError.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                val icon = requireContext().getDrawable(R.drawable.ic_cloud_off_white_24dp)
+
+                Toasty.normal(requireContext(), error, Toast.LENGTH_SHORT, icon).show()
+            }
         })
 
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { emptyViewVisible ->
