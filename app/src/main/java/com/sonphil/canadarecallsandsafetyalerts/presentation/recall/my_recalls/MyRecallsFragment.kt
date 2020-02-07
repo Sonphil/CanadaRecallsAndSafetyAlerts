@@ -54,9 +54,7 @@ class MyRecallsFragment : DaggerFragment() {
     private fun RecyclerView.setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
         setLayoutManager(layoutManager)
-        
         itemAnimator = SlideInLeftAnimator()
-
         adapter = this@MyRecallsFragment.adapter
     }
 

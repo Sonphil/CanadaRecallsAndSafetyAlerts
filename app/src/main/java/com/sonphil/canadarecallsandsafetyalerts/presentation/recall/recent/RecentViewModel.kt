@@ -80,10 +80,6 @@ class RecentViewModel @Inject constructor(
         stateData.status != StateData.Status.LOADING && stateData.data.isNullOrEmpty()
     }
 
-    val emptyProgressBarVisible = recentRecallsWithLoadState.map { stateData ->
-        stateData.status == StateData.Status.LOADING && stateData.data.isNullOrEmpty()
-    }
-
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
         try {
             _loading.postValue(true)

@@ -148,6 +148,7 @@ class RecentFragment : DaggerFragment() {
             if (!loading) {
                 swipe_refresh_layout_recent_recalls.isRefreshing = loading
             }
+            progress_bar_recent_recalls.isVisible = loading
         })
 
         viewModel.genericError.observe(viewLifecycleOwner, Observer { error ->
@@ -168,13 +169,6 @@ class RecentFragment : DaggerFragment() {
             rv_recent_recalls.isVisible = !emptyViewVisible
             empty_view_recent_recalls.isVisible = emptyViewVisible
         })
-
-        viewModel.emptyProgressBarVisible.observe(
-            viewLifecycleOwner,
-            Observer { emptyProgressBarVisible ->
-                progress_bar_empty_recent_recalls.isVisible = emptyProgressBarVisible
-            }
-        )
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
             with(filterCardView) {
