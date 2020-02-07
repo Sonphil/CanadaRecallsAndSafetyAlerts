@@ -2,7 +2,6 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
@@ -27,11 +26,9 @@ class RecentViewModel @Inject constructor(
     private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmark>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             val currentLang = LocaleUtils.getCurrentLanguage(app)
-            // TODO: Let user filter by categories
-            val categories = Category.values().asList()
 
             val source = recallRepository
-                .getRecallsAndBookmarks(currentLang, categories)
+                .getRecallsAndBookmarks(currentLang)
                 .asLiveData()
 
             emitSource(source)

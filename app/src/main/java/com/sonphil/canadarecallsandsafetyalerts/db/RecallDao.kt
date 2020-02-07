@@ -1,7 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.db
 
 import androidx.room.*
-import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
 import kotlinx.coroutines.flow.Flow
@@ -19,11 +18,11 @@ interface RecallDao {
     @Query(
         """
         SELECT * FROM recall 
-        WHERE category IN (:categories) 
+        WHERE category IN (SELECT category FROM categoryfilter) 
         ORDER BY datePublished DESC, id DESC
         """
     )
-    fun getAllRecallsAndBookmarksByCategories(categories: List<Category>): Flow<List<RecallAndBookmark>>
+    fun getAllRecallsAndBookmarksFilteredByCategories(): Flow<List<RecallAndBookmark>>
 
     @Transaction
     @Query(

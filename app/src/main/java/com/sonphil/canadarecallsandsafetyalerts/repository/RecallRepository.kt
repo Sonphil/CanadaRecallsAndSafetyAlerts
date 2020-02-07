@@ -2,7 +2,6 @@ package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
-import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
@@ -24,11 +23,10 @@ class RecallRepository @Inject constructor(
      * @param categories Categories to filter the recalls by
      */
     fun getRecallsAndBookmarks(
-        lang: String,
-        categories: List<Category>
+        lang: String
     ): Flow<StateData<List<RecallAndBookmark>>> = flow {
 
-        val dBValues = dao.getAllRecallsAndBookmarksByCategories(categories)
+        val dBValues = dao.getAllRecallsAndBookmarksFilteredByCategories()
             .catch { }
             .first()
 
@@ -44,7 +42,7 @@ class RecallRepository @Inject constructor(
             emit(StateData.error(cause.message, dBValues))
         } finally {
             // Always emit DB values because the user might try again on failure
-            emitAll(dao.getAllRecallsAndBookmarksByCategories(categories).map { recalls ->
+            emitAll(dao.getAllRecallsAndBookmarksFilteredByCategories().map { recalls ->
                 StateData.success(recalls)
             })
         }

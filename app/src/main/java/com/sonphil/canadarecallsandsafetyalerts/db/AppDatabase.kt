@@ -3,10 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.sonphil.canadarecallsandsafetyalerts.entity.Bookmark
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetails
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetailsImage
+import com.sonphil.canadarecallsandsafetyalerts.entity.*
 
 /**
  * Created by Sonphil on 01-02-20.
@@ -17,7 +14,8 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetailsImage
         Bookmark::class,
         Recall::class,
         RecallDetails::class,
-        RecallDetailsImage::class
+        RecallDetailsImage::class,
+        CategoryFilter::class
     ],
     version = 1
 )
@@ -26,4 +24,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun recallDetailsDao(): RecallDetailsDao
+    abstract fun categoryFilterDao(): CategoryFilterDao
 }
