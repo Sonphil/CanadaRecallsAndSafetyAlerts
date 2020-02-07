@@ -6,23 +6,15 @@ This allows the user to get access to recalls and safety alerts from the Governm
 
 - View recent recalls
 - Bookmark recalls
+- Filter recalls and safety alerts by categories
 
 ### TODO
 
-- Filter recalls and safety alerts by categories
-
 - View details about a recall
-
 - Notifications based on keywords
-
-- Change the icon and the name of app
-
 - In-app language selection
-
 - Paging
-
 - Search recalls and safety alerts
-
 - And more!
 
 ## Libraries and tools
@@ -38,6 +30,8 @@ This allows the user to get access to recalls and safety alerts from the Governm
 * [Android Debug Database](https://github.com/amitshekhariitbhu/Android-Debug-Database)
 * [Material Components](https://github.com/material-components/material-components-android)
 * [Ktlint Gradle](https://github.com/JLLeitschuh/ktlint-gradle)
+* [LeakCanary](https://square.github.io/leakcanary/)
+* [Toasty](https://github.com/GrenderG/Toasty)
 
 ## Data source
 
