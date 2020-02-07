@@ -2,11 +2,13 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.repository.CategoryFilterRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class RecentViewModel @Inject constructor(
     private val app: App,
     private val recallRepository: RecallRepository,
-    bookmarkRepository: BookmarkRepository
+    bookmarkRepository: BookmarkRepository,
+    private val categoryFilterRepository: CategoryFilterRepository
 ) : RecallBaseViewModel(bookmarkRepository) {
     private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmark>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -93,4 +96,17 @@ class RecentViewModel @Inject constructor(
             _error.postValue(t.message)
         }
     }
+
+    val categoryFilters: LiveData<List<Category>> = categoryFilterRepository
+        .getFilters()
+        .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
+
+    fun updateCategoryFilter(category: Category, checked: Boolean) = viewModelScope
+        .launch(Dispatchers.IO) {
+            if (checked) {
+                categoryFilterRepository.addFilter(category)
+            } else {
+                categoryFilterRepository.removeFilter(category)
+            }
+        }
 }

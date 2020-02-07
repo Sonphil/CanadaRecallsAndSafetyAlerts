@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,9 +14,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.chip.Chip
 import com.google.android.material.circularreveal.cardview.CircularRevealCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
@@ -80,8 +84,34 @@ class RecentFragment : DaggerFragment() {
         filterButton.setOnClickListener {
             filterButton.isExpanded = true
         }
-        filterCardView.btn_categories_filter_done.setOnClickListener {
-            filterButton.isExpanded = false
+        with(filterCardView) {
+            btn_categories_filter_done.setOnClickListener {
+                filterButton.isExpanded = false
+            }
+            val filterChipListener =
+                CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                    when (buttonView.id) {
+                        R.id.chip_category_filter_food -> viewModel.updateCategoryFilter(
+                            Category.FOOD,
+                            isChecked
+                        )
+                        R.id.chip_category_filter_vehicle -> viewModel.updateCategoryFilter(
+                            Category.VEHICLE,
+                            isChecked
+                        )
+                        R.id.chip_category_filter_health_product -> viewModel.updateCategoryFilter(
+                            Category.HEALTH_PRODUCT,
+                            isChecked
+                        )
+                        R.id.chip_category_filter_consumer_product -> viewModel.updateCategoryFilter(
+                            Category.CONSUMER_PRODUCT,
+                            isChecked
+                        )
+                    }
+                }
+            chip_group_category_filter.forEach { chip ->
+                (chip as Chip).setOnCheckedChangeListener(filterChipListener)
+            }
         }
     }
 
@@ -103,11 +133,13 @@ class RecentFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
-        (requireActivity() as MainActivity).selectedDestinationId.observe(viewLifecycleOwner, Observer { destinationId ->
-            if (destinationId == R.id.fragment_recent) {
-                rv_recent_recalls.smoothScrollToPosition(0)
-            }
-        })
+        (requireActivity() as MainActivity).selectedDestinationId.observe(
+            viewLifecycleOwner,
+            Observer { destinationId ->
+                if (destinationId == R.id.fragment_recent) {
+                    rv_recent_recalls.smoothScrollToPosition(0)
+                }
+            })
 
         viewModel.recentRecalls.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
@@ -144,6 +176,17 @@ class RecentFragment : DaggerFragment() {
                 progress_bar_empty_recent_recalls.isVisible = emptyProgressBarVisible
             }
         )
+
+        viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
+            with(filterCardView) {
+                chip_category_filter_food.isChecked = Category.FOOD in visibleCategories
+                chip_category_filter_vehicle.isChecked = Category.VEHICLE in visibleCategories
+                chip_category_filter_health_product.isChecked =
+                    Category.HEALTH_PRODUCT in visibleCategories
+                chip_category_filter_consumer_product.isChecked =
+                    Category.CONSUMER_PRODUCT in visibleCategories
+            }
+        })
     }
 
     override fun onDestroyView() {

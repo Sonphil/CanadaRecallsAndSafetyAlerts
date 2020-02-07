@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/test"
     tools:parentTag="androidx.coordinatorlayout.widget.CoordinatorLayout">
 
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
@@ -58,6 +57,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_categories_filter">
 
                 <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_category_filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
