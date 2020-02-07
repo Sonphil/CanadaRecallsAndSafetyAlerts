@@ -17,7 +17,6 @@ internal open class DatabaseModule {
     open fun provideDb(app: Application): AppDatabase =
             Room.databaseBuilder(app, AppDatabase::class.java, "canadarecallsandsafetyalerts.db")
                     .createFromAsset("database/canadarecallsandsafetyalertsinit.db")
-                    .fallbackToDestructiveMigration()
                     .build()
 
     @Singleton @Provides
