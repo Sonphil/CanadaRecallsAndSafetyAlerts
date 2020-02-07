@@ -10,7 +10,6 @@ import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,6 +22,7 @@ import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
 import es.dmoral.toasty.Toasty
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_recent.*
 import kotlinx.android.synthetic.main.include_categories_filter.*
@@ -119,8 +119,7 @@ class RecentFragment : DaggerFragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         setLayoutManager(layoutManager)
 
-        val divider = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        addItemDecoration(divider)
+        itemAnimator = SlideInLeftAnimator()
 
         adapter = this@RecentFragment.adapter
     }

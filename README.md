@@ -32,6 +32,7 @@ This allows the user to get access to recalls and safety alerts from the Governm
 * [Ktlint Gradle](https://github.com/JLLeitschuh/ktlint-gradle)
 * [LeakCanary](https://square.github.io/leakcanary/)
 * [Toasty](https://github.com/GrenderG/Toasty)
+* [RecyclerView Animators](https://github.com/wasabeef/recyclerview-animators)
 
 ## Data source
 

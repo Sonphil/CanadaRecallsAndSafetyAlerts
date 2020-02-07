@@ -98,4 +98,7 @@ dependencies {
 
     // Toasty
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+
+    // RecyclerView Animators
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 }

@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import dagger.android.support.DaggerFragment
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_recalls.*
 import kotlinx.android.synthetic.main.include_empty_view_my_recalls.*
@@ -54,9 +54,8 @@ class MyRecallsFragment : DaggerFragment() {
     private fun RecyclerView.setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
         setLayoutManager(layoutManager)
-
-        val divider = DividerItemDecoration(requireContext(), layoutManager.orientation)
-        addItemDecoration(divider)
+        
+        itemAnimator = SlideInLeftAnimator()
 
         adapter = this@MyRecallsFragment.adapter
     }
