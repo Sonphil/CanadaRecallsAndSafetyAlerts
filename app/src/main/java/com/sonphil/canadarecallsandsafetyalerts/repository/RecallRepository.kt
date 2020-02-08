@@ -20,7 +20,6 @@ class RecallRepository @Inject constructor(
      * Returns the recent recalls and their bookmarks
      *
      * @param lang Whether the response is in English (en) or French (fr)
-     * @param categories Categories to filter the recalls by
      */
     fun getRecallsAndBookmarks(
         lang: String
@@ -34,7 +33,7 @@ class RecallRepository @Inject constructor(
 
         try {
             val apiValues = api
-                .searchRecall("", lang, "", 50, 0)
+                .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
                 .toRecalls()
 
             dao.refreshRecalls(apiValues)
@@ -50,7 +49,7 @@ class RecallRepository @Inject constructor(
 
     suspend fun refreshRecallsAndBookmarks(lang: String) {
         val apiValues = api
-            .searchRecall("", lang, "", 80, 0)
+            .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
             .toRecalls()
 
         dao.refreshRecalls(apiValues)
@@ -60,5 +59,12 @@ class RecallRepository @Inject constructor(
         emitAll(dao.getBookmarkedRecalls().map { recalls ->
             StateData.success(recalls)
         })
+    }
+
+    companion object {
+        const val SEARCH_DEFAULT_TEXT = ""
+        const val SEARCH_CATEGORY = ""
+        const val SEARCH_LIMIT = 100
+        const val SEARCH_OFFSET = 0
     }
 }
