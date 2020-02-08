@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
-import com.google.android.material.circularreveal.cardview.CircularRevealCardView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
@@ -42,12 +40,6 @@ class RecentFragment : DaggerFragment() {
             requireContext(),
             viewModel
         )
-    }
-    private val filterButton: FloatingActionButton by lazy {
-        requireActivity().btn_filter_recalls
-    }
-    private val filterCardView: CircularRevealCardView by lazy {
-        requireActivity().card_view_categories_filter
     }
 
     override fun onCreateView(
@@ -83,12 +75,15 @@ class RecentFragment : DaggerFragment() {
     }
 
     private fun setupFilter() {
-        filterButton.setOnClickListener {
-            filterButton.isExpanded = true
+        val btnFilterRecalls = requireActivity().btn_filter_recalls
+
+        btnFilterRecalls.setOnClickListener { btn ->
+            btnFilterRecalls.isExpanded = true
         }
-        with(filterCardView) {
+
+        with(requireActivity().card_view_categories_filter) {
             btn_categories_filter_done.setOnClickListener {
-                filterButton.isExpanded = false
+                btnFilterRecalls.isExpanded = false
             }
             val filterChipListener =
                 CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -173,7 +168,7 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
-            with(filterCardView) {
+            with(requireActivity().card_view_categories_filter) {
                 chip_category_filter_food.isChecked = Category.FOOD in visibleCategories
                 chip_category_filter_vehicle.isChecked = Category.VEHICLE in visibleCategories
                 chip_category_filter_health_product.isChecked =
@@ -185,8 +180,10 @@ class RecentFragment : DaggerFragment() {
     }
 
     override fun onDestroyView() {
-        requireActivity().root.removeView(filterCardView)
-        requireActivity().root.removeView(filterButton)
+        with(requireActivity().root) {
+            removeView(requireActivity().card_view_categories_filter)
+            removeView(requireActivity().btn_filter_recalls)
+        }
 
         super.onDestroyView()
     }
