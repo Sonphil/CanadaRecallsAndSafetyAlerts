@@ -55,7 +55,9 @@ class RecentFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        inflater.inflate(R.layout.include_categories_filter, requireActivity().root, true)
+        if (requireActivity().card_view_categories_filter == null) {
+            inflater.inflate(R.layout.include_categories_filter, requireActivity().root, true)
+        }
 
         return inflater.inflate(R.layout.fragment_recent, container, false)
     }
