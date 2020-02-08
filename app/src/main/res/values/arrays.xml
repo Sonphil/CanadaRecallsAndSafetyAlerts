@@ -5,7 +5,7 @@
         <item>@string/title_report</item>
         <item>@string/title_contact_health_canada</item>
         <item>@string/title_website</item>
-        <item>@string/title_licence</item>
+        <item>@string/title_data_licence</item>
         <item>@string/title_source_code</item>
     </string-array>
 
@@ -14,7 +14,7 @@
         <item>@drawable/ic_report_black_24dp</item>
         <item>@drawable/ic_maple_leaf_red_650dp</item>
         <item>@drawable/ic_website_white_24dp</item>
-        <item>@drawable/ic_code_black_24dp</item>
+        <item>@drawable/ic_licence_black_24dp</item>
         <item>@drawable/ic_github_white_24dp</item>
     </integer-array>
 </resources>

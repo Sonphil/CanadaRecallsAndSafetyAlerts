@@ -19,7 +19,11 @@ class MoreAdapter(private val items: List<MoreItem>) :
         val inflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(R.layout.item_more, parent, false)
 
-        return MoreItemViewHolder(itemView)
+        return MoreItemViewHolder(itemView).apply {
+            itemView.setOnClickListener {
+                items[adapterPosition].moreItemClickHandler.invoke(adapterPosition)
+            }
+        }
     }
 
     override fun getItemCount(): Int = items.count()

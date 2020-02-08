@@ -21,11 +21,13 @@
     <string name="error_offline">Pas de connexion Internet</string>
     <string name="title_settings">Paramètres</string>
     <string name="title_report">Signaler un rappel</string>
+    <string name="url_report">https://www.canada.ca/fr/services/sante/signaler-probleme-lie-sante-ou-securite.html</string>
     <string name="title_contact_health_canada">Contacter Santé Canada</string>
+    <string name="url_contact_health_canada">https://canadiensensante.gc.ca/contact-contactez/index-fra.php</string>
     <string name="title_website">Site web</string>
     <string name="url_website">https://www.canadiensensante.gc.ca/recall-alert-rappel-avis/index-fra.php</string>
-    <string name="title_licence">Licence</string>
+    <string name="title_data_licence">Licence des données</string>
     <string name="url_data_licence">https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada</string>
-    <string name="title_source_code">Code source</string>
+    <string name="title_source_code">Code source de l\'application</string>
     <string name="url_source_code">https://github.com/Sonphil/CanadaRecallsAndSafetyAlerts</string>
 </resources>

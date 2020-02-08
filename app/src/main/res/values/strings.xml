@@ -19,12 +19,14 @@
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
     <string name="title_settings">Settings</string>
-    <string name="title_report">Report a recall</string>
+    <string name="title_report">Report a Recall</string>
+    <string name="url_report">https://www.canada.ca/en/services/health/report-health-safety-concern.html</string>
     <string name="title_contact_health_canada">Contact Health Canada</string>
+    <string name="url_contact_health_canada">https://healthycanadians.gc.ca/contact-contactez/index-eng.php</string>
     <string name="title_website">Website</string>
     <string name="url_website">https://healthycanadians.gc.ca/recall-alert-rappel-avis/index-eng.php</string>
-    <string name="title_licence">Licence</string>
+    <string name="title_data_licence">Data Licence</string>
     <string name="url_data_licence">https://open.canada.ca/en/open-government-licence-canada</string>
-    <string name="title_source_code">Source code</string>
+    <string name="title_source_code">Application Source Code</string>
     <string name="url_source_code">https://github.com/Sonphil/CanadaRecallsAndSafetyAlerts</string>
 </resources>
