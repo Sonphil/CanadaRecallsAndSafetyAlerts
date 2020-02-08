@@ -2,10 +2,13 @@
 <resources>
     <string name="app_name" translatable="false">Rappels et avis de sécurité</string>
 
+    <!-- Bottom navigation view -->
     <string name="title_recent">Rappels récents</string>
     <string name="title_my_recalls">Mes rappels</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_more">Plus</string>
+
+    <!-- Recalls -->
     <string name="label_category_food">Aliment</string>
     <string name="label_category_vehicle">Véhicule</string>
     <string name="label_category_health_product">Produit de santé</string>
@@ -19,6 +22,14 @@
     <string name="label_done">Terminé</string>
     <string name="error_generic">Une erreur est survenue</string>
     <string name="error_offline">Pas de connexion Internet</string>
+
+    <!-- Notifications -->
+    <string name="title_notifications_settings">Paramètres des notificaitons</string>
+    <string name="label_no_notifications">Ne pas recevoir de notification</string>
+    <string name="label_all_notifications">Me notifier de tous les alertes et avis</string>
+    <string name="label_keywords_notifications">Me notifier seulement d\'un rappel ou d\'un avis seulement si celui-ci comporte un mot-clé</string>
+
+    <!-- More -->
     <string name="title_settings">Paramètres</string>
     <string name="title_report">Signaler un rappel</string>
     <string name="url_report">https://www.canada.ca/fr/services/sante/signaler-probleme-lie-sante-ou-securite.html</string>

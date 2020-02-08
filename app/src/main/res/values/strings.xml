@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name" translatable="false">Recalls and Safety Alerts</string>
 
+    <!-- Bottom navigation view -->
     <string name="title_recent">Recent Recalls</string>
     <string name="title_my_recalls">My Recalls</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_more">More</string>
+
+    <!-- Recalls -->
     <string name="label_category_food">Food</string>
     <string name="label_category_vehicle">Vehicle</string>
     <string name="label_category_health_product">Health Product</string>
@@ -18,6 +21,14 @@
     <string name="label_done">Done</string>
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
+
+    <!-- Notifications -->
+    <string name="title_notifications_settings">Notifications Settings</string>
+    <string name="label_no_notifications">Don\'t notify me</string>
+    <string name="label_all_notifications">Notify me of all recalls and alerts</string>
+    <string name="label_keywords_notifications">Notify me only of a recall or alert only if it contains a keyword</string>
+
+    <!-- More -->
     <string name="title_settings">Settings</string>
     <string name="title_report">Report a Recall</string>
     <string name="url_report">https://www.canada.ca/en/services/health/report-health-safety-concern.html</string>
