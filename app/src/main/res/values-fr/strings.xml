@@ -19,5 +19,13 @@
     <string name="label_done">Terminé</string>
     <string name="error_generic">Une erreur est survenue</string>
     <string name="error_offline">Pas de connexion Internet</string>
-    <string name="label_settings">Paramètres</string>
+    <string name="title_settings">Paramètres</string>
+    <string name="title_report">Signaler un rappel</string>
+    <string name="title_contact_health_canada">Contacter Santé Canada</string>
+    <string name="title_website">Site web</string>
+    <string name="url_website">https://www.canadiensensante.gc.ca/recall-alert-rappel-avis/index-fra.php</string>
+    <string name="title_licence">Licence</string>
+    <string name="url_data_licence">https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada</string>
+    <string name="title_source_code">Code source</string>
+    <string name="url_source_code">https://github.com/Sonphil/CanadaRecallsAndSafetyAlerts</string>
 </resources>

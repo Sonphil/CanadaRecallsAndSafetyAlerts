@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
 import dagger.android.support.DaggerFragment
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : DaggerFragment() {
 
@@ -22,5 +26,35 @@ class MoreFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().iv_section_icon.setImageDrawable(null)
+
+        rv_more.setupRecyclerView()
+    }
+
+    private fun RecyclerView.setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        setLayoutManager(layoutManager)
+
+        itemAnimator = SlideInLeftAnimator()
+
+        setHasFixedSize(true)
+
+        val moreAdapter = MoreAdapter(createMoreItems())
+        moreAdapter.setHasStableIds(true)
+
+        adapter = moreAdapter
+    }
+
+    private fun createMoreItems(): List<MoreItem> {
+        val icons = resources.obtainTypedArray(R.array.array_more_items_icons)
+        val labels = resources.getStringArray(R.array.array_more_items_labels)
+        val moreItems = labels.mapIndexed { index, label ->
+            val icon = icons.getResourceId(index, -1)
+
+            MoreItem(icon, label)
+        }
+
+        icons.recycle()
+
+        return moreItems
     }
 }
