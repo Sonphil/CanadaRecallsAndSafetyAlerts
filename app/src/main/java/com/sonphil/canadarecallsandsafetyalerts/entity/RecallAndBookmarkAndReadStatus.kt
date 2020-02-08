@@ -7,9 +7,11 @@ import androidx.room.Relation
  * Created by Sonphil on 01-02-20.
  */
 
-data class RecallAndBookmark(
+data class RecallAndBookmarkAndReadStatus(
     @Embedded
     val recall: Recall,
     @Relation(parentColumn = "id", entityColumn = "recallId", entity = Bookmark::class)
-    val bookmark: Bookmark?
+    val bookmark: Bookmark?,
+    @Relation(parentColumn = "id", entityColumn = "recallId", entity = ReadStatus::class)
+    val readStatus: ReadStatus?
 )

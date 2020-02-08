@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls
 
 import androidx.lifecycle.*
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
@@ -17,7 +17,7 @@ class MyRecallsViewModel @Inject constructor(
     private val recallRepository: RecallRepository,
     bookmarkRepository: BookmarkRepository
 ) : RecallBaseViewModel(bookmarkRepository) {
-    private val bookmarkedRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmark>>> =
+    private val bookmarkedRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmarkAndReadStatus>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             val source = recallRepository
                 .getBookmarkedRecalls()

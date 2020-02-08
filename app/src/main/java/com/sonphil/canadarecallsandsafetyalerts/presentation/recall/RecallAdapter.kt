@@ -1,6 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_recall.*
@@ -25,7 +28,7 @@ import java.util.*
 class RecallAdapter(
     context: Context,
     private val viewModel: RecallBaseViewModel
-) : ListAdapter<RecallAndBookmark, RecallAdapter.RecallViewHolder>(
+) : ListAdapter<RecallAndBookmarkAndReadStatus, RecallAdapter.RecallViewHolder>(
     DiffCallback()
 ) {
 
@@ -59,37 +62,43 @@ class RecallAdapter(
         val bookmark = item.bookmark
 
         with(holder) {
-            when (recall.category) {
-                Category.FOOD -> {
-                    iv_recall_category_icon.setImageResource(R.drawable.ic_restaurant_black_24dp)
-                    tv_category.setText(R.string.label_category_food)
-                }
-                Category.VEHICLE -> {
-                    iv_recall_category_icon.setImageResource(R.drawable.ic_directions_car_black_24dp)
-                    tv_category.setText(R.string.label_category_vehicle)
-                }
-                Category.HEALTH_PRODUCT -> {
-                    iv_recall_category_icon.setImageResource(R.drawable.ic_healing_black_24dp)
-                    tv_category.setText(R.string.label_category_health_product)
-                }
-                Category.CONSUMER_PRODUCT -> {
-                    iv_recall_category_icon.setImageResource(R.drawable.ic_shopping_cart_black_24dp)
-                    tv_category.setText(R.string.label_category_consumer_product)
-                }
+            bindCategory(recall.category)
+            bindTitle(recall, item.readStatus)
+            bindBookmark(bookmark != null)
+            bindDate(recall.datePublished)
+        }
+    }
+
+    private fun RecallViewHolder.bindCategory(category: Category) {
+        when (category) {
+            Category.FOOD -> {
+                iv_recall_category_icon.setImageResource(R.drawable.ic_restaurant_black_24dp)
+                tv_category.setText(R.string.label_category_food)
             }
-
-            this.bindBookmark(bookmark != null)
-
-            tv_recall_title.text = recall.title
-
-            val datePublishedLong = recall.datePublished?.toLong()
-
-            if (datePublishedLong == null) {
-                tv_recall_date.isVisible = false
-            } else {
-                tv_recall_date.text = dateFormat.format(Date(datePublishedLong))
-                tv_recall_date.isVisible = true
+            Category.VEHICLE -> {
+                iv_recall_category_icon.setImageResource(R.drawable.ic_directions_car_black_24dp)
+                tv_category.setText(R.string.label_category_vehicle)
             }
+            Category.HEALTH_PRODUCT -> {
+                iv_recall_category_icon.setImageResource(R.drawable.ic_healing_black_24dp)
+                tv_category.setText(R.string.label_category_health_product)
+            }
+            Category.CONSUMER_PRODUCT -> {
+                iv_recall_category_icon.setImageResource(R.drawable.ic_shopping_cart_black_24dp)
+                tv_category.setText(R.string.label_category_consumer_product)
+            }
+        }
+    }
+
+    private fun RecallViewHolder.bindTitle(recall: Recall, readStatus: ReadStatus?) {
+        tv_recall_title.text = recall.title
+
+        val read = readStatus != null
+
+        if (read) {
+            tv_recall_title.setTypeface(null, Typeface.NORMAL)
+        } else {
+            tv_recall_title.setTypeface(null, Typeface.BOLD)
         }
     }
 
@@ -103,15 +112,24 @@ class RecallAdapter(
         btn_recall_bookmark.setImageResource(bookmarkDrawableRes)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<RecallAndBookmark>() {
+    private fun RecallViewHolder.bindDate(date: Long?) {
+        if (date == null) {
+            tv_recall_date.isVisible = false
+        } else {
+            tv_recall_date.text = dateFormat.format(Date(date))
+            tv_recall_date.isVisible = true
+        }
+    }
+
+    private class DiffCallback : DiffUtil.ItemCallback<RecallAndBookmarkAndReadStatus>() {
         override fun areItemsTheSame(
-            oldItem: RecallAndBookmark,
-            newItem: RecallAndBookmark
+            oldItem: RecallAndBookmarkAndReadStatus,
+            newItem: RecallAndBookmarkAndReadStatus
         ): Boolean = oldItem.recall.id == newItem.recall.id
 
         override fun areContentsTheSame(
-            oldItem: RecallAndBookmark,
-            newItem: RecallAndBookmark
+            oldItem: RecallAndBookmarkAndReadStatus,
+            newItem: RecallAndBookmarkAndReadStatus
         ): Boolean = oldItem == newItem
     }
 

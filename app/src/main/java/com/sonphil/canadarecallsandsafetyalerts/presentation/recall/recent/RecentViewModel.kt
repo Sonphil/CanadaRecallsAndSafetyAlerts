@@ -3,7 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
@@ -26,7 +26,7 @@ class RecentViewModel @Inject constructor(
     bookmarkRepository: BookmarkRepository,
     private val categoryFilterRepository: CategoryFilterRepository
 ) : RecallBaseViewModel(bookmarkRepository) {
-    private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmark>>> =
+    private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmarkAndReadStatus>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
             val currentLang = LocaleUtils.getCurrentLanguage(app)
 

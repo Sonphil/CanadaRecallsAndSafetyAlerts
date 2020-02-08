@@ -15,7 +15,8 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.*
         Recall::class,
         RecallDetails::class,
         RecallDetailsImage::class,
-        CategoryFilter::class
+        CategoryFilter::class,
+        ReadStatus::class
     ],
     version = 1
 )

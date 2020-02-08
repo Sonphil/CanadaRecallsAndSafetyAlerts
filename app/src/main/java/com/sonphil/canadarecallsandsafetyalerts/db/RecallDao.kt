@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.db
 
 import androidx.room.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -22,7 +22,7 @@ interface RecallDao {
         ORDER BY datePublished DESC, id DESC
         """
     )
-    fun getAllRecallsAndBookmarksFilteredByCategories(): Flow<List<RecallAndBookmark>>
+    fun getAllRecallsAndBookmarksFilteredByCategories(): Flow<List<RecallAndBookmarkAndReadStatus>>
 
     @Transaction
     @Query(
@@ -32,7 +32,7 @@ interface RecallDao {
             ORDER BY (SELECT date FROM bookmark WHERE recall.id = recallId) DESC
         """
     )
-    fun getBookmarkedRecalls(): Flow<List<RecallAndBookmark>>
+    fun getBookmarkedRecalls(): Flow<List<RecallAndBookmarkAndReadStatus>>
 
     @Query("""
             DELETE FROM recall 

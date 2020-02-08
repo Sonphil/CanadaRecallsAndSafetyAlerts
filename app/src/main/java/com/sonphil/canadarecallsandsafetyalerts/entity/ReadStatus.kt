@@ -4,12 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Indicates that a [Recall] has been bookmarked by the user
+ * Indicates a [Recall] has been read by the user
  */
 
 @Entity
-data class Bookmark(
+class ReadStatus(
     @PrimaryKey
-    val recallId: String,
-    val date: Long
+    val recallId: String
 )

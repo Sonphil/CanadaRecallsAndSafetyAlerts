@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmark
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.flow.*
@@ -23,7 +23,7 @@ class RecallRepository @Inject constructor(
      */
     fun getRecallsAndBookmarks(
         lang: String
-    ): Flow<StateData<List<RecallAndBookmark>>> = flow {
+    ): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
 
         val dBValues = dao.getAllRecallsAndBookmarksFilteredByCategories()
             .catch { }
@@ -55,7 +55,7 @@ class RecallRepository @Inject constructor(
         dao.refreshRecalls(apiValues)
     }
 
-    fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmark>>> = flow {
+    fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
         emitAll(dao.getBookmarkedRecalls().map { recalls ->
             StateData.success(recalls)
         })
