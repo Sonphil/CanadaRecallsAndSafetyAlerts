@@ -18,4 +18,5 @@
     <string name="label_done">Done</string>
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
+    <string name="label_settings">Settings</string>
 </resources>

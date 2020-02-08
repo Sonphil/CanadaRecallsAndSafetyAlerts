@@ -19,4 +19,5 @@
     <string name="label_done">Terminé</string>
     <string name="error_generic">Une erreur est survenue</string>
     <string name="error_offline">Pas de connexion Internet</string>
+    <string name="label_settings">Paramètres</string>
 </resources>
