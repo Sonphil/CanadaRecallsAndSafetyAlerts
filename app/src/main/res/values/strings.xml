@@ -24,9 +24,10 @@
 
     <!-- Notifications -->
     <string name="title_notifications_settings">Notifications Settings</string>
-    <string name="label_no_notifications">Don\'t notify me</string>
-    <string name="label_all_notifications">Notify me of all recalls and alerts</string>
-    <string name="label_keywords_notifications">Notify me only of a recall or alert only if it contains a keyword</string>
+    <string name="title_notifications_pref">Notifications Setting</string>
+    <string name="label_notifications_pref_no">No notification</string>
+    <string name="label_notifications_pref_all">All recalls and alerts</string>
+    <string name="label_notifications_pref_keyword">Only if the recall or alert includes a keyword</string>
 
     <!-- More -->
     <string name="title_settings">Settings</string>

@@ -1,29 +1,33 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.notification
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class NotificationsFragment : DaggerFragment() {
+class NotificationsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requireActivity().setTheme(R.style.AppTheme)
+
         setHasOptionsMenu(true)
 
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_notifications, container, false)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
+        addPreferencesFromResource(R.xml.preferences_notification)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,5 +59,9 @@ class NotificationsFragment : DaggerFragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+        return false
     }
 }

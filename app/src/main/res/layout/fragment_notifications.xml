@@ -17,7 +17,7 @@
             android:layout_height="56dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/label_no_notifications"
+            android:text="@string/label_notifications_pref_no"
             android:textSize="16sp" />
 
         <RadioButton
@@ -26,7 +26,7 @@
             android:layout_height="56dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/label_all_notifications"
+            android:text="@string/label_notifications_pref_all"
             android:textSize="16sp" />
 
         <RadioButton
@@ -35,7 +35,7 @@
             android:layout_height="56dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/label_keywords_notifications"
+            android:text="@string/label_notifications_pref_keyword"
             android:textSize="16sp" />
     </RadioGroup>
 </LinearLayout>
