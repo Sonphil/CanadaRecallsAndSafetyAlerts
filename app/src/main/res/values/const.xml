@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="key_notification_pref" translatable="false">notification_preference</string>
-    <string name="value_notification_pref_no" translatable="false">NO</string>
-    <string name="value_notification_pref_all" translatable="false">ALL</string>
-    <string name="value_notification_pref_keyword" translatable="false">KEYWORD</string>
+    <string name="key_notifications_pref" translatable="false">notifications_preference</string>
+    <string name="value_notifications_pref_no" translatable="false">NO</string>
+    <string name="value_notifications_pref_all" translatable="false">ALL</string>
+    <string name="value_notifications_pref_keyword" translatable="false">KEYWORD</string>
+    <string name="key_notifications_sync_frequency_in_minutes_pref" translatable="false">notification_sync_frequency_in_minutes_preference</string>
 </resources>

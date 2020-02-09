@@ -25,8 +25,25 @@
     </string-array>
 
     <string-array name="array_notification_pref_entries_values">
-        <item>@string/value_notification_pref_no</item>
-        <item>@string/value_notification_pref_all</item>
-        <item>@string/value_notification_pref_keyword</item>
+        <item>@string/value_notifications_pref_no</item>
+        <item>@string/value_notifications_pref_all</item>
+        <item>@string/value_notifications_pref_keyword</item>
+    </string-array>
+    
+    <string-array name="array_notifications_sync_frequency_entries">
+        <item>@string/label_notifications_sync_frequency_pref_15_min</item>
+        <item>@string/label_notifications_sync_frequency_pref_30_min</item>
+        <item>@string/label_notifications_sync_frequency_pref_1_hour</item>
+        <item>@string/label_notifications_sync_frequency_pref_12_hours</item>
+        <item>@string/label_notifications_sync_frequency_pref_1_day</item>
+    </string-array>
+
+    <!-- Synchronization frequency in minutes -->
+    <string-array name="array_notifications_sync_frequency_entries_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>720</item>
+        <item>1440</item>
     </string-array>
 </resources>

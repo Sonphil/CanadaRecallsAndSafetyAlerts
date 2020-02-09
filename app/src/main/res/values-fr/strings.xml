@@ -29,6 +29,12 @@
     <string name="label_notifications_pref_no">Aucune notification</string>
     <string name="label_notifications_pref_all">Tous les alertes et avis</string>
     <string name="label_notifications_pref_keyword">Seulement si le rappel ou l\'avis comporte un mot-clé</string>
+    <string name="title_notifications_sync_frequency_pref">Fréquence de synchronisation</string>
+    <string name="label_notifications_sync_frequency_pref_15_min">15 minutes</string>
+    <string name="label_notifications_sync_frequency_pref_30_min">30 minutes</string>
+    <string name="label_notifications_sync_frequency_pref_1_hour">1 heure</string>
+    <string name="label_notifications_sync_frequency_pref_12_hours">12 heures</string>
+    <string name="label_notifications_sync_frequency_pref_1_day">1 jour</string>
 
     <!-- More -->
     <string name="title_settings">Paramètres</string>
