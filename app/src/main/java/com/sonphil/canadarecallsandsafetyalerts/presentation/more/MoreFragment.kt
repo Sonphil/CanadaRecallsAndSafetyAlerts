@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
@@ -53,9 +54,7 @@ class MoreFragment : DaggerFragment() {
 
             MoreItem(icon, label) {
                 when (icon) {
-                    R.drawable.ic_settings_white_24dp -> {
-                        // TODO
-                    }
+                    R.drawable.ic_settings_white_24dp -> findNavController().navigate(R.id.fragment_preference)
                     R.drawable.ic_report_black_24dp -> openUrlExternal(R.string.url_report)
                     R.drawable.ic_maple_leaf_red_650dp -> openUrlExternal(R.string.url_contact_health_canada)
                     R.drawable.ic_website_white_24dp -> openUrlExternal(R.string.url_website)
