@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications_settings"
+        android:title="@string/title_notifications"
         app:fragment="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsFragment" />
 </PreferenceScreen>

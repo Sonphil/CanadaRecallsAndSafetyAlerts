@@ -1,6 +1,5 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.more.preference
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.View

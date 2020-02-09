@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,6 +19,12 @@ class MainActivity : DaggerAppCompatActivity(), PreferenceFragmentCompat.OnPrefe
     /** Last destination selected **/
     private val _selectedDestinationId = MutableLiveData<Int>()
     val selectedDestinationId: LiveData<Int> = _selectedDestinationId
+
+    private val topLevelDestinations = setOf(
+        R.id.fragment_recent,
+        R.id.fragment_my_recalls,
+        R.id.fragment_more
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +36,6 @@ class MainActivity : DaggerAppCompatActivity(), PreferenceFragmentCompat.OnPrefe
     }
 
     private fun setupActionBar() {
-        val topLevelDestinations = setOf(
-            R.id.fragment_recent,
-            R.id.fragment_my_recalls,
-            R.id.fragment_more
-        )
         val appBarConfiguration = AppBarConfiguration(topLevelDestinations)
 
         setSupportActionBar(toolbar)
@@ -58,8 +60,12 @@ class MainActivity : DaggerAppCompatActivity(), PreferenceFragmentCompat.OnPrefe
             }
         }
 
-        navController.addOnDestinationChangedListener { _, _, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             app_bar_layout.setExpanded(true, true)
+
+            val shouldShowBottomNavigationView = destination.id in topLevelDestinations
+
+            bottom_navigation_view.setVisible(shouldShowBottomNavigationView)
         }
     }
 
