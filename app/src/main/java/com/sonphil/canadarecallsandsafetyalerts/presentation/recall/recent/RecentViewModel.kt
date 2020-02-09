@@ -43,7 +43,7 @@ class RecentViewModel @Inject constructor(
 
     private val _loading = MediatorLiveData<Boolean>().apply {
         val source = recentRecallsWithLoadState.map { stateData ->
-            stateData.status == StateData.Status.LOADING
+            stateData is StateData.Loading
         }
 
         addSource(source) { loading ->
@@ -77,7 +77,7 @@ class RecentViewModel @Inject constructor(
     }
 
     val emptyViewVisible = recentRecallsWithLoadState.map { stateData ->
-        stateData.status != StateData.Status.LOADING && stateData.data.isNullOrEmpty()
+        stateData !is StateData.Loading && stateData.data.isNullOrEmpty()
     }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {

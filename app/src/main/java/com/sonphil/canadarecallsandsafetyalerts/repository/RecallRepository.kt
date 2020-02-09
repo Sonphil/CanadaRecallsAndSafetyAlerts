@@ -29,7 +29,7 @@ class RecallRepository @Inject constructor(
             .catch { }
             .first()
 
-        emit(StateData.loading(dBValues))
+        emit(StateData.Loading(dBValues))
 
         try {
             val apiValues = api
@@ -38,11 +38,11 @@ class RecallRepository @Inject constructor(
 
             dao.refreshRecalls(apiValues)
         } catch (cause: Throwable) {
-            emit(StateData.error(cause.message, dBValues))
+            emit(StateData.Error(cause.message, dBValues))
         } finally {
             // Always emit DB values because the user might try again on failure
             emitAll(dao.getAllRecallsAndBookmarksFilteredByCategories().map { recalls ->
-                StateData.success(recalls)
+                StateData.Success(recalls)
             })
         }
     }
@@ -57,14 +57,14 @@ class RecallRepository @Inject constructor(
 
     fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
         emitAll(dao.getBookmarkedRecalls().map { recalls ->
-            StateData.success(recalls)
+            StateData.Success(recalls)
         })
     }
 
     companion object {
         const val SEARCH_DEFAULT_TEXT = ""
         const val SEARCH_CATEGORY = ""
-        const val SEARCH_LIMIT = 100
+        const val SEARCH_LIMIT = 200
         const val SEARCH_OFFSET = 0
     }
 }
