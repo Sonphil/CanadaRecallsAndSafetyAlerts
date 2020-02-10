@@ -4,7 +4,6 @@
     <!-- Bottom navigation view -->
     <string name="title_recent">Recent Recalls</string>
     <string name="title_my_recalls">My Recalls</string>
-    <string name="title_notifications">Notifications</string>
     <string name="title_more">More</string>
 
     <!-- Recalls -->
@@ -22,8 +21,8 @@
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
 
-    <!-- Notifications -->
-    <string name="title_notifications_settings">Notifications Settings</string>
+    <!-- Settings -->
+    <string name="title_notifications">Pushed Notifications</string>
     <string name="title_notifications_pref">Notifications Setting</string>
     <string name="label_notifications_pref_no">No notification</string>
     <string name="label_notifications_pref_all">All recalls and alerts</string>
@@ -34,6 +33,10 @@
     <string name="label_notifications_sync_frequency_pref_1_hour">1 hour</string>
     <string name="label_notifications_sync_frequency_pref_12_hours">12 hours</string>
     <string name="label_notifications_sync_frequency_pref_1_day">1 day</string>
+    <string name="title_notifications_keywords_pref">Your keywords</string>
+    <string name="summary_notifications_keywords_pref">Set up notifications based on keywords your specify</string>
+    <string name="title_notifications_system_pref">Device Notifications Settings</string>
+    <string name="summary_notifications_system_pref">Customize your notifications through Android\'s Settings</string>
 
     <!-- More -->
     <string name="title_settings">Settings</string>
@@ -47,7 +50,4 @@
     <string name="url_data_licence">https://open.canada.ca/en/open-government-licence-canada</string>
     <string name="title_source_code">Application Source Code</string>
     <string name="url_source_code">https://github.com/Sonphil/CanadaRecallsAndSafetyAlerts</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

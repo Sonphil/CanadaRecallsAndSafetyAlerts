@@ -5,7 +5,6 @@
     <!-- Bottom navigation view -->
     <string name="title_recent">Rappels récents</string>
     <string name="title_my_recalls">Mes rappels</string>
-    <string name="title_notifications">Notifications</string>
     <string name="title_more">Plus</string>
 
     <!-- Recalls -->
@@ -23,8 +22,8 @@
     <string name="error_generic">Une erreur est survenue</string>
     <string name="error_offline">Pas de connexion Internet</string>
 
-    <!-- Notifications -->
-    <string name="title_notifications_settings">Paramètres des notifications</string>
+    <!-- Settings -->
+    <string name="title_notifications">Notifications poussées</string>
     <string name="title_notifications_pref">Paramètre des notifications</string>
     <string name="label_notifications_pref_no">Aucune notification</string>
     <string name="label_notifications_pref_all">Tous les alertes et avis</string>
@@ -35,6 +34,10 @@
     <string name="label_notifications_sync_frequency_pref_1_hour">1 heure</string>
     <string name="label_notifications_sync_frequency_pref_12_hours">12 heures</string>
     <string name="label_notifications_sync_frequency_pref_1_day">1 jour</string>
+    <string name="title_notifications_keywords_pref">Vos mots-clés</string>
+    <string name="summary_notifications_keywords_pref">Configurez vos notifications en fonction de vos mots clés</string>
+    <string name="title_notifications_system_pref">Paramètres de notifications de l\'appareil</string>
+    <string name="summary_notifications_system_pref">Personnalisez davantage les notifications dans les paramètres Android</string>
 
     <!-- More -->
     <string name="title_settings">Paramètres</string>
