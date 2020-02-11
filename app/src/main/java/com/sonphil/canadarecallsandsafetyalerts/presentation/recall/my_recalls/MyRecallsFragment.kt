@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
+import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -72,6 +75,12 @@ class MyRecallsFragment : DaggerFragment() {
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { visible ->
             rv_bookmarked_recalls.isVisible = !visible
             empty_view_bookmarked_recalls.isVisible = visible
+        })
+
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, EventObserver {
+            val action = NavGraphMainDirections.actionToActivityRecallDetails(it.recall)
+
+            findNavController().navigate(action)
         })
     }
 }

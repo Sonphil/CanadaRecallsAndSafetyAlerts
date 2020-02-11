@@ -43,7 +43,13 @@ class RecallAdapter(
             parent,
             false
         )
+
         val holder = RecallViewHolder(view)
+
+        holder.itemView.setOnClickListener {
+            val item = getItem(holder.adapterPosition)
+            viewModel.clickRecall(item)
+        }
 
         holder.btn_recall_bookmark.setOnClickListener {
             val item = getItem(holder.adapterPosition)

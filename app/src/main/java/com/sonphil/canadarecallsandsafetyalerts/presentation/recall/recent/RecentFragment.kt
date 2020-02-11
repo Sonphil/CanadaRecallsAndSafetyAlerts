@@ -10,14 +10,17 @@ import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
+import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
+import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
@@ -176,6 +179,12 @@ class RecentFragment : DaggerFragment() {
                 chip_category_filter_consumer_product.isChecked =
                     Category.CONSUMER_PRODUCT in visibleCategories
             }
+        })
+
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, EventObserver {
+            val action = NavGraphMainDirections.actionToActivityRecallDetails(it.recall)
+
+            findNavController().navigate(action)
         })
     }
 

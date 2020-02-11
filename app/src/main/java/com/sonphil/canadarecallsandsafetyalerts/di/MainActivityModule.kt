@@ -11,9 +11,6 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
-/**
- * Created by Sonphil on 15-03-18.
- */
 @Module
 interface MainActivityModule {
     @Binds

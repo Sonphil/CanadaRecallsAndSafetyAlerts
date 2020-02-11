@@ -20,9 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:exported="false"
-            android:name="com.novoda.merlin.MerlinService" />
+        <activity android:name=".presentation.recall.details.RecallDetailsActivity" />
     </application>
 </manifest>

@@ -31,4 +31,20 @@
         android:id="@+id/fragment_notifications"
         android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsKeywordsFragment"
         android:label="@string/title_notifications_keywords_pref"></fragment>
+
+    <activity
+        android:id="@+id/activity_recall_details"
+        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity">
+        <argument
+            android:name="recall"
+            app:argType="com.sonphil.canadarecallsandsafetyalerts.entity.Recall" />
+    </activity>
+
+    <action
+        android:id="@+id/action_to_activity_recall_details"
+        app:destination="@id/activity_recall_details">
+        <argument
+            android:name="recall"
+            app:argType="com.sonphil.canadarecallsandsafetyalerts.entity.Recall" />
+    </action>
 </navigation>
