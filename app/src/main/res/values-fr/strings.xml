@@ -24,6 +24,8 @@
 
     <!-- Recall Details -->
     <string name="label_back">Retour</string>
+    <string name="label_recall_link">Lien</string>
+    <string name="label_share_recall">Partager</string>
 
     <!-- Settings -->
     <string name="title_notifications">Notifications poussées</string>
