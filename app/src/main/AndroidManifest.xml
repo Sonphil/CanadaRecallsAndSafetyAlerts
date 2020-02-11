@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.recall.details.RecallDetailsActivity" />
+        <activity
+            android:name=".presentation.recall.details.RecallDetailsActivity"
+            android:parentActivityName=".presentation.MainActivity"
+            android:theme="@style/AppTheme" />
     </application>
 </manifest>
