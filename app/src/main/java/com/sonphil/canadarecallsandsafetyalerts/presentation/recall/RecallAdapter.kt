@@ -76,24 +76,10 @@ class RecallAdapter(
     }
 
     private fun RecallViewHolder.bindCategory(category: Category) {
-        when (category) {
-            Category.FOOD -> {
-                iv_recall_category_icon.setImageResource(R.drawable.ic_restaurant_black_24dp)
-                tv_category.setText(R.string.label_category_food)
-            }
-            Category.VEHICLE -> {
-                iv_recall_category_icon.setImageResource(R.drawable.ic_directions_car_black_24dp)
-                tv_category.setText(R.string.label_category_vehicle)
-            }
-            Category.HEALTH_PRODUCT -> {
-                iv_recall_category_icon.setImageResource(R.drawable.ic_healing_black_24dp)
-                tv_category.setText(R.string.label_category_health_product)
-            }
-            Category.CONSUMER_PRODUCT -> {
-                iv_recall_category_icon.setImageResource(R.drawable.ic_shopping_cart_black_24dp)
-                tv_category.setText(R.string.label_category_consumer_product)
-            }
-        }
+        val res = CategoryResources(category)
+
+        iv_recall_category_icon.setImageResource(res.iconId)
+        tv_category.setText(res.labelId)
     }
 
     private fun RecallViewHolder.bindTitle(recall: Recall, readStatus: ReadStatus?) {

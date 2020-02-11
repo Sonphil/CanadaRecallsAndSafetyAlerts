@@ -5,8 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
+import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_recall_details.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecallDetailsActivity : DaggerAppCompatActivity() {
 
@@ -22,7 +28,9 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         if (recall == null) {
             finish()
         } else {
+            bindRecallCategory(recall)
             tv_recall_title.text = recall.title
+            bindRecallPublicationDate(recall)
             setupWindow()
             btn_back.setOnClickListener { onBackPressed() }
         }
@@ -50,5 +58,23 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
         params.topMargin = params.topMargin + window.decorView.rootWindowInsets.stableInsetTop
         this.layoutParams = params
+    }
+
+    private fun bindRecallCategory(recall: Recall) {
+        val resources = CategoryResources(recall.category)
+
+        iv_recall_category_icon.setImageResource(resources.iconId)
+        tv_recall_category.setText(resources.labelId)
+    }
+
+    private fun bindRecallPublicationDate(recall: Recall) {
+        recall.datePublished?.let { date ->
+            val dateFormat = SimpleDateFormat.getDateInstance(
+                DateFormat.LONG,
+                LocaleUtils.getCurrentLocale(this)
+            )
+
+            tv_recall_date.text = dateFormat.format(Date(date))
+        }
     }
 }
