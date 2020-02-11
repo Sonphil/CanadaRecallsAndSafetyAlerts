@@ -21,6 +21,9 @@
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
 
+    <!-- Recall Details -->
+    <string name="label_back">Back</string>
+
     <!-- Settings -->
     <string name="title_notifications">Pushed Notifications</string>
     <string name="title_notifications_pref">Notifications Setting</string>
