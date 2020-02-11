@@ -7,14 +7,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : DaggerAppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class MainActivity : DaggerAppCompatActivity() {
     private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }
     /** Last destination selected **/
     private val _selectedDestinationId = MutableLiveData<Int>()
@@ -67,14 +65,5 @@ class MainActivity : DaggerAppCompatActivity(), PreferenceFragmentCompat.OnPrefe
 
             bottom_navigation_view.setVisible(shouldShowBottomNavigationView)
         }
-    }
-
-    override fun onPreferenceStartFragment(
-        caller: PreferenceFragmentCompat?,
-        pref: Preference?
-    ): Boolean {
-        navController.navigate(R.id.fragment_notifications)
-
-        return true
     }
 }

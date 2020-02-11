@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -27,7 +28,8 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
             enableOrDisableNotificationsPreferences(notificationsPref.value)
         }
 
-        setupSystemSettingsPref()
+        setupNotificationsKeyworkdsPrefNavigation()
+        setupSystemSettingsPrefNavigation()
     }
 
     private fun setupChangeListener() {
@@ -47,7 +49,18 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         requireActivity().iv_section_icon.setImageResource(R.drawable.ic_settings_white_24dp)
     }
 
-    private fun setupSystemSettingsPref() {
+    private fun setupNotificationsKeyworkdsPrefNavigation() {
+        val keywordsPrefKey = getString(R.string.key_notifications_keywords_pref)
+        val keywordsPref = preferenceScreen.findPreference<Preference>(keywordsPrefKey)
+
+        keywordsPref?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.fragment_notifications)
+
+            true
+        }
+    }
+
+    private fun setupSystemSettingsPrefNavigation() {
         val systemSettingsPrefKey = getString(R.string.key_notifications_system_pref)
         val systemSettingsPref = preferenceScreen.findPreference<Preference>(systemSettingsPrefKey)
         systemSettingsPref?.setOnPreferenceClickListener {
