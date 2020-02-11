@@ -1,7 +1,10 @@
 package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
+import com.sonphil.canadarecallsandsafetyalerts.db.ReadStatusDao
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
+import com.sonphil.canadarecallsandsafetyalerts.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
@@ -14,7 +17,8 @@ import javax.inject.Inject
 
 class RecallRepository @Inject constructor(
     private val api: CanadaGovernmentApi,
-    private val dao: RecallDao
+    private val recallDao: RecallDao,
+    private val readStatusDao: ReadStatusDao
 ) {
     /**
      * Returns the recent recalls and their bookmarks
@@ -25,7 +29,7 @@ class RecallRepository @Inject constructor(
         lang: String
     ): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
 
-        val dBValues = dao.getAllRecallsAndBookmarksFilteredByCategories()
+        val dBValues = recallDao.getAllRecallsAndBookmarksFilteredByCategories()
             .catch { }
             .first()
 
@@ -36,12 +40,12 @@ class RecallRepository @Inject constructor(
                 .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
                 .toRecalls()
 
-            dao.refreshRecalls(apiValues)
+            recallDao.refreshRecalls(apiValues)
         } catch (cause: Throwable) {
             emit(StateData.Error(cause.message, dBValues))
         } finally {
             // Always emit DB values because the user might try again on failure
-            emitAll(dao.getAllRecallsAndBookmarksFilteredByCategories().map { recalls ->
+            emitAll(recallDao.getAllRecallsAndBookmarksFilteredByCategories().map { recalls ->
                 StateData.Success(recalls)
             })
         }
@@ -52,13 +56,19 @@ class RecallRepository @Inject constructor(
             .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
             .toRecalls()
 
-        dao.refreshRecalls(apiValues)
+        recallDao.refreshRecalls(apiValues)
     }
 
     fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
-        emitAll(dao.getBookmarkedRecalls().map { recalls ->
+        emitAll(recallDao.getBookmarkedRecalls().map { recalls ->
             StateData.Success(recalls)
         })
+    }
+
+    suspend fun markRecallAsRead(recall: Recall) {
+        val readStatus = ReadStatus(recall.id)
+
+        readStatusDao.insertReadStatus(readStatus)
     }
 
     companion object {

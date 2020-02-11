@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sonphil.canadarecallsandsafetyalerts.entity.Bookmark
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Created by Sonphil on 01-02-20.
@@ -17,4 +18,7 @@ interface BookmarkDao {
 
     @Query("DELETE FROM bookmark WHERE recallId = :recallId")
     suspend fun deleteBookmark(recallId: String)
+
+    @Query("SELECT * FROM bookmark WHERE recallId = :recallId")
+    fun getBookmarkByRecallId(recallId: String): Flow<Bookmark?>
 }

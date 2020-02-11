@@ -14,6 +14,6 @@ interface ActivityBindingModule {
     @ContributesAndroidInjector(modules = [MainActivityModule::class])
     fun contributeMainActivity(): MainActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [RecallDetailsActivityModule::class])
     fun contributeRecallDetailsActivity(): RecallDetailsActivity
 }

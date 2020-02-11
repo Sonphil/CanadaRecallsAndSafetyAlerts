@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
@@ -13,8 +16,22 @@ import kotlinx.android.synthetic.main.activity_recall_details.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class RecallDetailsActivity : DaggerAppCompatActivity() {
+
+    private val viewModel: RecallDetailsViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(RecallDetailsViewModel::class.java)
+    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val dateFormat by lazy {
+        SimpleDateFormat.getDateInstance(
+            DateFormat.LONG,
+            LocaleUtils.getCurrentLocale(this)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +45,14 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         if (recall == null) {
             finish()
         } else {
+            setupWindow()
+            viewModel.setRecall(recall)
             bindRecallCategory(recall)
             tv_recall_title.text = recall.title
             bindRecallPublicationDate(recall)
-            setupWindow()
             btn_back.setOnClickListener { onBackPressed() }
+            btn_recall_bookmark.setOnClickListener { viewModel.clickBookmark() }
+            subscribeUI()
         }
     }
 
@@ -69,12 +89,34 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
     private fun bindRecallPublicationDate(recall: Recall) {
         recall.datePublished?.let { date ->
-            val dateFormat = SimpleDateFormat.getDateInstance(
-                DateFormat.LONG,
-                LocaleUtils.getCurrentLocale(this)
-            )
-
             tv_recall_date.text = dateFormat.format(Date(date))
         }
+    }
+
+    private fun subscribeUI() {
+        viewModel.bookmarked.observe(this, Observer { bookmarked ->
+            if (bookmarked) {
+                btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
+            } else {
+                btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
+            }
+        })
+
+        viewModel.bookmarkDate.observe(this, Observer { date ->
+            if (date != null) {
+                divider_recall_dates.isVisible = true
+                tv_recall_bookmark_date.isVisible = true
+
+                val dateStr = dateFormat.format(date)
+
+                tv_recall_bookmark_date.text = String.format(
+                    getString(R.string.label_bookmarked_on),
+                    dateStr
+                )
+            } else {
+                divider_recall_dates.isVisible = false
+                tv_recall_bookmark_date.isVisible = false
+            }
+        })
     }
 }

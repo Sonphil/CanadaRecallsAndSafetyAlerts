@@ -24,6 +24,7 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.*
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
     abstract fun bookmarkDao(): BookmarkDao
+    abstract fun readStatusDao(): ReadStatusDao
     abstract fun recallDetailsDao(): RecallDetailsDao
     abstract fun categoryFilterDao(): CategoryFilterDao
 }

@@ -21,4 +21,6 @@ class BookmarkRepository @Inject constructor(
             dao.deleteBookmark(recall.id)
         }
     }
+
+    suspend fun getBookmark(recall: Recall) = dao.getBookmarkByRecallId(recall.id)
 }

@@ -23,6 +23,7 @@
     <string name="error_offline">Pas de connexion Internet</string>
 
     <!-- Recall Details -->
+    <string name="label_bookmarked_on">Sauvegardé le %1$s</string>
     <string name="label_back">Retour</string>
     <string name="label_recall_link">Lien</string>
     <string name="label_share_recall">Partager</string>
