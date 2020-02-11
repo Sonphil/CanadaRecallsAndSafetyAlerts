@@ -15,6 +15,7 @@
     <string name="title_empty_bookmark">Aucun rappel sauvegardé</string>
     <string name="text_empty_bookmark">Sauvegardez un rappel et il apparaîtra ici</string>
     <string name="title_empty_recent_recall">Impossible de récupérer les rappels</string>
+    <string name="title_empty_recent_recall_no_category_selected">Aucune catégorie sélectionnée</string>
     <string name="label_retry">Réessayer</string>
     <string name="label_filter">Filtrer</string>
     <string name="title_filters">Filtres</string>

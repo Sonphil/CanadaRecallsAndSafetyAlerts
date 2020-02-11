@@ -170,6 +170,18 @@ class RecentFragment : DaggerFragment() {
             empty_view_recent_recalls.isVisible = emptyViewVisible
         })
 
+        viewModel.emptyViewIconResId.observe(viewLifecycleOwner, Observer { iconId ->
+            iv_empty_recent_recalls.setImageResource(iconId)
+        })
+
+        viewModel.emptyViewTitleResId.observe(viewLifecycleOwner, Observer { titleId ->
+            tv_title_empty_recent_recalls.setText(titleId)
+        })
+
+        viewModel.emptyViewRetryButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
+            btn_retry_recent_recalls.isVisible = visible
+        })
+
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
             with(requireActivity().card_view_categories_filter) {
                 chip_category_filter_food.isChecked = Category.FOOD in visibleCategories

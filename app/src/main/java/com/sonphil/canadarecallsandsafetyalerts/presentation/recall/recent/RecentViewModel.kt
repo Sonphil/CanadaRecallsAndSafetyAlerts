@@ -80,6 +80,28 @@ class RecentViewModel @Inject constructor(
         stateData !is StateData.Loading && stateData.data.isNullOrEmpty()
     }
 
+    val emptyViewIconResId = emptyViewVisible.map {
+        if (categoryFilters.value.isNullOrEmpty()) {
+            R.drawable.ic_filter_list_white_24dp
+        } else {
+            R.drawable.ic_access_time_white_24dp
+        }
+    }
+
+    val emptyViewTitleResId = emptyViewVisible.distinctUntilChanged().map {
+        if (categoryFilters.value.isNullOrEmpty()) {
+            R.string.title_empty_recent_recall_no_category_selected
+        } else {
+            R.string.title_empty_recent_recall
+        }
+    }
+
+    val emptyViewRetryButtonVisible = emptyViewVisible
+        .distinctUntilChanged()
+        .map { emptyViewVisible ->
+            emptyViewVisible && !categoryFilters.value.isNullOrEmpty()
+        }
+
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
         try {
             _loading.postValue(true)
