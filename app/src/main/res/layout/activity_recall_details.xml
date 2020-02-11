@@ -31,6 +31,28 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view_recall_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_recall_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                tools:text="Unauthorized products may pose serious health risks" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <ImageButton
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
@@ -40,10 +62,4 @@
         android:contentDescription="@string/label_back"
         android:padding="8dp"
         android:src="@drawable/ic_arrow_back_white_24dp" />
-
-    <ScrollView
-        android:id="@+id/scroll_view_recall_details"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

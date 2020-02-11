@@ -21,10 +21,11 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
         if (recall == null) {
             finish()
+        } else {
+            tv_recall_title.text = recall.title
+            setupWindow()
+            btn_back.setOnClickListener { onBackPressed() }
         }
-
-        setupWindow()
-        btn_back.setOnClickListener { onBackPressed() }
     }
 
     private fun setupWindow() {
@@ -40,13 +41,14 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        addInsetTopToBackButtonTopMargin()
+        btn_back.addTopInsetToTopMargin()
+        scroll_view_recall_details.addTopInsetToTopMargin()
     }
 
-    private fun addInsetTopToBackButtonTopMargin() {
-        val params = btn_back.layoutParams as ViewGroup.MarginLayoutParams
+    private fun View.addTopInsetToTopMargin() {
+        val params = layoutParams as ViewGroup.MarginLayoutParams
 
         params.topMargin = params.topMargin + window.decorView.rootWindowInsets.stableInsetTop
-        btn_back.layoutParams = params
+        this.layoutParams = params
     }
 }
