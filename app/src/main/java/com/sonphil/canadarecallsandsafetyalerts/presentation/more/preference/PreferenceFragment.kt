@@ -122,7 +122,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
     }
 
     private fun scheduleRecallsSyncWorker() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val repeatIntervalPrefKey = getString(R.string.key_notifications_sync_frequency_in_minutes_pref)
         try {
             val repeatInterval = prefs
@@ -130,7 +130,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
                 ?.toLong()
 
             if (repeatInterval != null) {
-                SyncRecallsWorker.schedule(requireContext(), repeatInterval)
+                SyncRecallsWorker.schedule(requireContext().applicationContext, repeatInterval)
             }
         } catch (e: NumberFormatException) { }
     }

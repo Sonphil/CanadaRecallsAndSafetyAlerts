@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.work.*
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
+import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
+import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -39,8 +41,6 @@ class SyncRecallsWorker @Inject constructor(
         ) {
             val workManager = WorkManager.getInstance(context)
 
-            workManager.cancelAllWork()
-
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .setRequiresBatteryNotLow(true)
@@ -49,6 +49,7 @@ class SyncRecallsWorker @Inject constructor(
             val syncRequest =
                 PeriodicWorkRequestBuilder<SyncRecallsWorker>(repeatInterval, timeUnit)
                     .setConstraints(constraints)
+                    .setInitialDelay(repeatInterval, timeUnit)
                     .build()
 
             workManager.enqueueUniquePeriodicWork(
@@ -61,19 +62,42 @@ class SyncRecallsWorker @Inject constructor(
 
     override suspend fun doWork(): Result {
         try {
-            val recalls = api.recentRecalls("fr")
-                .results
-                .all
-                ?.toRecalls()
+            val newRecalls = fetchNewRecalls()
 
-            if (!recalls.isNullOrEmpty()) {
-                NotificationsUtils.notifyRecall(appContext, recalls[0])
+            if (newRecalls.isNotEmpty()) {
+                newRecalls.forEach { recall ->
+                    NotificationsUtils.notifyRecall(appContext, recall)
+                }
+
+                recallDao.insertAll(newRecalls)
+
+                return Result.success()
+            } else {
+                return Result.retry()
             }
-
-            return Result.success()
         } catch (e: Exception) {
             return Result.failure()
         }
+    }
+
+    private suspend fun fetchNewRecalls(): List<Recall> {
+        val dbMostRecentRecall = recallDao.getMostRecentRecall()
+
+        return api
+            .recentRecalls(LocaleUtils.getCurrentLanguage(appContext))
+            .results
+            .all
+            .orEmpty()
+            .filter { apiRecall ->
+                if (apiRecall.datePublished == null) {
+                    val existsInDb = recallDao.getRecallsWithIdCount(apiRecall.recallId) == 1
+
+                    !existsInDb
+                } else {
+                    apiRecall.datePublished > dbMostRecentRecall?.datePublished ?: 0
+                }
+            }
+            .toRecalls()
     }
 
     class Factory @Inject constructor(

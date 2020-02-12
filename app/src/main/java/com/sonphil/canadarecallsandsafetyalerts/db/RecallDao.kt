@@ -14,6 +14,9 @@ interface RecallDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recalls: List<Recall>)
 
+    @Query("SELECT COUNT(id) FROM recall WHERE id = :recallId")
+    suspend fun getRecallsWithIdCount(recallId: String): Int
+
     @Transaction
     @Query(
         """
@@ -34,7 +37,18 @@ interface RecallDao {
     )
     fun getBookmarkedRecalls(): Flow<List<RecallAndBookmarkAndReadStatus>>
 
-    @Query("""
+    @Query(
+        """
+            SELECT * 
+            FROM recall 
+            WHERE datePublished = (SELECT MAX(datePublished) FROM recall)
+            LIMIT 1
+    """
+    )
+    suspend fun getMostRecentRecall(): Recall?
+
+    @Query(
+        """
             DELETE FROM recall 
             WHERE NOT EXISTS (SELECT 1 FROM bookmark WHERE recall.id = recallId) 
             """
