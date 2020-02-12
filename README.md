@@ -7,6 +7,7 @@ This allows the user to get access to recalls and safety alerts from the Governm
 - View recent recalls
 - Bookmark recalls
 - Filter recalls and safety alerts by categories
+- Notifications about new recalls
 
 ### TODO
 
@@ -19,7 +20,7 @@ This allows the user to get access to recalls and safety alerts from the Governm
 
 ## Libraries and tools
 
-* [Android Jetpack](https://developer.android.com/jetpack) (Room, ViewModel, ...)
+* [Android Jetpack](https://developer.android.com/jetpack) (Room, ViewModel, WorkManager, ...)
 * [Kotlin](http://kotlinlang.org/)
 * [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
 * [Glide](https://bumptech.github.io/glide/)
