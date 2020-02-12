@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
@@ -28,7 +30,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
             enableOrDisableNotificationsPreferences(notificationsPref.value)
         }
 
-        setupNotificationsKeyworkdsPrefNavigation()
+        setupNotificationsKeywordsPrefNavigation()
         setupSystemSettingsPrefNavigation()
     }
 
@@ -49,7 +51,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         requireActivity().iv_section_icon.setImageResource(R.drawable.ic_settings_white_24dp)
     }
 
-    private fun setupNotificationsKeyworkdsPrefNavigation() {
+    private fun setupNotificationsKeywordsPrefNavigation() {
         val keywordsPrefKey = getString(R.string.key_notifications_keywords_pref)
         val keywordsPref = preferenceScreen.findPreference<Preference>(keywordsPrefKey)
 
@@ -86,10 +88,11 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         return when (preference.key) {
             getString(R.string.key_notifications_pref) -> {
                 handleNotificationsPreferenceChange(newValue)
-
+                scheduleRecallsSyncWorker()
                 true
             }
             getString(R.string.key_notifications_sync_frequency_in_minutes_pref) -> {
+                scheduleRecallsSyncWorker()
                 true
             }
             else -> false
@@ -116,5 +119,19 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         val keywordsPref = preferenceScreen.findPreference<Preference>(keywordsPrefKey)
         val keywordValue = getString(R.string.value_notifications_pref_keyword)
         keywordsPref?.isEnabled = notificationsPrefValue == keywordValue
+    }
+
+    private fun scheduleRecallsSyncWorker() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val repeatIntervalPrefKey = getString(R.string.key_notifications_sync_frequency_in_minutes_pref)
+        try {
+            val repeatInterval = prefs
+                .getString(repeatIntervalPrefKey, null)
+                ?.toLong()
+
+            if (repeatInterval != null) {
+                SyncRecallsWorker.schedule(requireContext(), repeatInterval)
+            }
+        } catch (e: NumberFormatException) { }
     }
 }

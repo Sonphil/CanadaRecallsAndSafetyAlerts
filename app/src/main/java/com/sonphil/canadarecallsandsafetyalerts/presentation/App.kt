@@ -1,6 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation
 
+import androidx.work.Configuration
+import androidx.work.WorkManager
 import com.sonphil.canadarecallsandsafetyalerts.di.DaggerAppComponent
+import com.sonphil.canadarecallsandsafetyalerts.worker.AppWorkerFactory
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
@@ -9,9 +12,22 @@ import dagger.android.support.DaggerApplication
  */
 
 class App : DaggerApplication() {
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder()
+        val appComponent = DaggerAppComponent.builder()
             .application(this)
             .build()
+
+        initWorkerManager(appComponent.factory())
+
+        return appComponent
+    }
+
+    private fun initWorkerManager(workerFactory: AppWorkerFactory) {
+        val config = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+
+        WorkManager.initialize(this, config)
     }
 }

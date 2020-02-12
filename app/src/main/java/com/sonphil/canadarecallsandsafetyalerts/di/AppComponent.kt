@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 
 import android.app.Application
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
+import com.sonphil.canadarecallsandsafetyalerts.worker.AppWorkerFactory
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -19,7 +20,8 @@ import javax.inject.Singleton
         ViewModelFactoryModule::class,
         ActivityBindingModule::class,
         DatabaseModule::class,
-        NetworkModule::class
+        NetworkModule::class,
+        WorkerFactoryModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
@@ -32,4 +34,6 @@ interface AppComponent : AndroidInjector<App> {
     }
 
     override fun inject(app: App)
+
+    fun factory(): AppWorkerFactory
 }
