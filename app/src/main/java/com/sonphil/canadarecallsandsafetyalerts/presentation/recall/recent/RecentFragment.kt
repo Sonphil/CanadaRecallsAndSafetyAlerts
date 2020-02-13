@@ -122,7 +122,7 @@ class RecentFragment : DaggerFragment() {
         adapter = this@RecentFragment.adapter.apply {
             registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    this@setupRecyclerView.smoothScrollToPosition(positionStart)
+                    this@setupRecyclerView.smoothScrollToPosition(0)
                 }
             })
         }
@@ -187,13 +187,11 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
-            with(requireActivity().card_view_categories_filter) {
-                chip_category_filter_food.isChecked = Category.FOOD in visibleCategories
-                chip_category_filter_vehicle.isChecked = Category.VEHICLE in visibleCategories
-                chip_category_filter_health_product.isChecked =
-                    Category.HEALTH_PRODUCT in visibleCategories
-                chip_category_filter_consumer_product.isChecked =
-                    Category.CONSUMER_PRODUCT in visibleCategories
+            requireActivity().card_view_categories_filter?.let { filterCardView ->
+                filterCardView.chip_category_filter_food.isChecked = Category.FOOD in visibleCategories
+                filterCardView.chip_category_filter_vehicle.isChecked = Category.VEHICLE in visibleCategories
+                filterCardView.chip_category_filter_health_product.isChecked = Category.HEALTH_PRODUCT in visibleCategories
+                filterCardView.chip_category_filter_consumer_product.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
             }
         })
 
