@@ -73,11 +73,9 @@ class SyncRecallsWorker @Inject constructor(
                 newRecalls.forEach { recall ->
                     NotificationsUtils.notifyRecall(appContext, recall)
                 }
-
-                return Result.success()
-            } else {
-                return Result.retry()
             }
+
+            return Result.success()
         } catch (e: Exception) {
             return Result.failure()
         }
