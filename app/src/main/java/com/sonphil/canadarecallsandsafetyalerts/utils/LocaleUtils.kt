@@ -3,13 +3,16 @@ package com.sonphil.canadarecallsandsafetyalerts.utils
 import android.content.Context
 import android.os.Build
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Sonphil on 01-02-20.
  */
 
-object LocaleUtils {
-    fun getCurrentLocale(context: Context): Locale {
+@Singleton
+class LocaleUtils @Inject constructor(private val context: Context) {
+    fun getCurrentLocale(): Locale {
         val config = context.resources.configuration
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -19,5 +22,6 @@ object LocaleUtils {
             config.locale
         }
     }
-    fun getCurrentLanguage(context: Context): String = getCurrentLocale(context).language
+
+    fun getCurrentLanguage(): String = getCurrentLocale().language.takeIf { it == "fr" } ?: "en"
 }

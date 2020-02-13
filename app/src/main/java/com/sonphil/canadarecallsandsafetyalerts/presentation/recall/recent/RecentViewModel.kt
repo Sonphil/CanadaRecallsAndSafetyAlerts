@@ -22,13 +22,14 @@ import javax.inject.Inject
 
 class RecentViewModel @Inject constructor(
     private val app: App,
+    private val localeUtils: LocaleUtils,
     private val recallRepository: RecallRepository,
     bookmarkRepository: BookmarkRepository,
     private val categoryFilterRepository: CategoryFilterRepository
 ) : RecallBaseViewModel(bookmarkRepository) {
     private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmarkAndReadStatus>>> =
         liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val currentLang = LocaleUtils.getCurrentLanguage(app)
+            val currentLang = localeUtils.getCurrentLanguage()
 
             val source = recallRepository
                 .getRecallsAndBookmarks(currentLang)
@@ -106,7 +107,7 @@ class RecentViewModel @Inject constructor(
         try {
             _loading.postValue(true)
 
-            val currentLang = LocaleUtils.getCurrentLanguage(app)
+            val currentLang = localeUtils.getCurrentLanguage()
 
             recallRepository.refreshRecallsAndBookmarks(currentLang)
         } catch (t: Throwable) {

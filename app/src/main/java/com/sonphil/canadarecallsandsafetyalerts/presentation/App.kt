@@ -18,7 +18,7 @@ class App : DaggerApplication() {
             .application(this)
             .build()
 
-        initWorkerManager(appComponent.factory())
+        initWorkerManager(appComponent.workerFactory())
 
         return appComponent
     }

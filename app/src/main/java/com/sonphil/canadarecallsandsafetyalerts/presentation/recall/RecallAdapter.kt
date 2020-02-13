@@ -1,6 +1,5 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
-import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -26,15 +25,15 @@ import java.util.*
  */
 
 class RecallAdapter(
-    context: Context,
-    private val viewModel: RecallBaseViewModel
+    private val viewModel: RecallBaseViewModel,
+    localeUtils: LocaleUtils
 ) : ListAdapter<RecallAndBookmarkAndReadStatus, RecallAdapter.RecallViewHolder>(
     DiffCallback()
 ) {
 
     private val dateFormat = SimpleDateFormat.getDateInstance(
         DateFormat.MEDIUM,
-        LocaleUtils.getCurrentLocale(context)
+        localeUtils.getCurrentLocale()
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecallViewHolder {

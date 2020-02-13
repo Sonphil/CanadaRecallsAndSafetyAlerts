@@ -25,11 +25,13 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     }
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var localeUtils: LocaleUtils
 
     private val dateFormat by lazy {
         SimpleDateFormat.getDateInstance(
             DateFormat.LONG,
-            LocaleUtils.getCurrentLocale(this)
+            localeUtils.getCurrentLocale()
         )
     }
 

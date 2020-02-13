@@ -16,7 +16,8 @@ import javax.inject.Provider
 class SyncRecallsWorker @Inject constructor(
     private val appContext: Context,
     workerParameters: WorkerParameters,
-    private val recallRepository: RecallRepository
+    private val recallRepository: RecallRepository,
+    private val localeUtils: LocaleUtils
 ) : CoroutineWorker(appContext, workerParameters) {
 
     companion object {
@@ -66,7 +67,7 @@ class SyncRecallsWorker @Inject constructor(
 
     override suspend fun doWork(): Result {
         try {
-            val lang = LocaleUtils.getCurrentLanguage(appContext)
+            val lang = localeUtils.getCurrentLanguage()
             val newRecalls = recallRepository.getNewRecalls(lang)
 
             if (newRecalls.isNotEmpty()) {
@@ -82,10 +83,11 @@ class SyncRecallsWorker @Inject constructor(
     }
 
     class Factory @Inject constructor(
-        private val recallRepository: Provider<RecallRepository>
+        private val recallRepository: Provider<RecallRepository>,
+        private val localeUtils: Provider<LocaleUtils>
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
-            return SyncRecallsWorker(appContext, params, recallRepository.get())
+            return SyncRecallsWorker(appContext, params, recallRepository.get(), localeUtils.get())
         }
     }
 }

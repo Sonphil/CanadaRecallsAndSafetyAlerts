@@ -35,5 +35,5 @@ interface AppComponent : AndroidInjector<App> {
 
     override fun inject(app: App)
 
-    fun factory(): AppWorkerFactory
+    fun workerFactory(): AppWorkerFactory
 }
