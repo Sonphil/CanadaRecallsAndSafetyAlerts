@@ -71,6 +71,41 @@ class RecallRepository @Inject constructor(
         readStatusDao.insertReadStatus(readStatus)
     }
 
+    /**
+     * Fetches recent recalls from the server and returns [Recall]s that are more recent than the
+     * most recent one of the DB
+     *
+     * If a recall from the server has a date whose value is null or is equal to the date of the DB,
+     * this function considers that the recall is new if the recall doesn't exist in the DB.
+     *
+     * @param lang Whether the response from the server should be in English (en) or French (fr)
+     */
+    suspend fun getNewRecalls(lang: String): List<Recall> {
+        val dbMostRecentRecall = recallDao.getMostRecentRecall()
+        val dbMostRecentRecallDatePublished = dbMostRecentRecall?.datePublished ?: 0
+
+        return api
+            .recentRecalls(lang)
+            .results
+            .all
+            .orEmpty()
+            .filter { apiRecall ->
+                val datePublishedMillis = apiRecall.datePublished?.times(1000L)
+
+                if (datePublishedMillis == null || datePublishedMillis == dbMostRecentRecallDatePublished) {
+                    val existsInDb = recallDao.getRecallsWithIdCount(apiRecall.recallId) == 1
+
+                    !existsInDb
+                } else {
+                    datePublishedMillis > dbMostRecentRecallDatePublished
+                }
+            }
+            .toRecalls()
+            .also { newRecalls ->
+                recallDao.insertAll(newRecalls)
+            }
+    }
+
     companion object {
         const val SEARCH_DEFAULT_TEXT = ""
         const val SEARCH_CATEGORY = ""

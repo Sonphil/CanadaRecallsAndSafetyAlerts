@@ -2,10 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
 import androidx.work.*
-import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
-import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
+import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import java.util.concurrent.TimeUnit
@@ -19,12 +16,12 @@ import javax.inject.Provider
 class SyncRecallsWorker @Inject constructor(
     private val appContext: Context,
     workerParameters: WorkerParameters,
-    private val api: CanadaGovernmentApi,
-    private val recallDao: RecallDao
+    private val recallRepository: RecallRepository
 ) : CoroutineWorker(appContext, workerParameters) {
 
     companion object {
         private const val UNIQUE_WORK_NAME = "SyncRecallsWork"
+        private const val INITIAL_DELAY_IN_MINUTES = 5L
 
         /**
          * Schedules a worker that synchronize recalls with the API and notify the user about new
@@ -49,7 +46,7 @@ class SyncRecallsWorker @Inject constructor(
             val syncRequest =
                 PeriodicWorkRequestBuilder<SyncRecallsWorker>(repeatInterval, timeUnit)
                     .setConstraints(constraints)
-                    .setInitialDelay(repeatInterval, timeUnit)
+                    .setInitialDelay(INITIAL_DELAY_IN_MINUTES, timeUnit)
                     .build()
 
             workManager.enqueueUniquePeriodicWork(
@@ -58,18 +55,24 @@ class SyncRecallsWorker @Inject constructor(
                 syncRequest
             )
         }
+
+        /**
+         * Cancels scheduled worker
+         *
+         * @param context
+         */
+        fun cancel(context: Context) = WorkManager.getInstance(context).cancelAllWork()
     }
 
     override suspend fun doWork(): Result {
         try {
-            val newRecalls = fetchNewRecalls()
+            val lang = LocaleUtils.getCurrentLanguage(appContext)
+            val newRecalls = recallRepository.getNewRecalls(lang)
 
             if (newRecalls.isNotEmpty()) {
                 newRecalls.forEach { recall ->
                     NotificationsUtils.notifyRecall(appContext, recall)
                 }
-
-                recallDao.insertAll(newRecalls)
 
                 return Result.success()
             } else {
@@ -80,32 +83,11 @@ class SyncRecallsWorker @Inject constructor(
         }
     }
 
-    private suspend fun fetchNewRecalls(): List<Recall> {
-        val dbMostRecentRecall = recallDao.getMostRecentRecall()
-
-        return api
-            .recentRecalls(LocaleUtils.getCurrentLanguage(appContext))
-            .results
-            .all
-            .orEmpty()
-            .filter { apiRecall ->
-                if (apiRecall.datePublished == null) {
-                    val existsInDb = recallDao.getRecallsWithIdCount(apiRecall.recallId) == 1
-
-                    !existsInDb
-                } else {
-                    apiRecall.datePublished > dbMostRecentRecall?.datePublished ?: 0
-                }
-            }
-            .toRecalls()
-    }
-
     class Factory @Inject constructor(
-        private val api: Provider<CanadaGovernmentApi>,
-        private val recallDao: Provider<RecallDao>
+        private val recallRepository: Provider<RecallRepository>
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
-            return SyncRecallsWorker(appContext, params, api.get(), recallDao.get())
+            return SyncRecallsWorker(appContext, params, recallRepository.get())
         }
     }
 }

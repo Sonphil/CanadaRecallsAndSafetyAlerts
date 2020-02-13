@@ -26,6 +26,7 @@ class App : DaggerApplication() {
     private fun initWorkerManager(workerFactory: AppWorkerFactory) {
         val config = Configuration.Builder()
             .setWorkerFactory(workerFactory)
+            .setMinimumLoggingLevel(android.util.Log.DEBUG)
             .build()
 
         WorkManager.initialize(this, config)
