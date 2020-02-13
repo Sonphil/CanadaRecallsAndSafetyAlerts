@@ -88,7 +88,6 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         return when (preference.key) {
             getString(R.string.key_notifications_pref) -> {
                 handleNotificationsPreferenceChange(newValue)
-                scheduleRecallsSyncWorker()
                 true
             }
             getString(R.string.key_notifications_sync_frequency_in_minutes_pref) -> {
@@ -102,6 +101,10 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
     private fun handleNotificationsPreferenceChange(newValue: Any?) {
         if (newValue is String) {
             enableOrDisableNotificationsPreferences(newValue)
+
+            if (newValue != getString(R.string.value_notifications_pref_no)) {
+                scheduleRecallsSyncWorker()
+            }
         }
     }
 
