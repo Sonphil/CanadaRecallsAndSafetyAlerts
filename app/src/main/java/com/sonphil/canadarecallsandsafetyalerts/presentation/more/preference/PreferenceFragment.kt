@@ -102,7 +102,9 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         if (newValue is String) {
             enableOrDisableNotificationsPreferences(newValue)
 
-            if (newValue != getString(R.string.value_notifications_pref_no)) {
+            if (newValue == getString(R.string.value_notifications_pref_no)) {
+                SyncRecallsWorker.cancel(requireContext().applicationContext)
+            } else {
                 scheduleRecallsSyncWorker()
             }
         }
