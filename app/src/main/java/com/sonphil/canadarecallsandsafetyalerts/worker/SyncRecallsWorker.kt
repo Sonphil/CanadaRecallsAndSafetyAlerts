@@ -17,7 +17,8 @@ class SyncRecallsWorker @Inject constructor(
     private val appContext: Context,
     workerParameters: WorkerParameters,
     private val recallRepository: RecallRepository,
-    private val localeUtils: LocaleUtils
+    private val localeUtils: LocaleUtils,
+    private val notificationsUtils: NotificationsUtils
 ) : CoroutineWorker(appContext, workerParameters) {
 
     companion object {
@@ -72,7 +73,7 @@ class SyncRecallsWorker @Inject constructor(
 
             if (newRecalls.isNotEmpty()) {
                 newRecalls.forEach { recall ->
-                    NotificationsUtils.notifyRecall(appContext, recall)
+                    notificationsUtils.notifyRecall(recall)
                 }
             }
 
@@ -84,10 +85,17 @@ class SyncRecallsWorker @Inject constructor(
 
     class Factory @Inject constructor(
         private val recallRepository: Provider<RecallRepository>,
-        private val localeUtils: Provider<LocaleUtils>
+        private val localeUtils: Provider<LocaleUtils>,
+        private val notificationsUtils: Provider<NotificationsUtils>
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
-            return SyncRecallsWorker(appContext, params, recallRepository.get(), localeUtils.get())
+            return SyncRecallsWorker(
+                appContext,
+                params,
+                recallRepository.get(),
+                localeUtils.get(),
+                notificationsUtils.get()
+            )
         }
     }
 }

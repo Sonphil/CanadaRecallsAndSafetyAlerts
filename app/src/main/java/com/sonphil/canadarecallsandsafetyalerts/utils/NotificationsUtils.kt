@@ -15,22 +15,23 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivityArgs
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Sonphil on 11-02-20.
  */
 
-object NotificationsUtils {
+@Singleton
+class NotificationsUtils @Inject constructor(private val context: Context) {
     /**
      * Returns a new [NotificationChannel]
      *
-     * @param context
      * @param channelId The id of the channel
      * @param name The name of the channel
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannelForCategory(
-        context: Context,
         channelId: String,
         name: String
     ): NotificationChannel {
@@ -47,7 +48,6 @@ object NotificationsUtils {
      * Returns a new [PendingIntent] that allows the user to navigate to the details screen of a
      * [Recall]
      *
-     * @param context
      * @param recall
      * @param requestCode The request code for the [PendingIntent]
      */
@@ -72,10 +72,9 @@ object NotificationsUtils {
      *
      * The [Recall]'s category for the notification's channel on Android 8 and higher.
      *
-     * @param context
      * @param recall
      */
-    fun notifyRecall(context: Context, recall: Recall) {
+    fun notifyRecall(recall: Recall) {
         val channelId = recall.category.name
         val categoryResources = CategoryResources(recall.category)
         val notificationId = try {
@@ -94,7 +93,6 @@ object NotificationsUtils {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = createNotificationChannelForCategory(
-                context,
                 recall.category.name,
                 categoryTitle
             )
