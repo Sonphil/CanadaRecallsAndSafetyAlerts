@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.ext.openUrl
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrlExternal
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
@@ -58,8 +59,8 @@ class MoreFragment : DaggerFragment() {
                     R.drawable.ic_report_black_24dp -> openUrlExternal(R.string.url_report)
                     R.drawable.ic_maple_leaf_red_650dp -> openUrlExternal(R.string.url_contact_health_canada)
                     R.drawable.ic_website_white_24dp -> openUrlExternal(R.string.url_website)
-                    R.drawable.ic_licence_black_24dp -> openUrlExternal(R.string.url_data_licence)
-                    R.drawable.ic_github_white_24dp -> openUrlExternal(R.string.url_source_code)
+                    R.drawable.ic_licence_black_24dp -> openUrl(R.string.url_data_licence)
+                    R.drawable.ic_github_white_24dp -> openUrl(R.string.url_source_code)
                 }
             }
         }
