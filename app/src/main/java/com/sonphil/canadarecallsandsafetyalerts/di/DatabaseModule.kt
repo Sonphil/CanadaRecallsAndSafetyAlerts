@@ -33,4 +33,7 @@ internal open class DatabaseModule {
 
     @Singleton @Provides
     fun provideCategoryFilterDao(db: AppDatabase): CategoryFilterDao = db.categoryFilterDao()
+
+    @Singleton @Provides
+    fun provideNotificationKeywordDao(db: AppDatabase): NotificationKeyworkDao = db.notificationKeywordDao()
 }

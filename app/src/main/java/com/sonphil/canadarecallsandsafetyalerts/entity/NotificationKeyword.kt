@@ -4,11 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Indicates a [Recall] has been read by the user
+ * Created by Sonphil on 13-02-20.
  */
 
 @Entity
-data class ReadStatus(
+data class NotificationKeyword(
     @PrimaryKey
-    val recallId: String
+    val value: String
 )

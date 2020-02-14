@@ -16,7 +16,8 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.*
         RecallDetails::class,
         RecallDetailsImage::class,
         CategoryFilter::class,
-        ReadStatus::class
+        ReadStatus::class,
+        NotificationKeyword::class
     ],
     version = 1
 )
@@ -27,4 +28,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun readStatusDao(): ReadStatusDao
     abstract fun recallDetailsDao(): RecallDetailsDao
     abstract fun categoryFilterDao(): CategoryFilterDao
+    abstract fun notificationKeywordDao(): NotificationKeyworkDao
 }
