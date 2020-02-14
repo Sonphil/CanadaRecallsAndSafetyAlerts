@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/fragment_notifications"
-        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsKeywordsFragment"
+        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationKeywordsFragment"
         android:label="@string/title_notifications_keywords_pref"></fragment>
 
     <activity

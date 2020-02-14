@@ -45,6 +45,10 @@
     <string name="title_notifications_system_pref">Device Notifications Settings</string>
     <string name="summary_notifications_system_pref">Customize your notifications through Android\'s Settings</string>
 
+    <!-- Notification Keywords -->
+    <string name="label_delete_notification_keyword">Delete the keyword</string>
+    <string name="message_notification_keyword_deleted">Keyword deleted!</string>
+
     <!-- More -->
     <string name="title_settings">Settings</string>
     <string name="title_report">Report a Recall</string>
