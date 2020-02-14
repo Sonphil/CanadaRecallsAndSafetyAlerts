@@ -14,8 +14,8 @@ import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
+import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
-import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,8 +31,8 @@ class MyRecallsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
-    lateinit var localeUtils: LocaleUtils
-    private val adapter by lazy { RecallAdapter(viewModel, localeUtils) }
+    lateinit var dateUtils: DateUtils
+    private val adapter by lazy { RecallAdapter(viewModel, dateUtils) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

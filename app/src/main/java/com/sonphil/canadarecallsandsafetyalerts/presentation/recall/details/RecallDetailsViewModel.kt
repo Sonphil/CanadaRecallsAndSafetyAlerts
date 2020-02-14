@@ -6,7 +6,6 @@ import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -29,13 +28,7 @@ class RecallDetailsViewModel @Inject constructor(
         }
     }
     val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
-    val bookmarkDate: LiveData<Date?> = bookmark.map { bookmark ->
-        if (bookmark == null) {
-            null
-        } else {
-            Date(bookmark.date)
-        }
-    }
+    val bookmarkDate: LiveData<Long?> = bookmark.map { bookmark -> bookmark?.date }
 
     fun setRecall(recall: Recall) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -13,12 +13,11 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.ReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
+import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
+import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_recall.*
 import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Created by Sonphil on 01-02-20.
@@ -26,15 +25,11 @@ import java.util.*
 
 class RecallAdapter(
     private val viewModel: RecallBaseViewModel,
-    localeUtils: LocaleUtils
+    dateUtils: DateUtils
 ) : ListAdapter<RecallAndBookmarkAndReadStatus, RecallAdapter.RecallViewHolder>(
     DiffCallback()
 ) {
-
-    private val dateFormat = SimpleDateFormat.getDateInstance(
-        DateFormat.MEDIUM,
-        localeUtils.getCurrentLocale()
-    )
+    private val dateFormat = dateUtils.getDateFormat(DateFormat.MEDIUM)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecallViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -107,7 +102,7 @@ class RecallAdapter(
         if (date == null) {
             tv_recall_date.isVisible = false
         } else {
-            tv_recall_date.text = dateFormat.format(Date(date))
+            tv_recall_date.text = dateFormat.formatUTC(date)
             tv_recall_date.isVisible = true
         }
     }

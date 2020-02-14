@@ -9,13 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.ext.formatDefaultTimeZone
+import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
+import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_recall_details.*
 import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class RecallDetailsActivity : DaggerAppCompatActivity() {
@@ -27,13 +28,10 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var localeUtils: LocaleUtils
+    @Inject
+    lateinit var dateUtils: DateUtils
 
-    private val dateFormat by lazy {
-        SimpleDateFormat.getDateInstance(
-            DateFormat.LONG,
-            localeUtils.getCurrentLocale()
-        )
-    }
+    private val dateFormat by lazy { dateUtils.getDateFormat(DateFormat.LONG) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +89,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
     private fun bindRecallPublicationDate(recall: Recall) {
         recall.datePublished?.let { date ->
-            tv_recall_date.text = dateFormat.format(Date(date))
+            tv_recall_date.text = dateFormat.formatUTC(date)
         }
     }
 
@@ -109,7 +107,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
                 divider_recall_dates.isVisible = true
                 tv_recall_bookmark_date.isVisible = true
 
-                val dateStr = dateFormat.format(date)
+                val dateStr = dateFormat.formatDefaultTimeZone(date)
 
                 tv_recall_bookmark_date.text = String.format(
                     getString(R.string.label_bookmarked_on),
