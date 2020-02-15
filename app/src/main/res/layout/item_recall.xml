@@ -9,10 +9,12 @@
 
     <ImageView
         android:id="@+id/iv_recall_category_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
+        android:paddingTop="1dp"
+        android:tint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_shopping_cart_black_24dp" />
@@ -21,11 +23,11 @@
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_recall_category_icon"
         app:layout_constraintStart_toEndOf="@+id/iv_recall_category_icon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_recall_category_icon"
         tools:text="Aliments" />
 
     <TextView
@@ -49,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_recall_bookmark"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/iv_recall_category_icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_category"
         tools:text="Santé Canada fixe une nouvelle limite de cyanure pour atténuer les risques associés à la consommation d'amandes d'abricot" />
 

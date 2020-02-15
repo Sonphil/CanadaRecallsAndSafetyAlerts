@@ -119,13 +119,7 @@ class RecentFragment : DaggerFragment() {
 
         itemAnimator = SlideInLeftAnimator()
 
-        adapter = this@RecentFragment.adapter.apply {
-            registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    this@setupRecyclerView.smoothScrollToPosition(0)
-                }
-            })
-        }
+        adapter = this@RecentFragment.adapter
     }
 
     private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
