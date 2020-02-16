@@ -14,38 +14,31 @@ import javax.inject.Inject
 
 class RecallDetailsViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository,
-    private val recallRepository: RecallRepository
+    private val recallRepository: RecallRepository,
+    private val recall: Recall
 ) : ViewModel() {
-    private val recall = MutableLiveData<Recall>()
 
-    private val bookmark = recall.switchMap { recall ->
-        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val source = bookmarkRepository
-                .getBookmark(recall)
-                .asLiveData()
-
-            emitSource(source)
-        }
-    }
-    val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
-    val bookmarkDate: LiveData<Long?> = bookmark.map { bookmark -> bookmark?.date }
-
-    fun setRecall(recall: Recall) {
-        viewModelScope.launch(Dispatchers.IO) {
-            this@RecallDetailsViewModel.recall.postValue(recall)
-
+    init {
+        viewModelScope.launch {
             recallRepository.markRecallAsRead(recall)
         }
     }
 
+    private val bookmark = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+        val source = bookmarkRepository
+            .getBookmark(recall)
+            .asLiveData()
+
+        emitSource(source)
+    }
+    val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
+    val bookmarkDate: LiveData<Long?> = bookmark.map { bookmark -> bookmark?.date }
+
     fun clickBookmark() {
         viewModelScope.launch(Dispatchers.IO) {
-            val recall = recall.value
             val bookmarked = bookmark.value != null
 
-            if (recall != null) {
-                bookmarkRepository.updateBookmark(recall, !bookmarked)
-            }
+            bookmarkRepository.updateBookmark(recall, !bookmarked)
         }
     }
 }

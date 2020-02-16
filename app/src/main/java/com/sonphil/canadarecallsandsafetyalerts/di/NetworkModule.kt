@@ -15,10 +15,6 @@ import javax.inject.Singleton
 @Module
 internal open class NetworkModule {
 
-    companion object {
-        val instance = NetworkModule()
-    }
-
     @Singleton @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
 

@@ -1,5 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.di
 
+import com.sonphil.canadarecallsandsafetyalerts.di.scope.RecallDetailsScope
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity
 import dagger.Module
@@ -14,6 +15,7 @@ interface ActivityBindingModule {
     @ContributesAndroidInjector(modules = [MainActivityModule::class])
     fun contributeMainActivity(): MainActivity
 
+    @RecallDetailsScope
     @ContributesAndroidInjector(modules = [RecallDetailsActivityModule::class])
     fun contributeRecallDetailsActivity(): RecallDetailsActivity
 }

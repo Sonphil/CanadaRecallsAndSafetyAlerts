@@ -38,15 +38,12 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
         setContentView(R.layout.activity_recall_details)
 
-        val recall = intent?.extras?.run {
-            RecallDetailsActivityArgs.fromBundle(this).recall
-        }
+        val recall = getRecall()
 
         if (recall == null) {
             finish()
         } else {
             setupWindow()
-            viewModel.setRecall(recall)
             bindRecallCategory(recall)
             tv_recall_title.text = recall.title
             bindRecallPublicationDate(recall)
@@ -54,6 +51,10 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             btn_recall_bookmark.setOnClickListener { viewModel.clickBookmark() }
             subscribeUI()
         }
+    }
+
+    fun getRecall(): Recall? = intent?.extras?.run {
+        RecallDetailsActivityArgs.fromBundle(this).recall
     }
 
     private fun setupWindow() {
