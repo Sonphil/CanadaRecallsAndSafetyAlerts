@@ -1,5 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,11 +9,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }
     /** Last destination selected **/
     private val _selectedDestinationId = MutableLiveData<Int>()
@@ -27,10 +32,22 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setupTheme()
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
         setupActionBar()
         setupBottomNavigation()
+    }
+
+    private fun setupTheme() {
+        val darkThemePrefKey = getString(R.string.key_theme_pref)
+        val darkThemePrefValue = sharedPreferences.getString(
+            darkThemePrefKey,
+            getString(R.string.value_default_theme_pref)
+        )
+
+        applyThemePref(darkThemePrefValue)
+        setTheme(R.style.AppTheme)
     }
 
     private fun setupActionBar() {

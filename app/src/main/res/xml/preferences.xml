@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/title_notifications">
+    <PreferenceCategory android:title="@string/title_pref_category_notifications">
         <ListPreference
-            android:defaultValue="@string/value_notifications_pref_all"
-            android:entries="@array/array_notification_pref_entries"
-            android:entryValues="@array/array_notification_pref_entries_values"
-            android:icon="@drawable/ic_notifications_control_normal_24dp"
-            android:key="@string/key_notifications_pref"
-            android:title="@string/title_notifications_pref"
+            app:defaultValue="@string/value_notifications_pref_all"
+            app:entries="@array/array_notification_pref_entries"
+            app:entryValues="@array/array_notification_pref_entries_values"
+            app:icon="@drawable/ic_notifications_control_normal_24dp"
+            app:key="@string/key_notifications_pref"
+            app:title="@string/title_notifications_pref"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            android:defaultValue="60"
-            android:entries="@array/array_notifications_sync_frequency_entries"
-            android:entryValues="@array/array_notifications_sync_frequency_entries_values"
-            android:icon="@drawable/ic_sync_control_normal_24dp"
-            android:key="@string/key_notifications_sync_frequency_in_minutes_pref"
-            android:title="@string/title_notifications_sync_frequency_pref"
+            app:defaultValue="60"
+            app:entries="@array/array_notifications_sync_frequency_pref_entries"
+            app:entryValues="@array/array_notifications_sync_frequency_pref_entries_values"
+            app:icon="@drawable/ic_sync_control_normal_24dp"
+            app:key="@string/key_notifications_sync_frequency_in_minutes_pref"
+            app:title="@string/title_notifications_sync_frequency_pref"
             app:useSimpleSummaryProvider="true" />
 
         <Preference
@@ -32,5 +32,16 @@
             android:key="@string/key_notifications_system_pref"
             android:summary="@string/summary_notifications_system_pref"
             android:title="@string/title_notifications_system_pref" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/title_pref_category_display">
+        <ListPreference
+            app:defaultValue="@string/value_default_theme_pref"
+            app:entries="@array/array_theme_pref_entries"
+            app:entryValues="@array/array_theme_pref_entries_values"
+            app:icon="@drawable/ic_theme_light_dark_control_normal_24dp"
+            app:key="@string/key_theme_pref"
+            app:title="@string/title_theme_pref"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -30,7 +30,7 @@
     <string name="label_share_recall">Partager</string>
 
     <!-- Settings -->
-    <string name="title_notifications">Notifications poussées</string>
+    <string name="title_pref_category_notifications">Notifications poussées</string>
     <string name="title_notifications_pref">Paramètre des notifications</string>
     <string name="label_notifications_pref_no">Aucune notification</string>
     <string name="label_notifications_pref_all">Tous les alertes et avis</string>
@@ -45,6 +45,12 @@
     <string name="summary_notifications_keywords_pref">Configurez vos notifications en fonction de vos mots clés</string>
     <string name="title_notifications_system_pref">Paramètres de notifications de l\'appareil</string>
     <string name="summary_notifications_system_pref">Personnalisez davantage les notifications dans les paramètres Android</string>
+    <string name="title_pref_category_display">Affichage</string>
+    <string name="title_theme_pref">Thème</string>
+    <string name="label_theme_pref_light">Clair</string>
+    <string name="label_theme_pref_dark">Sombre</string>
+    <string name="label_theme_pref_system_default">Paramètre par défaut du système</string>
+    <string name="label_theme_pref_battery_saver">Défini par l\'économisateur de batterie</string>
 
     <!-- Notification Keywords -->
     <string name="label_delete_notification_keyword">Supprimer le mot-clé</string>

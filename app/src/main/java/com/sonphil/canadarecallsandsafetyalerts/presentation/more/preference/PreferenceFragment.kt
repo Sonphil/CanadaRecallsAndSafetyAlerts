@@ -6,12 +6,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
 
 class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
@@ -35,7 +37,8 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
     private fun setupChangeListener() {
         listOf(
             R.string.key_notifications_pref,
-            R.string.key_notifications_sync_frequency_in_minutes_pref
+            R.string.key_notifications_sync_frequency_in_minutes_pref,
+            R.string.key_theme_pref
         ).forEach { keyId ->
             val pref = findPreference<Preference>(getString(keyId))
 
@@ -57,6 +60,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
     private fun setupSystemSettingsPrefNavigation() {
         val systemSettingsPrefKey = getString(R.string.key_notifications_system_pref)
         val systemSettingsPref = preferenceScreen.findPreference<Preference>(systemSettingsPrefKey)
+        AppCompatDelegate.MODE_NIGHT_NO
         systemSettingsPref?.setOnPreferenceClickListener {
             navigateToSystemAppNotificationSettings()
 
@@ -85,6 +89,15 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
             getString(R.string.key_notifications_sync_frequency_in_minutes_pref) -> {
                 scheduleRecallsSyncWorker()
                 true
+            }
+            getString(R.string.key_theme_pref) -> {
+                if (newValue is String) {
+                    requireContext().applyThemePref(newValue)
+
+                    true
+                } else {
+                    false
+                }
             }
             else -> false
         }
@@ -120,7 +133,8 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
 
     private fun scheduleRecallsSyncWorker() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val repeatIntervalPrefKey = getString(R.string.key_notifications_sync_frequency_in_minutes_pref)
+        val repeatIntervalPrefKey =
+            getString(R.string.key_notifications_sync_frequency_in_minutes_pref)
         try {
             val repeatInterval = prefs
                 .getString(repeatIntervalPrefKey, null)
@@ -129,6 +143,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
             if (repeatInterval != null) {
                 SyncRecallsWorker.schedule(requireContext().applicationContext, repeatInterval)
             }
-        } catch (e: NumberFormatException) { }
+        } catch (e: NumberFormatException) {
+        }
     }
 }

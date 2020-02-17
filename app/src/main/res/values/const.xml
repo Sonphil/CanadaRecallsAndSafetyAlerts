@@ -7,4 +7,10 @@
     <string name="key_notifications_sync_frequency_in_minutes_pref" translatable="false">notification_sync_frequency_in_minutes_preference</string>
     <string name="key_notifications_keywords_pref" translatable="false">notifications_keywords_preference</string>
     <string name="key_notifications_system_pref" translatable="false">notifications_system_preference</string>
+    <string name="key_theme_pref" translatable="false">theme_preference</string>
+    <string name="value_theme_pref_light" translatable="false">LIGHT</string>
+    <string name="value_theme_pref_dark" translatable="false">DARK</string>
+    <string name="value_theme_pref_system_default" translatable="false">FOLLOW_SYSTEM</string>
+    <string name="value_theme_pref_battery_saver" translatable="false">AUTO_BATTERY</string>
+    <string name="value_default_theme_pref" translatable="false">@string/value_theme_pref_battery_saver</string>
 </resources>

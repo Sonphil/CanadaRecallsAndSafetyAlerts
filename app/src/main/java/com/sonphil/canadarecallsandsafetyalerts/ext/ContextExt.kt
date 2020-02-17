@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.ext
 
 import android.Manifest
 import android.content.Context
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -38,6 +39,16 @@ inline val Context.isDeviceConnected: Boolean
 
             return nwInfo.isConnected
         }
+    }
+
+/**
+ * Returns true when dark theme is on, false otherwise.
+ */
+inline val Context.isDarkModeOn: Boolean
+    get() {
+        val uiMode = resources.configuration.uiMode
+
+        return uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 
 /**

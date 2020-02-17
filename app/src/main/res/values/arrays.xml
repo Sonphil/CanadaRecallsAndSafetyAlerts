@@ -29,8 +29,8 @@
         <item>@string/value_notifications_pref_all</item>
         <item>@string/value_notifications_pref_keyword</item>
     </string-array>
-    
-    <string-array name="array_notifications_sync_frequency_entries">
+
+    <string-array name="array_notifications_sync_frequency_pref_entries">
         <item>@string/label_notifications_sync_frequency_pref_15_min</item>
         <item>@string/label_notifications_sync_frequency_pref_30_min</item>
         <item>@string/label_notifications_sync_frequency_pref_1_hour</item>
@@ -39,11 +39,23 @@
     </string-array>
 
     <!-- Synchronization frequency in minutes -->
-    <string-array name="array_notifications_sync_frequency_entries_values">
+    <string-array name="array_notifications_sync_frequency_pref_entries_values">
         <item>15</item>
         <item>30</item>
         <item>60</item>
         <item>720</item>
         <item>1440</item>
+    </string-array>
+
+    <string-array name="array_theme_pref_entries">
+        <item>@string/label_theme_pref_light</item>
+        <item>@string/label_theme_pref_dark</item>
+        <item>@string/label_theme_pref_battery_saver</item>
+    </string-array>
+
+    <string-array name="array_theme_pref_entries_values">
+        <item>@string/value_theme_pref_light</item>
+        <item>@string/value_theme_pref_dark</item>
+        <item>@string/value_theme_pref_battery_saver</item>
     </string-array>
 </resources>
