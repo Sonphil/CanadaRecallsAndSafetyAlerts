@@ -6,40 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/colorSurface"
     tools:context=".presentation.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/AppTheme.CollapsingToolbarLayout"
-            app:contentScrim="@color/colorPrimary"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <ImageView
-                android:id="@+id/iv_section_icon"
-                android:layout_width="@dimen/image_view_section_icon_size"
-                android:layout_height="@dimen/image_view_section_icon_size"
-                android:layout_gravity="bottom|end"
-                android:layout_marginTop="@dimen/image_view_section_icon_margin_top"
-                android:layout_marginEnd="@dimen/image_view_section_icon_margin_end"
-                android:layout_marginBottom="@dimen/image_view_section_icon_margin_bottom"
-                android:alpha="0.3"
-                android:tint="@android:color/white"
-                tools:src="@drawable/ic_access_time_white_24dp" />
-
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 tools:title="Title" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_collapsing_toolbar_layout_height" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -50,8 +42,7 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:navGraph="@navigation/nav_graph_main"
-        tools:background="@color/colorPrimary" />
+        app:navGraph="@navigation/nav_graph_main" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"

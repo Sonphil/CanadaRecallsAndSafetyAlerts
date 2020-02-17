@@ -66,35 +66,31 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_category_filter_food"
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        style="@style/Widget.AppTheme.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_category_food"
-                        app:chipBackgroundColor="@android:color/white" />
+                        android:text="@string/label_category_food" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_category_filter_vehicle"
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        style="@style/Widget.AppTheme.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_category_vehicle"
-                        app:chipBackgroundColor="@android:color/white" />
+                        android:text="@string/label_category_vehicle" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_category_filter_health_product"
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        style="@style/Widget.AppTheme.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_category_health_product"
-                        app:chipBackgroundColor="@android:color/white" />
+                        android:text="@string/label_category_health_product" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_category_filter_consumer_product"
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        style="@style/Widget.AppTheme.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_category_consumer_product"
-                        app:chipBackgroundColor="@android:color/white" />
+                        android:text="@string/label_category_consumer_product" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -102,14 +98,13 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_filter_recalls"
+        style="@style/Widget.AppTheme.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="72dp"
         android:contentDescription="@string/label_filter"
-        app:backgroundTint="@color/colorPrimary"
         app:layout_anchor="@id/bottom_navigation_view"
         app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_filter_list_white_24dp"
-        app:tint="@android:color/white" />
+        app:srcCompat="@drawable/ic_filter_list_white_24dp" />
 </merge>

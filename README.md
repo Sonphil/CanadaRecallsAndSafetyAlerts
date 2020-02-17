@@ -8,6 +8,7 @@ This allows the user to get access to recalls and safety alerts from the Governm
 - Bookmark recalls
 - Filter recalls and safety alerts by categories
 - Notifications about new recalls
+- Dark theme
 
 ### TODO
 

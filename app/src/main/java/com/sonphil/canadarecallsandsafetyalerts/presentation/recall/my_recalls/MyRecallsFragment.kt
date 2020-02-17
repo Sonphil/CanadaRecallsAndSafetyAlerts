@@ -18,7 +18,6 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_recalls.*
 import kotlinx.android.synthetic.main.include_empty_view_my_recalls.*
 import javax.inject.Inject
@@ -44,8 +43,6 @@ class MyRecallsFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().iv_section_icon.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
 
         rv_bookmarked_recalls.setupRecyclerView()
 

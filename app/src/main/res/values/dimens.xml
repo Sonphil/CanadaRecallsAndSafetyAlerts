@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="image_view_section_icon_size">80dp</dimen>
-    <dimen name="image_view_section_icon_margin_top">20dp</dimen>
-    <dimen name="image_view_section_icon_margin_end">-20dp</dimen>
-    <dimen name="image_view_section_icon_margin_bottom">-20dp</dimen>
+    <dimen name="space_collapsing_toolbar_layout_height">80dp</dimen>
 </resources>

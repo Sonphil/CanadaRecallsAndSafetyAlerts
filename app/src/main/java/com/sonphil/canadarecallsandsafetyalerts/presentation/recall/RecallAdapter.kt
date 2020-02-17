@@ -92,7 +92,7 @@ class RecallAdapter(
         val bookmarkDrawableRes = if (bookmarked) {
             R.drawable.ic_bookmark_red_24dp
         } else {
-            R.drawable.ic_bookmark_border_black_24dp
+            R.drawable.ic_bookmark_border_control_normal_24dp
         }
 
         btn_recall_bookmark.setImageResource(bookmarkDrawableRes)

@@ -6,7 +6,7 @@
             android:defaultValue="@string/value_notifications_pref_all"
             android:entries="@array/array_notification_pref_entries"
             android:entryValues="@array/array_notification_pref_entries_values"
-            android:icon="@drawable/ic_notifications_black_24dp"
+            android:icon="@drawable/ic_notifications_control_normal_24dp"
             android:key="@string/key_notifications_pref"
             android:title="@string/title_notifications_pref"
             app:useSimpleSummaryProvider="true" />
@@ -15,20 +15,20 @@
             android:defaultValue="60"
             android:entries="@array/array_notifications_sync_frequency_entries"
             android:entryValues="@array/array_notifications_sync_frequency_entries_values"
-            android:icon="@drawable/ic_sync_black_24dp"
+            android:icon="@drawable/ic_sync_control_normal_24dp"
             android:key="@string/key_notifications_sync_frequency_in_minutes_pref"
             android:title="@string/title_notifications_sync_frequency_pref"
             app:useSimpleSummaryProvider="true" />
 
         <Preference
-            android:icon="@drawable/ic_word_black_24dp"
+            android:icon="@drawable/ic_word_control_normal_24dp"
             android:key="@string/key_notifications_keywords_pref"
             android:summary="@string/summary_notifications_keywords_pref"
             android:title="@string/title_notifications_keywords_pref"
             app:fragment="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsKeywordsFragment" />
 
         <Preference
-            android:icon="@drawable/ic_open_in_new_black_24dp"
+            android:icon="@drawable/ic_open_in_new_control_normal_24dp"
             android:key="@string/key_notifications_system_pref"
             android:summary="@string/summary_notifications_system_pref"
             android:title="@string/title_notifications_system_pref" />

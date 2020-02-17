@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_keywords.*
 import javax.inject.Inject
 
@@ -41,8 +40,6 @@ class NotificationKeywordsFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().iv_section_icon.setImageResource(R.drawable.ic_notifications_black_24dp)
 
         rv_notification_keywords.setupRecyclerView()
 

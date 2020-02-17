@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/item_link"
-        android:icon="@drawable/ic_link_black_24dp"
+        android:icon="@drawable/ic_link_control_normal_24dp"
         android:title="@string/label_recall_link"
         app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/item_share"
-        android:icon="@drawable/ic_share_black_24dp"
+        android:icon="@drawable/ic_share_control_normal_24dp"
         android:title="@string/label_share_recall"
         app:showAsAction="always|withText" />
 </menu>

@@ -18,6 +18,7 @@ import com.google.android.material.chip.Chip
 import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
@@ -59,10 +60,6 @@ class RecentFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         rv_recent_recalls.setupRecyclerView()
-
-        requireActivity()
-            .iv_section_icon
-            .setImageResource(R.drawable.ic_access_time_white_24dp)
 
         subscribeUI()
 
@@ -123,7 +120,7 @@ class RecentFragment : DaggerFragment() {
     }
 
     private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
-        setColorSchemeResources(R.color.colorPrimary)
+        applyAppTheme(requireContext())
         swipe_refresh_layout_recent_recalls.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -179,10 +176,14 @@ class RecentFragment : DaggerFragment() {
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
             requireActivity().card_view_categories_filter?.let { filterCardView ->
-                filterCardView.chip_category_filter_food.isChecked = Category.FOOD in visibleCategories
-                filterCardView.chip_category_filter_vehicle.isChecked = Category.VEHICLE in visibleCategories
-                filterCardView.chip_category_filter_health_product.isChecked = Category.HEALTH_PRODUCT in visibleCategories
-                filterCardView.chip_category_filter_consumer_product.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
+                filterCardView.chip_category_filter_food.isChecked =
+                    Category.FOOD in visibleCategories
+                filterCardView.chip_category_filter_vehicle.isChecked =
+                    Category.VEHICLE in visibleCategories
+                filterCardView.chip_category_filter_health_product.isChecked =
+                    Category.HEALTH_PRODUCT in visibleCategories
+                filterCardView.chip_category_filter_consumer_product.isChecked =
+                    Category.CONSUMER_PRODUCT in visibleCategories
             }
         })
 

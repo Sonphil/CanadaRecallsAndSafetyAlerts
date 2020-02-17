@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorSurface">@color/design_dark_default_color_surface</color>
+    <color name="colorCardView">@color/colorSurface</color>
+    <color name="colorSplashBackground">@color/colorSurface</color>
+</resources>

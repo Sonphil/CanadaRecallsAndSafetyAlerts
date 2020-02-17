@@ -12,7 +12,6 @@ import com.sonphil.canadarecallsandsafetyalerts.ext.openUrl
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrlExternal
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : DaggerFragment() {
@@ -27,8 +26,6 @@ class MoreFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().iv_section_icon.setImageDrawable(null)
 
         rv_more.setupRecyclerView()
     }
@@ -55,12 +52,12 @@ class MoreFragment : DaggerFragment() {
 
             MoreItem(icon, label) {
                 when (icon) {
-                    R.drawable.ic_settings_white_24dp -> findNavController().navigate(R.id.fragment_preference)
+                    R.drawable.ic_settings_black_24dp -> findNavController().navigate(R.id.fragment_preference)
                     R.drawable.ic_report_black_24dp -> openUrlExternal(R.string.url_report)
-                    R.drawable.ic_maple_leaf_red_650dp -> openUrlExternal(R.string.url_contact_health_canada)
-                    R.drawable.ic_website_white_24dp -> openUrlExternal(R.string.url_website)
+                    R.drawable.ic_maple_leaf_black_650dp -> openUrlExternal(R.string.url_contact_health_canada)
+                    R.drawable.ic_website_black_24dp -> openUrlExternal(R.string.url_website)
                     R.drawable.ic_licence_black_24dp -> openUrl(R.string.url_data_licence)
-                    R.drawable.ic_github_white_24dp -> openUrl(R.string.url_source_code)
+                    R.drawable.ic_github_black_24dp -> openUrl(R.string.url_source_code)
                 }
             }
         }

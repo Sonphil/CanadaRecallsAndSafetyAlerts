@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.recall.my_recalls.MyRecallsFragment">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bookmarked_recalls"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/design_bottom_navigation_height"
+        android:scrollbars="none"
         tools:ignore="PrivateResource"
         tools:listitem="@layout/item_recall" />
 
-    <include
-        layout="@layout/include_empty_view_my_recalls" />
+    <include layout="@layout/include_empty_view_my_recalls" />
 </FrameLayout>

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -14,7 +13,6 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
-import kotlinx.android.synthetic.main.activity_main.*
 
 class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -43,12 +41,6 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
 
             pref?.onPreferenceChangeListener = this
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().iv_section_icon.setImageResource(R.drawable.ic_settings_white_24dp)
     }
 
     private fun setupNotificationsKeywordsPrefNavigation() {
