@@ -10,17 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progress_bar_recent_recalls"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-6dp"
-            android:indeterminate="true"
-            android:scaleY="1.2"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent_recalls"
             android:layout_width="match_parent"

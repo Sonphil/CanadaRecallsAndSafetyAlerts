@@ -143,10 +143,7 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
-            if (!loading) {
-                swipe_refresh_layout_recent_recalls.isRefreshing = loading
-            }
-            progress_bar_recent_recalls.isVisible = loading
+            swipe_refresh_layout_recent_recalls.isRefreshing = loading
         })
 
         viewModel.genericError.observe(viewLifecycleOwner, Observer { error ->
