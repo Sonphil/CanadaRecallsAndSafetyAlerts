@@ -12,8 +12,6 @@
     <string name="label_category_vehicle">Véhicule</string>
     <string name="label_category_health_product">Produit de santé</string>
     <string name="label_category_consumer_product">Produit de consommation</string>
-    <string name="title_empty_bookmark">Aucun rappel sauvegardé</string>
-    <string name="text_empty_bookmark">Sauvegardez un rappel et il apparaîtra ici</string>
     <string name="title_empty_recent_recall">Impossible de récupérer les rappels</string>
     <string name="title_empty_recent_recall_no_category_selected">Aucune catégorie sélectionnée</string>
     <string name="label_retry">Réessayer</string>
@@ -22,6 +20,12 @@
     <string name="label_done">Terminé</string>
     <string name="error_generic">Une erreur est survenue</string>
     <string name="error_offline">Pas de connexion Internet</string>
+
+    <!-- My Recalls -->
+    <string name="title_empty_bookmark">Aucun rappel sauvegardé</string>
+    <string name="text_empty_bookmark">Sauvegardez un rappel et il apparaîtra ici</string>
+    <string name="message_unbookmark">Rappel retiré</string>
+    <string name="label_undo_unbookmark">Annuler</string>
 
     <!-- Recall Details -->
     <string name="label_bookmarked_on">Sauvegardé le %1$s</string>

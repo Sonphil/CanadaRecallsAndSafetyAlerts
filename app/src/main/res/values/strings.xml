@@ -11,8 +11,6 @@
     <string name="label_category_vehicle">Vehicle</string>
     <string name="label_category_health_product">Health Product</string>
     <string name="label_category_consumer_product">Consumer Product</string>
-    <string name="title_empty_bookmark">No recalls saved</string>
-    <string name="text_empty_bookmark">Save a recall and it will show up here</string>
     <string name="title_empty_recent_recall">Unable to retrieve recalls</string>
     <string name="title_empty_recent_recall_no_category_selected">No category selected</string>
     <string name="label_retry">Retry</string>
@@ -21,6 +19,12 @@
     <string name="label_done">Done</string>
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
+
+    <!-- My Recalls -->
+    <string name="title_empty_bookmark">No recalls saved</string>
+    <string name="text_empty_bookmark">Save a recall and it will show up here</string>
+    <string name="message_unbookmark">Recall unsaved</string>
+    <string name="label_undo_unbookmark">Cancel</string>
 
     <!-- Recall Details -->
     <string name="label_bookmarked_on">Saved on %1$s</string>

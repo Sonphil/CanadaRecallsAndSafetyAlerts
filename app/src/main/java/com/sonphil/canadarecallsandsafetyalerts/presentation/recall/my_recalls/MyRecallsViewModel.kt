@@ -7,7 +7,6 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadS
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
-import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +38,7 @@ class MyRecallsViewModel @Inject constructor(
     }
 
     private val lastBookmarkRemoved = MutableLiveData<Bookmark?>()
-    private val _showUndoUnbookmarkSnackbar = MutableLiveData<Event<Boolean>>()
+    private val _showUndoUnbookmarkSnackbar = MutableLiveData<Boolean>()
     val showUndoUnbookmarkSnackbar = _showUndoUnbookmarkSnackbar
 
     override fun updateBookmark(recall: Recall, bookmarked: Boolean) {
@@ -51,7 +50,7 @@ class MyRecallsViewModel @Inject constructor(
                     ?.bookmark
 
                 lastBookmarkRemoved.postValue(bookmark)
-                _showUndoUnbookmarkSnackbar.postValue(Event(true))
+                _showUndoUnbookmarkSnackbar.postValue(true)
             }
 
             super.updateBookmark(recall, bookmarked)
@@ -59,7 +58,7 @@ class MyRecallsViewModel @Inject constructor(
     }
 
     fun undoLastUnbookmark() {
-        _showUndoUnbookmarkSnackbar.value = Event(false)
+        _showUndoUnbookmarkSnackbar.value = false
 
         viewModelScope.launch(Dispatchers.IO) {
             lastBookmarkRemoved.value?.let {

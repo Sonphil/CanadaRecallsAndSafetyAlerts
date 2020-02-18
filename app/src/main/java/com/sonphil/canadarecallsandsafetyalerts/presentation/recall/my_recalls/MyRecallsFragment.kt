@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
@@ -18,6 +19,7 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_recalls.*
 import kotlinx.android.synthetic.main.include_empty_view_my_recalls.*
 import javax.inject.Inject
@@ -32,6 +34,14 @@ class MyRecallsFragment : DaggerFragment() {
     @Inject
     lateinit var dateUtils: DateUtils
     private val adapter by lazy { RecallAdapter(viewModel, dateUtils) }
+    private val unbookmarkSnackbar by lazy {
+        Snackbar.make(requireActivity().root, R.string.message_unbookmark, Snackbar.LENGTH_LONG)
+            .setAnchorView(requireActivity().bottom_navigation_view)
+            .setAction(R.string.label_undo_unbookmark) {
+                viewModel.undoLastUnbookmark()
+            }
+            .setActionTextColor(requireContext().getColor(R.color.colorPrimary))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,11 +67,13 @@ class MyRecallsFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
-        (requireActivity() as MainActivity).selectedDestinationId.observe(viewLifecycleOwner, Observer { destinationId ->
-            if (destinationId == R.id.fragment_my_recalls) {
-                rv_bookmarked_recalls.smoothScrollToPosition(0)
-            }
-        })
+        (requireActivity() as MainActivity).selectedDestinationId.observe(
+            viewLifecycleOwner,
+            Observer { destinationId ->
+                if (destinationId == R.id.fragment_my_recalls) {
+                    rv_bookmarked_recalls.smoothScrollToPosition(0)
+                }
+            })
 
         viewModel.bookmarkedRecalls.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
@@ -76,6 +88,14 @@ class MyRecallsFragment : DaggerFragment() {
             val action = NavGraphMainDirections.actionToActivityRecallDetails(it.recall)
 
             findNavController().navigate(action)
+        })
+
+        viewModel.showUndoUnbookmarkSnackbar.observe(viewLifecycleOwner, Observer { show ->
+            if (show) {
+                unbookmarkSnackbar.show()
+            } else {
+                unbookmarkSnackbar.dismiss()
+            }
         })
     }
 }
