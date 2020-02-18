@@ -140,5 +140,5 @@
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottom_app_bar"
         app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_bookmark_border_control_normal_24dp" />
+        app:srcCompat="@drawable/ic_bookmark_black_24dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

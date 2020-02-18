@@ -99,7 +99,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             if (bookmarked) {
                 btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
             } else {
-                btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_border_control_normal_24dp)
+                btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
             }
         })
 
