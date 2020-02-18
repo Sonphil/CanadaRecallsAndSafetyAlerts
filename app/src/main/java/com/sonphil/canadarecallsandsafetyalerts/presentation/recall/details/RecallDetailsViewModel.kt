@@ -24,13 +24,9 @@ class RecallDetailsViewModel @Inject constructor(
         }
     }
 
-    private val bookmark = liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-        val source = bookmarkRepository
-            .getBookmark(recall)
-            .asLiveData()
-
-        emitSource(source)
-    }
+    private val bookmark = bookmarkRepository
+        .getBookmark(recall)
+        .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
     val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
     val bookmarkDate: LiveData<Long?> = bookmark.map { bookmark -> bookmark?.date }
 
