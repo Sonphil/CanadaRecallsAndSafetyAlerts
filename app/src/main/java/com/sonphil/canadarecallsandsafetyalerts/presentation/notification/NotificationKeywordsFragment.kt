@@ -70,7 +70,7 @@ class NotificationKeywordsFragment : DaggerFragment() {
 
     private fun setupEmptyView() {
         with(requireActivity()) {
-            iv_empty.setImageResource(R.drawable.ic_notifications_control_normal_24dp)
+            iv_empty.setImageResource(R.drawable.ic_notifications_off_control_normal_24dp)
             tv_title_empty.setText(R.string.title_empty_notification_keyword)
             tv_text_empty.setText(R.string.text_empty_notification_keyword)
             tv_text_empty.isVisible = true

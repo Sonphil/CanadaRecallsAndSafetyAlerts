@@ -35,7 +35,8 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(
         R.layout.fragment_dialog_add_notification_keyword,
