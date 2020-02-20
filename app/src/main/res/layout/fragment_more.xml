@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/design_bottom_navigation_height"
+        android:scrollbars="none"
         tools:ignore="PrivateResource"
         tools:itemCount="6"
         tools:listitem="@layout/item_more" />

@@ -12,5 +12,6 @@ typealias MoreItemClickHandler = (index: Int) -> Unit
 data class MoreItem(
     @DrawableRes val icon: Int,
     @StringRes val label: Int,
+    @StringRes val description: Int,
     val moreItemClickHandler: MoreItemClickHandler
 )

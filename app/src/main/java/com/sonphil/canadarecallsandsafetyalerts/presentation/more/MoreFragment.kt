@@ -52,13 +52,18 @@ class MoreFragment : DaggerFragment() {
     private fun createMoreItems(): List<MoreItem> {
         val icons = resources.obtainTypedArray(R.array.array_more_items_icons)
         val labels = resources.obtainTypedArray(R.array.array_more_items_labels)
+        val descriptions = resources.obtainTypedArray(R.array.array_more_items_descriptions)
         val count = labels.length()
         val moreItems = mutableListOf<MoreItem>()
 
         for (i in 0 until count) {
             val labelResId = labels.getResourceIdOrThrow(i)
 
-            val moreItem = MoreItem(icons.getResourceIdOrThrow(i), labelResId) {
+            val moreItem = MoreItem(
+                icons.getResourceIdOrThrow(i),
+                labelResId,
+                descriptions.getResourceIdOrThrow(i)
+            ) {
                 when (labelResId) {
                     R.string.title_settings -> findNavController().navigate(R.id.fragment_preference)
                     R.string.title_report -> openUrlExternal(R.string.url_report)
@@ -75,6 +80,7 @@ class MoreFragment : DaggerFragment() {
 
         icons.recycle()
         labels.recycle()
+        descriptions.recycle()
 
         return moreItems
     }

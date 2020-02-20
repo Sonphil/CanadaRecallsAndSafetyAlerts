@@ -35,6 +35,7 @@ class MoreAdapter(private val items: List<MoreItem>) :
 
         holder.iv_item_more_icon.setImageResource(item.icon)
         holder.tv_item_more_label.setText(item.label)
+        holder.tv_item_more_description.setText(item.description)
     }
 
     inner class MoreItemViewHolder(override val containerView: View) :

@@ -67,16 +67,23 @@
 
     <!-- More -->
     <string name="title_settings">Paramètres</string>
+    <string name="text_description_settings">Configurer les notifications et le thème de l\'application</string>
     <string name="title_report">Signaler un rappel</string>
+    <string name="text_description_report">Signaler un problème lié à la santé ou à la sécurité au Gouvernement du Canada</string>
     <string name="url_report">https://www.canada.ca/fr/services/sante/signaler-probleme-lie-sante-ou-securite.html</string>
+    <string name="text_description_contact_health_canada">Faites part de vos questions ou commentaires à Santé Canada</string>
     <string name="title_contact_health_canada">Contacter Santé Canada</string>
     <string name="url_contact_health_canada">https://canadiensensante.gc.ca/contact-contactez/index-fra.php</string>
     <string name="title_website">Site web</string>
     <string name="url_website">https://www.canadiensensante.gc.ca/recall-alert-rappel-avis/index-fra.php</string>
+    <string name="text_description_website">@string/url_website</string>
     <string name="title_data_licence">Licence des données</string>
+    <string name="text_description_data_licence">Licence du gouvernement ouvert – Canada</string>
     <string name="url_data_licence">https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada</string>
-    <string name="title_source_code">Code source de l\'application</string>
+    <string name="title_source_code">Code source</string>
+    <string name="text_description_source_code">Code source de l\'application sur GitHub</string>
     <string name="url_source_code">https://github.com/Sonphil/CanadaRecallsAndSafetyAlerts</string>
     <string name="title_contact_dev">Contacter le développeur</string>
-    <string name="text_body_contact_dev">Version: %1$s\nAppareil: %2$s\nVersion d\'Android: %3$s</string>
+    <string name="text_description_contact_dev">@string/email_dev</string>
+    <string name="text_body_contact_dev">Version : %1$s\nAppareil : %2$s\nVersion d\'Android : %3$s</string>
 </resources>

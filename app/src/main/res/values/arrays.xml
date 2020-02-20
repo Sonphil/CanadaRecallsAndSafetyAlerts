@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer-array name="array_more_items_icons">
+        <item>@drawable/ic_settings_black_24dp</item>
+        <item>@drawable/ic_report_black_24dp</item>
+        <item>@drawable/ic_maple_leaf_black_650dp</item>
+        <item>@drawable/ic_website_black_24dp</item>
+        <item>@drawable/ic_licence_black_24dp</item>
+        <item>@drawable/ic_github_black_24dp</item>
+        <item>@drawable/ic_email_black_24dp</item>
+    </integer-array>
+
     <string-array name="array_more_items_labels">
         <item>@string/title_settings</item>
         <item>@string/title_report</item>
@@ -10,15 +20,15 @@
         <item>@string/title_contact_dev</item>
     </string-array>
 
-    <integer-array name="array_more_items_icons">
-        <item>@drawable/ic_settings_black_24dp</item>
-        <item>@drawable/ic_report_black_24dp</item>
-        <item>@drawable/ic_maple_leaf_black_650dp</item>
-        <item>@drawable/ic_website_black_24dp</item>
-        <item>@drawable/ic_licence_black_24dp</item>
-        <item>@drawable/ic_github_black_24dp</item>
-        <item>@drawable/ic_email_black_24dp</item>
-    </integer-array>
+    <string-array name="array_more_items_descriptions">
+        <item>@string/text_description_settings</item>
+        <item>@string/text_description_report</item>
+        <item>@string/text_description_contact_health_canada</item>
+        <item>@string/text_description_website</item>
+        <item>@string/text_description_data_licence</item>
+        <item>@string/text_description_source_code</item>
+        <item>@string/text_description_contact_dev</item>
+    </string-array>
 
     <string-array name="array_notification_pref_entries">
         <item>@string/label_notifications_pref_no</item>
