@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_keywords.*
 import kotlinx.android.synthetic.main.include_empty_view.*
@@ -81,6 +82,8 @@ class NotificationKeywordsFragment : DaggerFragment() {
         val swipeToDeleteCallback = SwipeToDeleteCallback(viewModel)
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(this)
+
+        itemAnimator = SlideInLeftAnimator()
 
         adapter = this@NotificationKeywordsFragment.adapter
     }
