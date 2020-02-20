@@ -8,12 +8,12 @@ This allows the user to get access to recalls and safety alerts from the Governm
 - Bookmark recalls
 - Filter recalls and safety alerts by categories
 - Notifications about new recalls
+- Notifications based on keywords
 - Dark theme
 
 ### TODO
 
 - View details about a recall
-- Notifications based on keywords
 - In-app language selection
 - Paging
 - Search recalls and safety alerts
