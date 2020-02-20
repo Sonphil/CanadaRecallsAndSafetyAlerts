@@ -7,6 +7,7 @@
         <item>@string/title_website</item>
         <item>@string/title_data_licence</item>
         <item>@string/title_source_code</item>
+        <item>@string/title_contact_dev</item>
     </string-array>
 
     <integer-array name="array_more_items_icons">
@@ -16,6 +17,7 @@
         <item>@drawable/ic_website_black_24dp</item>
         <item>@drawable/ic_licence_black_24dp</item>
         <item>@drawable/ic_github_black_24dp</item>
+        <item>@drawable/ic_email_black_24dp</item>
     </integer-array>
 
     <string-array name="array_notification_pref_entries">

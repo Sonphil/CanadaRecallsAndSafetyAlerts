@@ -13,4 +13,5 @@
     <string name="value_theme_pref_system_default" translatable="false">FOLLOW_SYSTEM</string>
     <string name="value_theme_pref_battery_saver" translatable="false">AUTO_BATTERY</string>
     <string name="value_default_theme_pref" translatable="false">@string/value_theme_pref_battery_saver</string>
+    <string name="email_dev" translatable="false">T.S.Philippe_Lam@hotmail.com</string>
 </resources>

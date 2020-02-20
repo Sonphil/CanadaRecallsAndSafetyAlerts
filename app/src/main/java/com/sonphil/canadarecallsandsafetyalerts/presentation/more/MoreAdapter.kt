@@ -34,7 +34,7 @@ class MoreAdapter(private val items: List<MoreItem>) :
         val item = items[position]
 
         holder.iv_item_more_icon.setImageResource(item.icon)
-        holder.tv_item_more_label.text = item.label
+        holder.tv_item_more_label.setText(item.label)
     }
 
     inner class MoreItemViewHolder(override val containerView: View) :

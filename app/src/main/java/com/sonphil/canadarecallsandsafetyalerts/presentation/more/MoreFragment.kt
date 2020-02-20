@@ -1,12 +1,17 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.more
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.getResourceIdOrThrow
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sonphil.canadarecallsandsafetyalerts.BuildConfig
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrl
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrlExternal
@@ -46,24 +51,50 @@ class MoreFragment : DaggerFragment() {
 
     private fun createMoreItems(): List<MoreItem> {
         val icons = resources.obtainTypedArray(R.array.array_more_items_icons)
-        val labels = resources.getStringArray(R.array.array_more_items_labels)
-        val moreItems = labels.mapIndexed { index, label ->
-            val icon = icons.getResourceId(index, -1)
+        val labels = resources.obtainTypedArray(R.array.array_more_items_labels)
+        val count = labels.length()
+        val moreItems = mutableListOf<MoreItem>()
 
-            MoreItem(icon, label) {
-                when (icon) {
-                    R.drawable.ic_settings_black_24dp -> findNavController().navigate(R.id.fragment_preference)
-                    R.drawable.ic_report_black_24dp -> openUrlExternal(R.string.url_report)
-                    R.drawable.ic_maple_leaf_black_650dp -> openUrlExternal(R.string.url_contact_health_canada)
-                    R.drawable.ic_website_black_24dp -> openUrlExternal(R.string.url_website)
-                    R.drawable.ic_licence_black_24dp -> openUrl(R.string.url_data_licence)
-                    R.drawable.ic_github_black_24dp -> openUrl(R.string.url_source_code)
+        for (i in 0 until count) {
+            val labelResId = labels.getResourceIdOrThrow(i)
+
+            val moreItem = MoreItem(icons.getResourceIdOrThrow(i), labelResId) {
+                when (labelResId) {
+                    R.string.title_settings -> findNavController().navigate(R.id.fragment_preference)
+                    R.string.title_report -> openUrlExternal(R.string.url_report)
+                    R.string.title_contact_health_canada -> openUrlExternal(R.string.url_contact_health_canada)
+                    R.string.title_website -> openUrlExternal(R.string.url_website)
+                    R.string.title_data_licence -> openUrl(R.string.url_data_licence)
+                    R.string.title_source_code -> openUrl(R.string.url_source_code)
+                    R.string.title_contact_dev -> composeEmailDev()
                 }
             }
+
+            moreItems.add(moreItem)
         }
 
         icons.recycle()
+        labels.recycle()
 
         return moreItems
+    }
+
+    private fun composeEmailDev() {
+        val email = getString(R.string.email_dev)
+        val text = String.format(
+            getString(R.string.text_body_contact_dev),
+            BuildConfig.VERSION_NAME,
+            "${Build.MANUFACTURER} ${Build.MODEL}",
+            Build.VERSION.RELEASE
+        )
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            startActivity(intent)
+        }
     }
 }
