@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity
@@ -102,6 +103,19 @@ class NotificationsUtils @Inject constructor(private val context: Context) {
 
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId, notificationBuilder.build())
+        }
+    }
+
+    fun initNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Category.values().forEach { category ->
+                val categoryResources = CategoryResources(category)
+
+                createNotificationChannelForCategory(
+                    channelId = category.name,
+                    name = context.getString(categoryResources.labelId)
+                )
+            }
         }
     }
 }
