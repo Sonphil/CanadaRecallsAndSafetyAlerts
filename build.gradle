@@ -19,7 +19,7 @@ buildscript {
             "room": "2.2.3",
             "test": "1.2.0",
             "support": "1.2.0",
-            "work_manager": "2.3.1"
+            "work_manager": "2.3.2"
     ]
 
     repositories {

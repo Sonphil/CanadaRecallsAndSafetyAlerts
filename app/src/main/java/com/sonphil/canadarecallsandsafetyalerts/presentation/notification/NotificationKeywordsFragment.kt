@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,6 +15,7 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_notification_keywords.*
+import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class NotificationKeywordsFragment : DaggerFragment() {
@@ -41,9 +43,20 @@ class NotificationKeywordsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupEmptyView()
+
         rv_notification_keywords.setupRecyclerView()
 
         subscribeUI()
+    }
+
+    private fun setupEmptyView() {
+        with(requireActivity()) {
+            iv_empty.setImageResource(R.drawable.ic_notifications_control_normal_24dp)
+            tv_title_empty.setText(R.string.title_empty_notification_keyword)
+            tv_text_empty.setText(R.string.text_empty_notification_keyword)
+            tv_text_empty.isVisible = true
+        }
     }
 
     private fun RecyclerView.setupRecyclerView() {
@@ -69,6 +82,11 @@ class NotificationKeywordsFragment : DaggerFragment() {
             if (show) {
                 keywordDeletedSnackBar.show()
             }
+        })
+
+        viewModel.showEmptyView.observe(viewLifecycleOwner, Observer { show ->
+            rv_notification_keywords.isVisible = !show
+            requireActivity().empty_view.isVisible = show
         })
     }
 }

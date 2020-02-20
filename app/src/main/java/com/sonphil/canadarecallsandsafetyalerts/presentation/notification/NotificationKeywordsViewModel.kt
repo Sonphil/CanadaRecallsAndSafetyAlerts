@@ -24,6 +24,8 @@ class NotificationKeywordsViewModel @Inject constructor(
         Event(true)
     }
 
+    val showEmptyView: LiveData<Boolean> = keywords.map { it.isNullOrEmpty() }
+
     fun insertNewKeyword(keyword: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertNewKeyword(keyword)

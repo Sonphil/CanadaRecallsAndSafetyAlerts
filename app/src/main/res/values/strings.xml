@@ -58,6 +58,8 @@
     <!-- Notification Keywords -->
     <string name="label_delete_notification_keyword">Delete the keyword</string>
     <string name="message_notification_keyword_deleted">Keyword deleted!</string>
+    <string name="title_empty_notification_keyword">No keywords</string>
+    <string name="text_empty_notification_keyword">Keywords notify you when a recall or safety alert might interest you</string>
 
     <!-- More -->
     <string name="title_settings">Settings</string>

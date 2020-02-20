@@ -65,8 +65,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun resetEmptyView() {
         tv_text_empty.isVisible = false
-        empty_view.isVisible = false
         btn_retry.isVisible = false
+        empty_view.isVisible = false
     }
 
     private fun setupBottomNavigation() {
