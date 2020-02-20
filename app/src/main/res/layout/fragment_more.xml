@@ -10,8 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/design_bottom_navigation_height"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
         android:scrollbars="none"
         tools:ignore="PrivateResource"
-        tools:itemCount="6"
+        tools:itemCount="7"
         tools:listitem="@layout/item_more" />
 </FrameLayout>
