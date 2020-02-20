@@ -51,7 +51,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         val keywordsPref = preferenceScreen.findPreference<Preference>(keywordsPrefKey)
 
         keywordsPref?.setOnPreferenceClickListener {
-            findNavController().navigate(R.id.fragment_notifications)
+            findNavController().navigate(R.id.fragment_notification_keywords)
 
             true
         }

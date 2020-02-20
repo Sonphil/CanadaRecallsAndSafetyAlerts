@@ -61,7 +61,9 @@
     <string name="message_notification_keyword_deleted">Mot-clé supprimé!</string>
     <string name="title_empty_notification_keyword">Aucun mot-clé</string>
     <string name="text_empty_notification_keyword">Les mot-clés vous permettent de recevoir une notification lorsqu\'un rappel ou une alerte est susceptible de vous intéresser</string>
-
+    <string name="label_add_notification_keyword">Ajouter un mot-clé</string>
+    <string name="label_hint_add_new_notification_keyword">Nouveau mot-clé</string>
+    <string name="label_add_new_notification_keyword">Ajouter</string>
 
     <!-- More -->
     <string name="title_settings">Paramètres</string>

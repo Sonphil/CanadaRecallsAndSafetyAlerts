@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification_keywords.*
 import kotlinx.android.synthetic.main.include_empty_view.*
+import kotlinx.android.synthetic.main.include_fab_add_notification_keyword.*
 import javax.inject.Inject
 
 class NotificationKeywordsFragment : DaggerFragment() {
@@ -38,12 +39,29 @@ class NotificationKeywordsFragment : DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_notification_keywords, container, false)
+    ): View? {
+        if (requireActivity().btn_add_notification_keyword == null) {
+            inflater.inflate(
+                R.layout.include_fab_add_notification_keyword,
+                requireActivity().root,
+                true
+            )
+        }
+
+        return inflater.inflate(R.layout.fragment_notification_keywords, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupEmptyView()
+
+        requireActivity().btn_add_notification_keyword.setOnClickListener {
+            AddNotificationKeywordDialogFragment().show(
+                childFragmentManager,
+                AddNotificationKeywordDialogFragment.TAG
+            )
+        }
 
         rv_notification_keywords.setupRecyclerView()
 
@@ -60,12 +78,6 @@ class NotificationKeywordsFragment : DaggerFragment() {
     }
 
     private fun RecyclerView.setupRecyclerView() {
-        val dividerItemDecoration = DividerItemDecoration(
-            requireContext(),
-            DividerItemDecoration.VERTICAL
-        )
-        addItemDecoration(dividerItemDecoration)
-
         val swipeToDeleteCallback = SwipeToDeleteCallback(viewModel)
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(this)
@@ -88,5 +100,13 @@ class NotificationKeywordsFragment : DaggerFragment() {
             rv_notification_keywords.isVisible = !show
             requireActivity().empty_view.isVisible = show
         })
+    }
+
+    override fun onDestroyView() {
+        requireActivity().btn_add_notification_keyword?.let { btn ->
+            requireActivity().root.removeView(btn)
+        }
+
+        super.onDestroyView()
     }
 }

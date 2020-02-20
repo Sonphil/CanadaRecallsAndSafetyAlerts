@@ -86,11 +86,11 @@ class MainActivity : DaggerAppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             app_bar_layout.setExpanded(true, true)
 
+            resetEmptyView()
+
             val shouldShowBottomNavigationView = destination.id in topLevelDestinations
 
             bottom_navigation_view.setVisible(shouldShowBottomNavigationView)
-
-            resetEmptyView()
         }
     }
 }

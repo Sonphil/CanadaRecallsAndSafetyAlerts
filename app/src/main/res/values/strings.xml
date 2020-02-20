@@ -60,6 +60,9 @@
     <string name="message_notification_keyword_deleted">Keyword deleted!</string>
     <string name="title_empty_notification_keyword">No keywords</string>
     <string name="text_empty_notification_keyword">Keywords notify you when a recall or safety alert might interest you</string>
+    <string name="label_add_notification_keyword">Add a keyword</string>
+    <string name="label_hint_add_new_notification_keyword">New keyword</string>
+    <string name="label_add_new_notification_keyword">Add</string>
 
     <!-- More -->
     <string name="title_settings">Settings</string>
