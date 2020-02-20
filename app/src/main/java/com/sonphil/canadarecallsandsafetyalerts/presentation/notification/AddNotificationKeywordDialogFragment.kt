@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +48,7 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        edit_text_notification_keyword.requestFocus()
+        setupEditText()
 
         btn_add_notification_keyword.setOnClickListener {
             viewModel.insertNewKeyword(edit_text_notification_keyword.text.toString())
@@ -56,6 +57,21 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             dismiss()
         })
+    }
+
+    private fun setupEditText() {
+        edit_text_notification_keyword.setOnEditorActionListener { textView, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    viewModel.insertNewKeyword(textView.text.toString())
+
+                    true
+                }
+                else -> false
+            }
+        }
+
+        edit_text_notification_keyword.requestFocus()
     }
 
     companion object {
