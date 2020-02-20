@@ -135,13 +135,21 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val repeatIntervalPrefKey =
             getString(R.string.key_notifications_sync_frequency_in_minutes_pref)
+        val notificationsPrefKey = getString(R.string.key_notifications_pref)
+        val notificationsPrefValue = prefs.getString(notificationsPrefKey, "")
         try {
             val repeatInterval = prefs
                 .getString(repeatIntervalPrefKey, null)
                 ?.toLong()
+            val keywordNotificationsEnabled =
+                notificationsPrefValue == getString(R.string.value_notifications_pref_keyword)
 
             if (repeatInterval != null) {
-                SyncRecallsWorker.schedule(requireContext().applicationContext, repeatInterval)
+                SyncRecallsWorker.schedule(
+                    requireContext().applicationContext,
+                    keywordNotificationsEnabled,
+                    repeatInterval
+                )
             }
         } catch (e: NumberFormatException) {
         }
