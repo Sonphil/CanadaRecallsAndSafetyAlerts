@@ -21,7 +21,7 @@ import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_recalls.*
-import kotlinx.android.synthetic.main.include_empty_view_my_recalls.*
+import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class MyRecallsFragment : DaggerFragment() {
@@ -54,9 +54,18 @@ class MyRecallsFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupEmptyView()
+
         rv_bookmarked_recalls.setupRecyclerView()
 
         subscribeUI()
+    }
+
+    private fun setupEmptyView() = with(requireActivity()) {
+        iv_empty.setImageResource(R.drawable.ic_bookmark_border_control_normal_24dp)
+        tv_title_empty.setText(R.string.title_empty_bookmark)
+        tv_text_empty.setText(R.string.text_empty_bookmark)
+        tv_text_empty.isVisible = true
     }
 
     private fun RecyclerView.setupRecyclerView() {
@@ -81,7 +90,7 @@ class MyRecallsFragment : DaggerFragment() {
 
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { visible ->
             rv_bookmarked_recalls.isVisible = !visible
-            empty_view_bookmarked_recalls.isVisible = visible
+            requireActivity().empty_view.isVisible = visible
         })
 
         viewModel.navigateToDetails.observe(viewLifecycleOwner, EventObserver {

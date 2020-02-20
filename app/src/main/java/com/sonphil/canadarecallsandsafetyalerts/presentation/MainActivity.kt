@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
@@ -13,6 +14,7 @@ import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -61,6 +63,12 @@ class MainActivity : DaggerAppCompatActivity() {
         )
     }
 
+    private fun resetEmptyView() {
+        tv_text_empty.isVisible = false
+        empty_view.isVisible = false
+        btn_retry.isVisible = false
+    }
+
     private fun setupBottomNavigation() {
         bottom_navigation_view.setupWithNavController(navController)
         bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
@@ -81,6 +89,8 @@ class MainActivity : DaggerAppCompatActivity() {
             val shouldShowBottomNavigationView = destination.id in topLevelDestinations
 
             bottom_navigation_view.setVisible(shouldShowBottomNavigationView)
+
+            resetEmptyView()
         }
     }
 }

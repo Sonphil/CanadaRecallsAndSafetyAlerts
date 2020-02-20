@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_recent.*
 import kotlinx.android.synthetic.main.include_categories_filter.*
 import kotlinx.android.synthetic.main.include_categories_filter.view.*
-import kotlinx.android.synthetic.main.include_empty_view_recent_recalls.*
+import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class RecentFragment : DaggerFragment() {
@@ -67,7 +67,7 @@ class RecentFragment : DaggerFragment() {
 
         setupFilter()
 
-        btn_retry_recent_recalls.setOnClickListener {
+        requireActivity().btn_retry.setOnClickListener {
             viewModel.refresh()
         }
     }
@@ -159,19 +159,19 @@ class RecentFragment : DaggerFragment() {
 
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { emptyViewVisible ->
             rv_recent_recalls.isVisible = !emptyViewVisible
-            empty_view_recent_recalls.isVisible = emptyViewVisible
+            requireActivity().empty_view.isVisible = emptyViewVisible
         })
 
         viewModel.emptyViewIconResId.observe(viewLifecycleOwner, Observer { iconId ->
-            iv_empty_recent_recalls.setImageResource(iconId)
+            requireActivity().iv_empty.setImageResource(iconId)
         })
 
         viewModel.emptyViewTitleResId.observe(viewLifecycleOwner, Observer { titleId ->
-            tv_title_empty_recent_recalls.setText(titleId)
+            requireActivity().tv_title_empty.setText(titleId)
         })
 
         viewModel.emptyViewRetryButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
-            btn_retry_recent_recalls.isVisible = visible
+            requireActivity().btn_retry.isVisible = visible
         })
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
