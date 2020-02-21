@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 29
@@ -23,9 +25,17 @@ android {
         }
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            manifestPlaceholders = [enableCrashReporting: "false"]
+            // Prevent Crashlytics from updating app resources with its own unique build ID
+            ext.alwaysUpdateBuildId = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [enableCrashReporting: "true"]
         }
     }
     compileOptions {
@@ -73,6 +83,11 @@ dependencies {
 
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$versions.work_manager"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:$versions.firebase"
+    implementation "com.google.firebase:firebase-analytics:$versions.firebase"
+    implementation "com.crashlytics.sdk.android:crashlytics:$versions.firebase_crashlytics"
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$versions.glide"
