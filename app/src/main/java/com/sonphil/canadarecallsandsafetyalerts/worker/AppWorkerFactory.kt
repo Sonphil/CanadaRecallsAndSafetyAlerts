@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
+import com.crashlytics.android.Crashlytics
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -19,11 +20,23 @@ class AppWorkerFactory @Inject constructor(
         workerClassName: String,
         workerParameters: WorkerParameters
     ): ListenableWorker? {
-        val foundEntry =
-            workerFactories.entries.find { Class.forName(workerClassName).isAssignableFrom(it.key) }
-        val factoryProvider = foundEntry?.value
-            ?: throw IllegalArgumentException("Unknown worker class name: $workerClassName")
+        try {
+            val foundEntry = workerFactories
+                .entries
+                .find {
+                    Class.forName(workerClassName).isAssignableFrom(it.key)
+                }
+            val factoryProvider = foundEntry?.value
 
-        return factoryProvider.get().create(appContext, workerParameters)
+            if (factoryProvider == null) {
+                val msg = "Unknown worker class name: $workerClassName"
+                Crashlytics.logException(IllegalArgumentException(msg))
+            }
+            return factoryProvider?.get()?.create(appContext, workerParameters)
+        } catch (e: Exception) {
+            Crashlytics.logException(e)
+
+            return null
+        }
     }
 }
