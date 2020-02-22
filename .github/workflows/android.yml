@@ -15,9 +15,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Lint Check
+      run: bash ./gradlew ktlintCheck
     - name: Build debug APK
       run: bash ./gradlew assembleDebug --stacktrace
-    - name: Upload APK
+    - name: Upload debug APK
       uses: actions/upload-artifact@v1
       with:
         name: app-debug
