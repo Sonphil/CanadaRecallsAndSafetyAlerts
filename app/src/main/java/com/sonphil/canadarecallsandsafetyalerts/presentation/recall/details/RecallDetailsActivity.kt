@@ -2,11 +2,11 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallImage
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatDefaultTimeZone
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
@@ -25,6 +26,9 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_recall_details.*
+import technolifestyle.com.imageslider.FlipperLayout
+import technolifestyle.com.imageslider.FlipperView
+import technolifestyle.com.imageslider.pagetransformers.ZoomOutPageTransformer
 import java.text.DateFormat
 import javax.inject.Inject
 
@@ -57,6 +61,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             tv_recall_title.text = recall.title
             bindRecallPublicationDate(recall)
             btn_back.setOnClickListener { onBackPressed() }
+            flipper_layout.setupFlipperLayout()
             btn_recall_bookmark.setOnClickListener { viewModel.clickBookmark() }
             swipe_refresh_layout_recall_details.setupSwipeRefreshLayout()
             setupBottomAppBar()
@@ -82,7 +87,6 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         super.onAttachedToWindow()
 
         btn_back.addTopInsetToTopMargin()
-        swipe_refresh_layout_recall_details.addTopInsetToTopMargin()
     }
 
     private fun View.addTopInsetToTopMargin() {
@@ -110,6 +114,12 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         setOnRefreshListener {
             viewModel.refresh()
         }
+    }
+
+    private fun FlipperLayout.setupFlipperLayout() {
+        removeAutoCycle()
+        showInnerPagerIndicator()
+        addPageTransformer(false, ZoomOutPageTransformer())
     }
 
     private fun setupBottomAppBar() {
@@ -177,23 +187,39 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         })
 
         viewModel.images.observe(this, Observer { images ->
-            val image = images.takeIf { !it.isNullOrEmpty() }?.first()
-
-            if (image != null) {
-                val thumbnailRequest: RequestBuilder<Drawable> = Glide
-                    .with(this)
-                    .load(Uri.parse(image.thumbUrl))
-
-                Glide.with(this)
-                    .load(Uri.parse(image.fullUrl))
-                    .centerCrop()
-                    .thumbnail(thumbnailRequest)
-                    .into(iv_recall_details)
-
-                iv_recall_details.isVisible = true
-            }
-
-            // TODO: Let user slide between images
+            showRecallImagesGallery(images)
         })
+    }
+
+    private fun ImageView.loadWithGlide(recallImage: RecallImage) {
+        val thumbnailRequest: RequestBuilder<Drawable> = Glide
+            .with(this)
+            .load(recallImage.thumbUrl)
+
+        Glide.with(this)
+            .load(recallImage.fullUrl)
+            .optionalCenterCrop()
+            .thumbnail(thumbnailRequest)
+            .into(this)
+    }
+
+    private fun showRecallImagesGallery(recallImages: List<RecallImage>?) {
+        flipper_layout.removeAllFlipperViews()
+
+        recallImages
+            .orEmpty()
+            .map { recallImage ->
+                FlipperView(this).apply {
+                    setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+                    setDescriptionBackgroundAlpha(0f)
+                    fun setFlipperImage(flipperImageView: ImageView, imageUrl: String) {
+                        flipperImageView.loadWithGlide(recallImage)
+                    }
+                    setImageUrl(recallImage.fullUrl, ::setFlipperImage)
+                }
+            }
+            .apply {
+                flipper_layout.addFlipperViewList(this)
+            }
     }
 }

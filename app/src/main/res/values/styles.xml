@@ -15,6 +15,10 @@
         <item name="android:navigationBarColor">@color/colorSplashBackground</item>
     </style>
 
+    <style name="RecallDetailsTheme" parent="AppTheme">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
     <style name="Widget.AppTheme.Chip.Filter" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="android:textColor">@android:color/black</item>
         <item name="chipBackgroundColor">@android:color/white</item>
