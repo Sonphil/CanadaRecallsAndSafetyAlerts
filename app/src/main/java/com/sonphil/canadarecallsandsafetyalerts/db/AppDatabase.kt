@@ -13,7 +13,7 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.*
     entities = [
         Bookmark::class,
         Recall::class,
-        RecallDetails::class,
+        RecallDetailsSection::class,
         RecallDetailsImage::class,
         CategoryFilter::class,
         ReadStatus::class,
@@ -26,7 +26,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun readStatusDao(): ReadStatusDao
-    abstract fun recallDetailsDao(): RecallDetailsDao
     abstract fun categoryFilterDao(): CategoryFilterDao
     abstract fun notificationKeywordDao(): NotificationKeyworkDao
 }

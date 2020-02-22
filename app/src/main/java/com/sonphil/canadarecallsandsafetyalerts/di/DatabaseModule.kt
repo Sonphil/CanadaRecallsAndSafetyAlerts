@@ -29,9 +29,6 @@ internal open class DatabaseModule {
     fun provideReadStatusDao(db: AppDatabase): ReadStatusDao = db.readStatusDao()
 
     @Singleton @Provides
-    fun provideRecallDetailsDao(db: AppDatabase): RecallDetailsDao = db.recallDetailsDao()
-
-    @Singleton @Provides
     fun provideCategoryFilterDao(db: AppDatabase): CategoryFilterDao = db.categoryFilterDao()
 
     @Singleton @Provides

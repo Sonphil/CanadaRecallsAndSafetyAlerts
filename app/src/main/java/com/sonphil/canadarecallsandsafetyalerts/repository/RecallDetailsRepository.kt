@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
-import com.sonphil.canadarecallsandsafetyalerts.db.RecallDetailsDao
+import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
 import javax.inject.Inject
 
 /**
@@ -10,5 +10,5 @@ import javax.inject.Inject
 
 class RecallDetailsRepository @Inject constructor(
     private val api: CanadaGovernmentApi,
-    private val dao: RecallDetailsDao
+    private val dao: RecallDao
 )

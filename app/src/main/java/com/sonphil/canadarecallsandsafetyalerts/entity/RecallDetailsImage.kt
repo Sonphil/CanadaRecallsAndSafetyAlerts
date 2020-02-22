@@ -6,16 +6,16 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(foreignKeys = [ForeignKey(
-    entity = RecallDetails::class,
-    parentColumns = ["recallId"],
-    childColumns = ["recall_id"],
+    entity = Recall::class,
+    parentColumns = ["id"],
+    childColumns = ["recallId"],
     onDelete = ForeignKey.CASCADE
 )])
 data class RecallDetailsImage(
+    @ColumnInfo(index = true)
+    val recallId: String,
     @PrimaryKey
     val fullUrl: String,
     val thumbUrl: String?,
-    val title: String?,
-    @ColumnInfo(name = "recall_id", index = true)
-    val recallId: String
+    val title: String?
 )
