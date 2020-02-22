@@ -39,18 +39,40 @@ class RecallDetailsRepository @Inject constructor(
         emit(StateData.Loading(dbValue))
 
         try {
-            val apiValue = api.recallDetails(recall.id, lang)
-                .toRecallAndDetailsSectionsAndImages(recall, apiBaseUrl)
-
-            recallDetailsBasicInformationDao.insert(apiValue.basicInformation)
-            recallDetailsSectionDao.refreshRecallDetailsSectionsForRecall(apiValue.detailsSections, recall)
-            recallDetailsImageDao.refreshRecallDetailsImagesForRecall(apiValue.images, recall)
+            refreshRecallAndDetailsSectionsAndImages(recall, lang)
         } catch (cause: Throwable) {
             emit(StateData.Error(cause.message, dbValue))
         } finally {
+            // Continue to emit DB value
             emitAll(recallDao.getRecallAndSectionsAndImagesById(recall.id).map { recalls ->
                 StateData.Success(recalls)
             })
+        }
+    }
+
+    suspend fun refreshRecallAndDetailsSectionsAndImages(recall: Recall, lang: String) {
+        val apiValue = api
+            .recallDetails(recall.id, lang)
+            .toRecallAndDetailsSectionsAndImages(recall, apiBaseUrl)
+
+        refreshDb(apiValue, recall)
+    }
+
+    private suspend fun refreshDb(
+        apiValue: RecallAndBasicInformationAndDetailsSectionsAndImages,
+        recall: Recall
+    ) {
+        apiValue.basicInformation?.let { basicInfo ->
+            recallDetailsBasicInformationDao.insert(basicInfo)
+        }
+        apiValue.detailsSections?.let { sections ->
+            recallDetailsSectionDao.refreshRecallDetailsSectionsForRecall(
+                sections,
+                recall
+            )
+        }
+        apiValue.images?.let { images ->
+            recallDetailsImageDao.refreshRecallDetailsImagesForRecall(images, recall)
         }
     }
 }

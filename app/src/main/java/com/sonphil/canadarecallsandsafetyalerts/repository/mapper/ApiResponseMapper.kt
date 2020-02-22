@@ -17,7 +17,7 @@ fun ApiRecall.toRecall() = Recall(
     datePublished?.times(1000L),
     recallId,
     title,
-    url
+    apiUrl
 )
 
 fun List<ApiRecall>.toRecalls() = map { it.toRecall() }

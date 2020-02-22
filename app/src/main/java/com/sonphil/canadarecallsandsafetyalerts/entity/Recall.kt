@@ -17,5 +17,5 @@ data class Recall(
     @PrimaryKey
     val id: String,
     val title: String?,
-    val url: String?
+    val apiUrl: String?
 ) : Parcelable

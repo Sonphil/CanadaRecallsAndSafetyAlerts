@@ -14,5 +14,5 @@ data class ApiRecall(
     @Json(name = "title")
     val title: String?,
     @Json(name = "url")
-    val url: String?
+    val apiUrl: String?
 )

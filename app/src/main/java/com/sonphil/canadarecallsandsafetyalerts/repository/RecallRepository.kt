@@ -36,11 +36,7 @@ class RecallRepository @Inject constructor(
         emit(StateData.Loading(dBValues))
 
         try {
-            val apiValues = api
-                .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
-                .toRecalls()
-
-            recallDao.refreshRecalls(apiValues)
+            refreshRecallsAndBookmarks(lang)
         } catch (cause: Throwable) {
             emit(StateData.Error(cause.message, dBValues))
         } finally {

@@ -1,5 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -7,12 +8,16 @@ import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatDefaultTimeZone
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
+import com.sonphil.canadarecallsandsafetyalerts.ext.open
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
+import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_recall_details.*
@@ -49,6 +54,8 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             bindRecallPublicationDate(recall)
             btn_back.setOnClickListener { onBackPressed() }
             btn_recall_bookmark.setOnClickListener { viewModel.clickBookmark() }
+            swipe_refresh_layout_recall_details.setupSwipeRefreshLayout()
+            setupBottomAppBar()
             subscribeUI()
         }
     }
@@ -71,7 +78,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         super.onAttachedToWindow()
 
         btn_back.addTopInsetToTopMargin()
-        scroll_view_recall_details.addTopInsetToTopMargin()
+        swipe_refresh_layout_recall_details.addTopInsetToTopMargin()
     }
 
     private fun View.addTopInsetToTopMargin() {
@@ -91,6 +98,31 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     private fun bindRecallPublicationDate(recall: Recall) {
         recall.datePublished?.let { date ->
             tv_recall_date.text = dateFormat.formatUTC(date)
+        }
+    }
+
+    private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
+        applyAppTheme(context)
+        setOnRefreshListener {
+            viewModel.refresh()
+        }
+    }
+
+    private fun setupBottomAppBar() {
+        bottom_app_bar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.item_link -> {
+                    viewModel.clickRecallUrl()
+
+                    true
+                }
+                R.id.item_share -> {
+                    viewModel.clickShareUrl()
+
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -118,6 +150,26 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
                 divider_recall_dates.isVisible = false
                 tv_recall_bookmark_date.isVisible = false
             }
+        })
+
+        viewModel.loading.observe(this, Observer { loading ->
+            swipe_refresh_layout_recall_details.isRefreshing = loading
+        })
+
+        viewModel.navigateToUrl.observe(this, EventObserver { uri ->
+            uri.open(this)
+        })
+
+        viewModel.shareUrl.observe(this, EventObserver { url ->
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, url)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+
+            startActivity(shareIntent)
         })
     }
 }
