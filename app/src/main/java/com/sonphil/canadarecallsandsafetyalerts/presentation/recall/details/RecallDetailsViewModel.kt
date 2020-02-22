@@ -47,6 +47,8 @@ class RecallDetailsViewModel @Inject constructor(
         .getRecallAndDetailsSectionsAndImages(recall, localeUtils.getCurrentLanguage())
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
 
+    val images = recallAndDetailsSectionsAndImages.map { it.data?.images }
+
     private val _loading = MediatorLiveData<Boolean>().apply {
         val source = recallAndDetailsSectionsAndImages.map { stateData ->
             stateData is StateData.Loading

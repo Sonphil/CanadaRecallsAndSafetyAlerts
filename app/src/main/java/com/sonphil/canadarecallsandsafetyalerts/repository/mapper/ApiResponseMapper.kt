@@ -1,5 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.repository.mapper
 
+import android.webkit.URLUtil
 import com.sonphil.canadarecallsandsafetyalerts.api.details.ApiRecallDetailsPanel
 import com.sonphil.canadarecallsandsafetyalerts.api.details.ApiRecallDetailsResponse
 import com.sonphil.canadarecallsandsafetyalerts.api.recent.ApiRecall
@@ -7,6 +8,7 @@ import com.sonphil.canadarecallsandsafetyalerts.api.recent.ApiRecentRecallsRespo
 import com.sonphil.canadarecallsandsafetyalerts.api.search.ApiSearchResponse
 import com.sonphil.canadarecallsandsafetyalerts.api.search.ApiSearchResult
 import com.sonphil.canadarecallsandsafetyalerts.entity.*
+
 
 /**
  * Created by Sonphil on 01-02-20.
@@ -54,11 +56,40 @@ fun ApiRecallDetailsPanel.toRecallDetailsImages(
 ) = data?.map { apiImage ->
     RecallImage(
         recall.id,
-        apiBaseUrl + apiImage.fullUrl,
-        apiBaseUrl + apiImage.thumbUrl,
+        apiImage.fullUrl.processedUrl(apiBaseUrl),
+        apiImage.thumbUrl.processedUrl(apiBaseUrl),
         apiImage.title
     )
 }.orEmpty()
+
+/**
+ * Attempts to fix the URL provided by the API
+ *
+ * Examples of URLs sent by the API:
+ *
+ * 1) /recall-alert-rappel-avis/inspection/2020/assets/http://wwwqa.inspection.gc.ca/DAM/DAM-recall-rappel/STAGING/images-images/20200221a_1582330689190_fra.jpg
+ * 2) /recall-alert-rappel-avis/hc-sc/2020/assets/ra-72335-01_s_fs_3_20200214-150635_17_fr.jpg
+ *
+ * For the first case, we need to remove the first part and remove "qa" from the URL and use https.
+ * For the second case, we simply to add the base url at the beginning.
+ */
+private fun String.processedUrl(apiBaseUrl: String): String {
+    val delimiter = "http"
+
+    if (contains(delimiter)) {
+        var url = delimiter + this.split(delimiter)
+            .last()
+            .replaceFirst("qa", "")
+
+        if (!URLUtil.isHttpsUrl(url)) {
+            url = url.replaceFirst("http://", "https://")
+        }
+
+        return url
+    } else {
+        return apiBaseUrl + this
+    }
+}
 
 fun List<ApiRecallDetailsPanel>?.toRecallDetailsImages(
     recall: Recall,
