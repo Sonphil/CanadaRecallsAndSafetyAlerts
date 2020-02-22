@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.activity_recall_details.*
 import java.text.DateFormat
 import javax.inject.Inject
 
-
 class RecallDetailsActivity : DaggerAppCompatActivity() {
 
     private val viewModel: RecallDetailsViewModel by lazy {

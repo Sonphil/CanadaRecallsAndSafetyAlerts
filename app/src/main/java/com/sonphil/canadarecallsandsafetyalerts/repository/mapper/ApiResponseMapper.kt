@@ -9,7 +9,6 @@ import com.sonphil.canadarecallsandsafetyalerts.api.search.ApiSearchResponse
 import com.sonphil.canadarecallsandsafetyalerts.api.search.ApiSearchResult
 import com.sonphil.canadarecallsandsafetyalerts.entity.*
 
-
 /**
  * Created by Sonphil on 01-02-20.
  */
