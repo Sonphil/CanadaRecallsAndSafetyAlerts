@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.db
 
 import androidx.room.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetailsImage
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallImage
 
 /**
  * Created by Sonphil on 22-02-20.
@@ -11,14 +11,14 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetailsImage
 @Dao
 interface RecallDetailsImageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(images: List<RecallDetailsImage>)
+    suspend fun insertAll(images: List<RecallImage>)
 
-    @Query("DELETE FROM recalldetailsimage WHERE recallId = :recallId")
+    @Query("DELETE FROM recallimage WHERE recallId = :recallId")
     suspend fun deleteAllOfRecall(recallId: String)
 
     @Transaction
     suspend fun refreshRecallDetailsImagesForRecall(
-        images: List<RecallDetailsImage>,
+        images: List<RecallImage>,
         recall: Recall
     ) {
         deleteAllOfRecall(recall.id)

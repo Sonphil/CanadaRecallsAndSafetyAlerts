@@ -1,6 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.di
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
+import com.sonphil.canadarecallsandsafetyalerts.di.qualifier.CanadaApiBaseUrl
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -15,22 +16,35 @@ import javax.inject.Singleton
 @Module
 internal open class NetworkModule {
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideMoshi(): Moshi = Moshi.Builder().build()
 
-    @Singleton @Provides
-    fun provideRetrofit(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
+    @Singleton
+    @Provides
+    @CanadaApiBaseUrl
+    fun provideCanadaApiBaseUrl(): String = "https://healthycanadians.gc.ca"
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(
+        moshi: Moshi,
+        okHttpClient: OkHttpClient,
+        @CanadaApiBaseUrl baseUrl: String
+    ): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("https://healthycanadians.gc.ca/recall-alert-rappel-avis/api/")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .client(okHttpClient)
-                .build()
+            .baseUrl("$baseUrl/recall-alert-rappel-avis/api/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
     }
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideApi(retrofit: Retrofit): CanadaGovernmentApi {
         return retrofit.create(CanadaGovernmentApi::class.java)
     }

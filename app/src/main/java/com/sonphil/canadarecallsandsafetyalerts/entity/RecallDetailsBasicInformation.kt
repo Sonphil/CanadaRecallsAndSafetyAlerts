@@ -1,9 +1,12 @@
 package com.sonphil.canadarecallsandsafetyalerts.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+
+/**
+ * Created by Sonphil on 22-02-20.
+ */
 
 @Entity(foreignKeys = [ForeignKey(
     entity = Recall::class,
@@ -11,11 +14,12 @@ import androidx.room.PrimaryKey
     childColumns = ["recallId"],
     onDelete = ForeignKey.CASCADE
 )])
-data class RecallDetailsImage(
-    @ColumnInfo(index = true)
-    val recallId: String,
+class RecallDetailsBasicInformation(
     @PrimaryKey
-    val fullUrl: String,
-    val thumbUrl: String,
-    val title: String
+    val recallId: String,
+    val recallFullId: String,
+    val url: String?,
+    val title: String?,
+    val startDate: Long?,
+    val datePublished: Long?
 )

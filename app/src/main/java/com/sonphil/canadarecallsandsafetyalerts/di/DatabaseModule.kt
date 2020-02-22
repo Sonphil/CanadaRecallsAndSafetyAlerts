@@ -13,30 +13,46 @@ import javax.inject.Singleton
 @Module
 internal open class DatabaseModule {
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     open fun provideDb(app: Application): AppDatabase =
-            Room.databaseBuilder(app, AppDatabase::class.java, "canadarecallsandsafetyalerts.db")
-                    .createFromAsset("database/canadarecallsandsafetyalertsinit.db")
-                    .build()
+        Room.databaseBuilder(app, AppDatabase::class.java, "canadarecallsandsafetyalerts.db")
+            .createFromAsset("database/canadarecallsandsafetyalertsinit.db")
+            .build()
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideRecallDao(db: AppDatabase): RecallDao = db.recallDao()
 
-    @Singleton @Provides
-    fun provideRecallDetailsSectionDao(db: AppDatabase): RecallDetailsSectionDao = db.recallDetailsSectionDao()
+    @Singleton
+    @Provides
+    fun provideRecallDetailsBasicInformationDao(db: AppDatabase): RecallDetailsBasicInformationDao =
+        db.recallDetailsBasicInformationDao()
 
-    @Singleton @Provides
-    fun provideRecallDetailsImageDao(db: AppDatabase): RecallDetailsImageDao = db.recallDetailsImageDao()
+    @Singleton
+    @Provides
+    fun provideRecallDetailsSectionDao(db: AppDatabase): RecallDetailsSectionDao = db
+        .recallDetailsSectionDao()
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
+    fun provideRecallDetailsImageDao(db: AppDatabase): RecallDetailsImageDao = db
+        .recallDetailsImageDao()
+
+    @Singleton
+    @Provides
     fun provideBookmarkDao(db: AppDatabase): BookmarkDao = db.bookmarkDao()
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideReadStatusDao(db: AppDatabase): ReadStatusDao = db.readStatusDao()
 
-    @Singleton @Provides
+    @Singleton
+    @Provides
     fun provideCategoryFilterDao(db: AppDatabase): CategoryFilterDao = db.categoryFilterDao()
 
-    @Singleton @Provides
-    fun provideNotificationKeywordDao(db: AppDatabase): NotificationKeyworkDao = db.notificationKeywordDao()
+    @Singleton
+    @Provides
+    fun provideNotificationKeywordDao(db: AppDatabase): NotificationKeyworkDao =
+        db.notificationKeywordDao()
 }

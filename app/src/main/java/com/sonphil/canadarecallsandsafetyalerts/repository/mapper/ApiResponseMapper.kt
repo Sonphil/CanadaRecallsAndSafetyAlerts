@@ -48,18 +48,43 @@ fun List<ApiRecallDetailsPanel>?.toRecallDetailsSections(recall: Recall) = orEmp
         panel.toRecallDetailsSection(recall)
     }
 
-fun ApiRecallDetailsPanel.toRecallDetailsImages(recall: Recall) = data?.map { apiImage ->
-    RecallDetailsImage(recall.id, apiImage.fullUrl, apiImage.thumbUrl, apiImage.title)
+fun ApiRecallDetailsPanel.toRecallDetailsImages(
+    recall: Recall,
+    apiBaseUrl: String
+) = data?.map { apiImage ->
+    RecallImage(
+        recall.id,
+        apiBaseUrl + apiImage.fullUrl,
+        apiBaseUrl + apiImage.thumbUrl,
+        apiImage.title
+    )
 }.orEmpty()
 
-fun List<ApiRecallDetailsPanel>?.toRecallDetailsImages(recall: Recall) = this
+fun List<ApiRecallDetailsPanel>?.toRecallDetailsImages(
+    recall: Recall,
+    apiBaseUrl: String
+) = this
     ?.find { panel ->
         panel.title.equals("images", true) && panel.data != null
-    }?.toRecallDetailsImages(recall)
+    }?.toRecallDetailsImages(recall, apiBaseUrl)
     .orEmpty()
 
-fun ApiRecallDetailsResponse.toRecallAndDetailsSectionsAndImages(recall: Recall) =
-    RecallDetailsSectionsAndImages(
-        sections = panels.toRecallDetailsSections(recall),
-        images = panels.toRecallDetailsImages(recall)
+fun ApiRecallDetailsResponse.toBasicInformation(recall: Recall) = RecallDetailsBasicInformation(
+    recall.id,
+    recallId,
+    url,
+    title,
+    startDate,
+    datePublished
+)
+
+fun ApiRecallDetailsResponse.toRecallAndDetailsSectionsAndImages(
+    recall: Recall,
+    apiBaseUrl: String
+) =
+    RecallAndBasicInformationAndDetailsSectionsAndImages(
+        recall,
+        basicInformation = this.toBasicInformation(recall),
+        detailsSections = panels.toRecallDetailsSections(recall),
+        images = panels.toRecallDetailsImages(recall, apiBaseUrl)
     )

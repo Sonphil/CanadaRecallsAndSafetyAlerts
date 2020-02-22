@@ -2,10 +2,12 @@ package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
+import com.sonphil.canadarecallsandsafetyalerts.db.RecallDetailsBasicInformationDao
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDetailsImageDao
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDetailsSectionDao
+import com.sonphil.canadarecallsandsafetyalerts.di.qualifier.CanadaApiBaseUrl
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecallAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.flow.*
@@ -18,14 +20,16 @@ import javax.inject.Inject
 class RecallDetailsRepository @Inject constructor(
     private val api: CanadaGovernmentApi,
     private val recallDao: RecallDao,
+    private val recallDetailsBasicInformationDao: RecallDetailsBasicInformationDao,
     private val recallDetailsSectionDao: RecallDetailsSectionDao,
-    private val recallDetailsImageDao: RecallDetailsImageDao
+    private val recallDetailsImageDao: RecallDetailsImageDao,
+    @CanadaApiBaseUrl private val apiBaseUrl: String
 ) {
     fun getRecallAndDetailsSectionsAndImages(
         recall: Recall,
         lang: String
-    ): Flow<StateData<RecallAndDetailsSectionsAndImages>> = flow {
-        emit(StateData.Loading<RecallAndDetailsSectionsAndImages>(null))
+    ): Flow<StateData<RecallAndBasicInformationAndDetailsSectionsAndImages>> = flow {
+        emit(StateData.Loading<RecallAndBasicInformationAndDetailsSectionsAndImages>(null))
 
         val dbValue = recallDao
             .getRecallAndSectionsAndImagesById(recall.id)
@@ -36,9 +40,10 @@ class RecallDetailsRepository @Inject constructor(
 
         try {
             val apiValue = api.recallDetails(recall.id, lang)
-                .toRecallAndDetailsSectionsAndImages(recall)
+                .toRecallAndDetailsSectionsAndImages(recall, apiBaseUrl)
 
-            recallDetailsSectionDao.refreshRecallDetailsSectionsForRecall(apiValue.sections, recall)
+            recallDetailsBasicInformationDao.insert(apiValue.basicInformation)
+            recallDetailsSectionDao.refreshRecallDetailsSectionsForRecall(apiValue.detailsSections, recall)
             recallDetailsImageDao.refreshRecallDetailsImagesForRecall(apiValue.images, recall)
         } catch (cause: Throwable) {
             emit(StateData.Error(cause.message, dbValue))

@@ -7,19 +7,25 @@ import androidx.room.Relation
  * Created by Sonphil on 01-02-20.
  */
 
-data class RecallAndDetailsSectionsAndImages(
+data class RecallAndBasicInformationAndDetailsSectionsAndImages(
     @Embedded
     val recall: Recall,
     @Relation(
         parentColumn = "id",
         entityColumn = "recallId",
-        entity = RecallDetailsSection::class
+        entity = RecallDetailsBasicInformation::class
     )
-    val sections: List<RecallDetailsSection>,
+    val basicInformation: RecallDetailsBasicInformation,
     @Relation(
         parentColumn = "id",
         entityColumn = "recallId",
-        entity = RecallDetailsImage::class
+        entity = RecallDetailsSection::class
     )
-    val images: List<RecallDetailsImage>
+    val detailsSections: List<RecallDetailsSection>,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "recallId",
+        entity = RecallImage::class
+    )
+    val images: List<RecallImage>
 )

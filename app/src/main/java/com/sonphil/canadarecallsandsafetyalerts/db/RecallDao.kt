@@ -2,8 +2,8 @@ package com.sonphil.canadarecallsandsafetyalerts.db
 
 import androidx.room.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndDetailsSectionsAndImages
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -64,5 +64,5 @@ interface RecallDao {
 
     @Transaction
     @Query("SELECT * FROM recall WHERE id = :recallId")
-    fun getRecallAndSectionsAndImagesById(recallId: String): Flow<RecallAndDetailsSectionsAndImages>
+    fun getRecallAndSectionsAndImagesById(recallId: String): Flow<RecallAndBasicInformationAndDetailsSectionsAndImages>
 }

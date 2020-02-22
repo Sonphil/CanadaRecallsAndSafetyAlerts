@@ -11,17 +11,17 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.RecallDetailsSection
 @Dao
 interface RecallDetailsSectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(sections: List<RecallDetailsSection>)
+    suspend fun insertAll(detailsSections: List<RecallDetailsSection>)
 
     @Query("DELETE FROM recalldetailssection WHERE recallId = :recallId")
     suspend fun deleteAllOfRecall(recallId: String)
 
     @Transaction
     suspend fun refreshRecallDetailsSectionsForRecall(
-        sections: List<RecallDetailsSection>,
+        detailsSections: List<RecallDetailsSection>,
         recall: Recall
     ) {
         deleteAllOfRecall(recall.id)
-        insertAll(sections)
+        insertAll(detailsSections)
     }
 }
