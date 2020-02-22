@@ -6,9 +6,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ApiRecallDetailsImage(
     @Json(name = "fullUrl")
-    val fullUrl: String?,
+    val fullUrl: String,
     @Json(name = "thumbUrl")
-    val thumbUrl: String?,
+    val thumbUrl: String,
     @Json(name = "title")
-    val title: String?
+    val title: String
 )

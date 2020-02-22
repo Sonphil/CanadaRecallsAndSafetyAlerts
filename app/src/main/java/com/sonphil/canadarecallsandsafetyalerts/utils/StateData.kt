@@ -6,8 +6,8 @@ sealed class StateData<T>(open val data: T?, open val message: String?) {
 
     data class Error<T>(
         override val message: String?,
-        override val data: T
+        override val data: T?
     ) : StateData<T>(data, message)
 
-    data class Loading<T>(override val data: T) : StateData<T>(data, null)
+    data class Loading<T>(override val data: T?) : StateData<T>(data, null)
 }

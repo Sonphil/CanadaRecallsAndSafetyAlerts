@@ -6,11 +6,11 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ApiRecallDetailsResponse(
     @Json(name = "category")
-    val category: List<String?>?,
+    val category: List<String>?,
     @Json(name = "date_published")
     val datePublished: Int?,
     @Json(name = "panels")
-    val panels: List<ApiRecallDetailsPanel?>?,
+    val panels: List<ApiRecallDetailsPanel>?,
     @Json(name = "recallId")
     val recallId: String?,
     @Json(name = "start_date")

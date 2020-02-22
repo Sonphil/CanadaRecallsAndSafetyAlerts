@@ -23,6 +23,12 @@ internal open class DatabaseModule {
     fun provideRecallDao(db: AppDatabase): RecallDao = db.recallDao()
 
     @Singleton @Provides
+    fun provideRecallDetailsSectionDao(db: AppDatabase): RecallDetailsSectionDao = db.recallDetailsSectionDao()
+
+    @Singleton @Provides
+    fun provideRecallDetailsImageDao(db: AppDatabase): RecallDetailsImageDao = db.recallDetailsImageDao()
+
+    @Singleton @Provides
     fun provideBookmarkDao(db: AppDatabase): BookmarkDao = db.bookmarkDao()
 
     @Singleton @Provides

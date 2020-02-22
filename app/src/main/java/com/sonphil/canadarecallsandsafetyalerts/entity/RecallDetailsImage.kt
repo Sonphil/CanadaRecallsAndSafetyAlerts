@@ -16,6 +16,6 @@ data class RecallDetailsImage(
     val recallId: String,
     @PrimaryKey
     val fullUrl: String,
-    val thumbUrl: String?,
-    val title: String?
+    val thumbUrl: String,
+    val title: String
 )

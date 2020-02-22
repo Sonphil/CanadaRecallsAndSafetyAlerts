@@ -24,6 +24,8 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.*
 @TypeConverters(CategoryTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
+    abstract fun recallDetailsSectionDao(): RecallDetailsSectionDao
+    abstract fun recallDetailsImageDao(): RecallDetailsImageDao
     abstract fun bookmarkDao(): BookmarkDao
     abstract fun readStatusDao(): ReadStatusDao
     abstract fun categoryFilterDao(): CategoryFilterDao

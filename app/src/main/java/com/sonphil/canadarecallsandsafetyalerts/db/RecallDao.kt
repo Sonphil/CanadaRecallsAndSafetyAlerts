@@ -29,10 +29,6 @@ interface RecallDao {
     fun getAllRecallsAndBookmarksFilteredByCategories(): Flow<List<RecallAndBookmarkAndReadStatus>>
 
     @Transaction
-    @Query("SELECT * FROM recall WHERE id = :recallId")
-    fun getRecallAndSectionsAndImagesById(recallId: String): Flow<RecallAndDetailsSectionsAndImages>
-
-    @Transaction
     @Query(
         """
             SELECT * FROM recall 
@@ -65,4 +61,8 @@ interface RecallDao {
         deleteNotBookmarkedRecalls()
         insertAll(recalls)
     }
+
+    @Transaction
+    @Query("SELECT * FROM recall WHERE id = :recallId")
+    fun getRecallAndSectionsAndImagesById(recallId: String): Flow<RecallAndDetailsSectionsAndImages>
 }

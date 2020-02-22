@@ -33,7 +33,7 @@ interface CanadaGovernmentApi {
      */
     @GET("{id}/{lang}")
     suspend fun recallDetails(
-        @Path("id") recallId: Int,
+        @Path("id") recallId: String,
         @Path("lang") lang: String?
     ): ApiRecallDetailsResponse
 
