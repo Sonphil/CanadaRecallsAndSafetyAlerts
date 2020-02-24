@@ -3,6 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.ext
 import android.Manifest
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.TypedArray
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -70,4 +71,15 @@ fun Context.getColorFromAttr(
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
+}
+
+/**
+ * Returns dimension from attribute
+ */
+fun Context.getDimensionFromAttr(@AttrRes attrDimension: Int): Int {
+    val styledAttributes: TypedArray = theme.obtainStyledAttributes(intArrayOf(attrDimension))
+    val dimension = styledAttributes.getDimension(0, 0f).toInt()
+    styledAttributes.recycle()
+
+    return dimension
 }

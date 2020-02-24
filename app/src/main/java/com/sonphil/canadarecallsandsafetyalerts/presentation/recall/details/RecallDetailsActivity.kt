@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,10 +17,7 @@ import com.bumptech.glide.RequestBuilder
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallImage
-import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
-import com.sonphil.canadarecallsandsafetyalerts.ext.formatDefaultTimeZone
-import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
-import com.sonphil.canadarecallsandsafetyalerts.ext.open
+import com.sonphil.canadarecallsandsafetyalerts.ext.*
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
@@ -45,6 +43,9 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     lateinit var dateUtils: DateUtils
 
     private val dateFormat by lazy { dateUtils.getDateFormat(DateFormat.LONG) }
+    private val constraintLayoutInitialTopMargin by lazy {
+        constraint_layout_recall_details.marginTop
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             bindRecallCategory(recall)
             tv_recall_title.text = recall.title
             bindRecallPublicationDate(recall)
-            btn_back.setOnClickListener { onBackPressed() }
+            setupBackButton()
             flipper_layout.setupFlipperLayout()
             btn_recall_bookmark.setOnClickListener { viewModel.clickBookmark() }
             swipe_refresh_layout_recall_details.setupSwipeRefreshLayout()
@@ -83,17 +84,9 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         )
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        btn_back.addTopInsetToTopMargin()
-    }
-
-    private fun View.addTopInsetToTopMargin() {
-        val params = layoutParams as ViewGroup.MarginLayoutParams
-
-        params.topMargin = params.topMargin + window.decorView.rootWindowInsets.stableInsetTop
-        this.layoutParams = params
+    private fun setupBackButton() {
+        btn_back.setOnClickListener { onBackPressed() }
+        btn_back.doApplyTopInsetToTopMarginWhenAttached()
     }
 
     private fun bindRecallCategory(recall: Recall) {
@@ -187,7 +180,26 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         })
 
         viewModel.images.observe(this, Observer { images ->
-            showRecallImagesGallery(images)
+            if (!images.isNullOrEmpty()) {
+                fillImagesGallery(images)
+            }
+        })
+
+        viewModel.galleryVisible.observe(this, Observer { visible ->
+            flipper_layout.isVisible = visible
+
+            constraint_layout_recall_details.doApplyInsetsWhenAttached { view, windowInsets ->
+                val params = view.layoutParams as ViewGroup.MarginLayoutParams
+
+                if (visible) {
+                    params.topMargin = constraintLayoutInitialTopMargin
+                } else {
+                    val toolbarHeight = getDimensionFromAttr(R.attr.actionBarSize)
+                    params.topMargin = constraintLayoutInitialTopMargin + toolbarHeight + windowInsets.systemWindowInsetTop
+                }
+
+                view.layoutParams = params
+            }
         })
     }
 
@@ -203,9 +215,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             .into(this)
     }
 
-    private fun showRecallImagesGallery(recallImages: List<RecallImage>?) {
-        flipper_layout.removeAllFlipperViews()
-
+    private fun fillImagesGallery(recallImages: List<RecallImage>?) {
         recallImages
             .orEmpty()
             .map { recallImage ->
@@ -219,6 +229,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
                 }
             }
             .apply {
+                flipper_layout.removeAllFlipperViews()
                 flipper_layout.addFlipperViewList(this)
             }
     }

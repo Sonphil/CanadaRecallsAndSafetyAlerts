@@ -48,6 +48,7 @@ class RecallDetailsViewModel @Inject constructor(
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
 
     val images = recallAndDetailsSectionsAndImages.map { it.data?.images }
+    val galleryVisible = images.map { !it.isNullOrEmpty() }
 
     private val _loading = MediatorLiveData<Boolean>().apply {
         val source = recallAndDetailsSectionsAndImages.map { stateData ->
