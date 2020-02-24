@@ -44,7 +44,9 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/nav_graph_main" />
 
-    <include layout="@layout/include_empty_view" />
+    <include
+        android:id="@+id/include_empty_view"
+        layout="@layout/include_empty_view" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"

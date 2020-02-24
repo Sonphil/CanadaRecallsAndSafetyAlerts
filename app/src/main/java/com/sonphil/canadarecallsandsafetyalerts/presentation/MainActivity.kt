@@ -10,14 +10,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }
@@ -33,10 +33,10 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setupTheme()
         setTheme(R.style.AppTheme)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         setupActionBar()
         setupBottomNavigation()
     }
@@ -55,23 +55,25 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun setupActionBar() {
         val appBarConfiguration = AppBarConfiguration(topLevelDestinations)
 
-        setSupportActionBar(toolbar)
-        collapsing_toolbar_layout.setupWithNavController(
-            toolbar,
+        setSupportActionBar(binding.toolbar)
+        binding.collapsingToolbarLayout.setupWithNavController(
+            binding.toolbar,
             navController,
             appBarConfiguration
         )
     }
 
     private fun resetEmptyView() {
-        tv_text_empty.isVisible = false
-        btn_retry.isVisible = false
-        empty_view.isVisible = false
+        with(binding.includeEmptyView) {
+            tvTextEmpty.isVisible = false
+            btnRetry.isVisible = false
+            emptyView.isVisible = false
+        }
     }
 
     private fun setupBottomNavigation() {
-        bottom_navigation_view.setupWithNavController(navController)
-        bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             _selectedDestinationId.value = item.itemId
 
             if (item.itemId == navController.currentDestination?.id) {
@@ -84,13 +86,13 @@ class MainActivity : DaggerAppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            app_bar_layout.setExpanded(true, true)
+            binding.appBarLayout.setExpanded(true, true)
 
             resetEmptyView()
 
             val shouldShowBottomNavigationView = destination.id in topLevelDestinations
 
-            bottom_navigation_view.setVisible(shouldShowBottomNavigationView)
+            binding.bottomNavigationView.setVisible(shouldShowBottomNavigationView)
         }
     }
 }

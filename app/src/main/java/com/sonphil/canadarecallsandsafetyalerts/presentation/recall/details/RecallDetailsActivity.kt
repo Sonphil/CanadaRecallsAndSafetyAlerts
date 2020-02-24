@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallImage
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
@@ -23,7 +24,6 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_recall_details.*
 import technolifestyle.com.imageslider.FlipperLayout
 import technolifestyle.com.imageslider.FlipperView
 import technolifestyle.com.imageslider.pagetransformers.ZoomOutPageTransformer
@@ -32,6 +32,7 @@ import javax.inject.Inject
 
 class RecallDetailsActivity : DaggerAppCompatActivity() {
 
+    private lateinit var binding: ActivityRecallDetailsBinding
     private val viewModel: RecallDetailsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(RecallDetailsViewModel::class.java)
     }
@@ -44,13 +45,13 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
     private val dateFormat by lazy { dateUtils.getDateFormat(DateFormat.LONG) }
     private val constraintLayoutInitialTopMargin by lazy {
-        constraint_layout_recall_details.marginTop
+        binding.constraintLayoutRecallDetails.marginTop
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_recall_details)
+        binding = ActivityRecallDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val recall = getRecall()
 
@@ -59,12 +60,12 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         } else {
             setupWindow()
             bindRecallCategory(recall)
-            tv_recall_title.text = recall.title
+            binding.tvRecallTitle.text = recall.title
             bindRecallPublicationDate(recall)
             setupBackButton()
-            flipper_layout.setupFlipperLayout()
-            btn_recall_bookmark.setOnClickListener { viewModel.clickBookmark() }
-            swipe_refresh_layout_recall_details.setupSwipeRefreshLayout()
+            binding.flipperLayout.setupFlipperLayout()
+            binding.btnRecallBookmark.setOnClickListener { viewModel.clickBookmark() }
+            binding.swipeRefreshLayoutRecallDetails.setupSwipeRefreshLayout()
             setupBottomAppBar()
             subscribeUI()
         }
@@ -75,7 +76,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupWindow() {
-        root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+        binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         window.setFlags(
@@ -85,20 +86,20 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupBackButton() {
-        btn_back.setOnClickListener { onBackPressed() }
-        btn_back.doApplyTopInsetToTopMarginWhenAttached()
+        binding.btnBack.setOnClickListener { onBackPressed() }
+        binding.btnBack.doApplyTopInsetToTopMarginWhenAttached()
     }
 
     private fun bindRecallCategory(recall: Recall) {
         val resources = CategoryResources(recall.category)
 
-        iv_recall_category_icon.setImageResource(resources.iconId)
-        tv_recall_category.setText(resources.labelId)
+        binding.ivRecallCategoryIcon.setImageResource(resources.iconId)
+        binding.tvRecallCategory.setText(resources.labelId)
     }
 
     private fun bindRecallPublicationDate(recall: Recall) {
         recall.datePublished?.let { date ->
-            tv_recall_date.text = dateFormat.formatUTC(date)
+            binding.tvRecallDate.text = dateFormat.formatUTC(date)
         }
     }
 
@@ -116,7 +117,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupBottomAppBar() {
-        bottom_app_bar.setOnMenuItemClickListener { item ->
+        binding.bottomAppBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.item_link -> {
                     viewModel.clickRecallUrl()
@@ -136,31 +137,31 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     private fun subscribeUI() {
         viewModel.bookmarked.observe(this, Observer { bookmarked ->
             if (bookmarked) {
-                btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
+                binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
             } else {
-                btn_recall_bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
+                binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
             }
         })
 
         viewModel.bookmarkDate.observe(this, Observer { date ->
             if (date != null) {
-                divider_recall_dates.isVisible = true
-                tv_recall_bookmark_date.isVisible = true
+                binding.dividerRecallDates.isVisible = true
+                binding.tvRecallBookmarkDate.isVisible = true
 
                 val dateStr = dateFormat.formatDefaultTimeZone(date)
 
-                tv_recall_bookmark_date.text = String.format(
+                binding.tvRecallBookmarkDate.text = String.format(
                     getString(R.string.label_bookmarked_on),
                     dateStr
                 )
             } else {
-                divider_recall_dates.isVisible = false
-                tv_recall_bookmark_date.isVisible = false
+                binding.dividerRecallDates.isVisible = false
+                binding.tvRecallBookmarkDate.isVisible = false
             }
         })
 
         viewModel.loading.observe(this, Observer { loading ->
-            swipe_refresh_layout_recall_details.isRefreshing = loading
+            binding.swipeRefreshLayoutRecallDetails.isRefreshing = loading
         })
 
         viewModel.navigateToUrl.observe(this, EventObserver { uri ->
@@ -186,9 +187,9 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         })
 
         viewModel.galleryVisible.observe(this, Observer { visible ->
-            flipper_layout.isVisible = visible
+            binding.flipperLayout.isVisible = visible
 
-            constraint_layout_recall_details.doApplyInsetsWhenAttached { view, windowInsets ->
+            binding.constraintLayoutRecallDetails.doApplyInsetsWhenAttached { view, windowInsets ->
                 val params = view.layoutParams as ViewGroup.MarginLayoutParams
 
                 if (visible) {
@@ -229,8 +230,8 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
                 }
             }
             .apply {
-                flipper_layout.removeAllFlipperViews()
-                flipper_layout.addFlipperViewList(this)
+                binding.flipperLayout.removeAllFlipperViews()
+                binding.flipperLayout.addFlipperViewList(this)
             }
     }
 }

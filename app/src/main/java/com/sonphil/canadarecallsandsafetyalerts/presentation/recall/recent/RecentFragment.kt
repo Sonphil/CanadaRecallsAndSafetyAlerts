@@ -75,9 +75,7 @@ class RecentFragment : DaggerFragment() {
     private fun setupFilter() {
         val btnFilterRecalls = requireActivity().btn_filter_recalls
 
-        btnFilterRecalls.setOnClickListener { btn ->
-            btnFilterRecalls.isExpanded = true
-        }
+        btnFilterRecalls.setOnClickListener { btnFilterRecalls.isExpanded = true }
 
         with(requireActivity().card_view_categories_filter) {
             btn_categories_filter_done.setOnClickListener {

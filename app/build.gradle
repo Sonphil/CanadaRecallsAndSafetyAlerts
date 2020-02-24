@@ -45,6 +45,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    viewBinding.enabled = true
 }
 
 androidExtensions {
@@ -64,7 +65,7 @@ dependencies {
     implementation "androidx.browser:browser:$versions.support"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
     implementation "androidx.core:core-ktx:$versions.android_ktx"
-    implementation 'androidx.fragment:fragment-ktx:1.2.1'
+    implementation 'androidx.fragment:fragment-ktx:1.2.2'
     implementation "androidx.preference:preference:1.1.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
