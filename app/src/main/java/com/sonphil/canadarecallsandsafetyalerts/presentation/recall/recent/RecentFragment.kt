@@ -32,9 +32,12 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import javax.inject.Inject
 
 class RecentFragment : DaggerFragment() {
-    private lateinit var binding: FragmentRecentBinding
+    // TODO: Use Kotlin delegates to avoid boilerplate
+    private var _binding: FragmentRecentBinding? = null
+    private val binding get() = _binding!!
     private lateinit var mainActivityBinding: ActivityMainBinding
-    private lateinit var categoriesFilterBinding: IncludeCategoriesFilterBinding
+    private var _categoriesFilterBinding: IncludeCategoriesFilterBinding ? = null
+    private val categoriesFilterBinding get() = _categoriesFilterBinding!!
     private val viewModel: RecentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(RecentViewModel::class.java)
     }
@@ -49,11 +52,11 @@ class RecentFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRecentBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentRecentBinding.inflate(layoutInflater, container, false)
 
         mainActivityBinding = (requireActivity() as MainActivity).binding
 
-        categoriesFilterBinding = IncludeCategoriesFilterBinding.inflate(
+        _categoriesFilterBinding = IncludeCategoriesFilterBinding.inflate(
             layoutInflater,
             mainActivityBinding.root
         )
@@ -203,6 +206,9 @@ class RecentFragment : DaggerFragment() {
             removeView(categoriesFilterBinding.cardViewCategoriesFilter)
             removeView(categoriesFilterBinding.btnFilterRecalls)
         }
+
+        _binding = null
+        _categoriesFilterBinding = null
 
         super.onDestroyView()
     }
