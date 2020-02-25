@@ -17,7 +17,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }

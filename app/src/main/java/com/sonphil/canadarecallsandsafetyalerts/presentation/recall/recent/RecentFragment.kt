@@ -17,6 +17,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
 import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
@@ -26,15 +29,12 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_recent.*
-import kotlinx.android.synthetic.main.include_categories_filter.*
-import kotlinx.android.synthetic.main.include_categories_filter.view.*
-import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class RecentFragment : DaggerFragment() {
-
+    private lateinit var binding: FragmentRecentBinding
+    private lateinit var mainActivityBinding: ActivityMainBinding
+    private lateinit var categoriesFilterBinding: IncludeCategoriesFilterBinding
     private val viewModel: RecentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(RecentViewModel::class.java)
     }
@@ -49,61 +49,67 @@ class RecentFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (requireActivity().card_view_categories_filter == null) {
-            inflater.inflate(R.layout.include_categories_filter, requireActivity().root, true)
-        }
+        binding = FragmentRecentBinding.inflate(layoutInflater, container, false)
 
-        return inflater.inflate(R.layout.fragment_recent, container, false)
+        mainActivityBinding = (requireActivity() as MainActivity).binding
+
+        categoriesFilterBinding = IncludeCategoriesFilterBinding.inflate(
+            layoutInflater,
+            mainActivityBinding.root
+        )
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv_recent_recalls.setupRecyclerView()
+        binding.rvRecentRecalls.setupRecyclerView()
 
         subscribeUI()
 
-        swipe_refresh_layout_recent_recalls.setupSwipeRefreshLayout()
+        binding.swipeRefreshLayoutRecentRecalls.setupSwipeRefreshLayout()
 
         setupFilter()
 
-        requireActivity().btn_retry.setOnClickListener {
+        mainActivityBinding.includeEmptyView.btnRetry.setOnClickListener {
             viewModel.refresh()
         }
     }
 
     private fun setupFilter() {
-        val btnFilterRecalls = requireActivity().btn_filter_recalls
+        with(categoriesFilterBinding) {
+            btnFilterRecalls.setOnClickListener {
+                btnFilterRecalls.isExpanded = true
+            }
 
-        btnFilterRecalls.setOnClickListener { btnFilterRecalls.isExpanded = true }
-
-        with(requireActivity().card_view_categories_filter) {
-            btn_categories_filter_done.setOnClickListener {
+            btnCategoriesFilterDone.setOnClickListener {
                 btnFilterRecalls.isExpanded = false
             }
-            val filterChipListener =
-                CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-                    when (buttonView.id) {
-                        R.id.chip_category_filter_food -> viewModel.updateCategoryFilter(
-                            Category.FOOD,
-                            isChecked
-                        )
-                        R.id.chip_category_filter_vehicle -> viewModel.updateCategoryFilter(
-                            Category.VEHICLE,
-                            isChecked
-                        )
-                        R.id.chip_category_filter_health_product -> viewModel.updateCategoryFilter(
-                            Category.HEALTH_PRODUCT,
-                            isChecked
-                        )
-                        R.id.chip_category_filter_consumer_product -> viewModel.updateCategoryFilter(
-                            Category.CONSUMER_PRODUCT,
-                            isChecked
-                        )
-                    }
+
+            CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                when (buttonView.id) {
+                    R.id.chip_category_filter_food -> viewModel.updateCategoryFilter(
+                        Category.FOOD,
+                        isChecked
+                    )
+                    R.id.chip_category_filter_vehicle -> viewModel.updateCategoryFilter(
+                        Category.VEHICLE,
+                        isChecked
+                    )
+                    R.id.chip_category_filter_health_product -> viewModel.updateCategoryFilter(
+                        Category.HEALTH_PRODUCT,
+                        isChecked
+                    )
+                    R.id.chip_category_filter_consumer_product -> viewModel.updateCategoryFilter(
+                        Category.CONSUMER_PRODUCT,
+                        isChecked
+                    )
                 }
-            chip_group_category_filter.forEach { chip ->
-                (chip as Chip).setOnCheckedChangeListener(filterChipListener)
+            }.let { listener ->
+                chipGroupCategoryFilter.forEach { chip ->
+                    (chip as Chip).setOnCheckedChangeListener(listener)
+                }
             }
         }
     }
@@ -119,7 +125,7 @@ class RecentFragment : DaggerFragment() {
 
     private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
         applyAppTheme(requireContext())
-        swipe_refresh_layout_recent_recalls.setOnRefreshListener {
+        binding.swipeRefreshLayoutRecentRecalls.setOnRefreshListener {
             viewModel.refresh()
         }
     }
@@ -129,7 +135,7 @@ class RecentFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { destinationId ->
                 if (destinationId == R.id.fragment_recent) {
-                    rv_recent_recalls.smoothScrollToPosition(0)
+                    binding.rvRecentRecalls.smoothScrollToPosition(0)
                 }
             })
 
@@ -138,7 +144,7 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
-            swipe_refresh_layout_recent_recalls.isRefreshing = loading
+            binding.swipeRefreshLayoutRecentRecalls.isRefreshing = loading
         })
 
         viewModel.genericError.observe(viewLifecycleOwner, Observer { error ->
@@ -156,31 +162,31 @@ class RecentFragment : DaggerFragment() {
         })
 
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { emptyViewVisible ->
-            rv_recent_recalls.isVisible = !emptyViewVisible
-            requireActivity().empty_view.isVisible = emptyViewVisible
+            binding.rvRecentRecalls.isVisible = !emptyViewVisible
+            mainActivityBinding.includeEmptyView.emptyView.isVisible = emptyViewVisible
         })
 
         viewModel.emptyViewIconResId.observe(viewLifecycleOwner, Observer { iconId ->
-            requireActivity().iv_empty.setImageResource(iconId)
+            mainActivityBinding.includeEmptyView.ivEmpty.setImageResource(iconId)
         })
 
         viewModel.emptyViewTitleResId.observe(viewLifecycleOwner, Observer { titleId ->
-            requireActivity().tv_title_empty.setText(titleId)
+            mainActivityBinding.includeEmptyView.tvTitleEmpty.setText(titleId)
         })
 
         viewModel.emptyViewRetryButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
-            requireActivity().btn_retry.isVisible = visible
+            mainActivityBinding.includeEmptyView.btnRetry.isVisible = visible
         })
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
-            requireActivity().card_view_categories_filter?.let { filterCardView ->
-                filterCardView.chip_category_filter_food.isChecked =
+            with(categoriesFilterBinding) {
+                chipCategoryFilterFood.isChecked =
                     Category.FOOD in visibleCategories
-                filterCardView.chip_category_filter_vehicle.isChecked =
+                chipCategoryFilterVehicle.isChecked =
                     Category.VEHICLE in visibleCategories
-                filterCardView.chip_category_filter_health_product.isChecked =
+                chipCategoryFilterHealthProduct.isChecked =
                     Category.HEALTH_PRODUCT in visibleCategories
-                filterCardView.chip_category_filter_consumer_product.isChecked =
+                chipCategoryFilterConsumerProduct.isChecked =
                     Category.CONSUMER_PRODUCT in visibleCategories
             }
         })
@@ -193,9 +199,9 @@ class RecentFragment : DaggerFragment() {
     }
 
     override fun onDestroyView() {
-        with(requireActivity().root) {
-            removeView(requireActivity().card_view_categories_filter)
-            removeView(requireActivity().btn_filter_recalls)
+        with(mainActivityBinding.root) {
+            removeView(categoriesFilterBinding.cardViewCategoriesFilter)
+            removeView(categoriesFilterBinding.btnFilterRecalls)
         }
 
         super.onDestroyView()
