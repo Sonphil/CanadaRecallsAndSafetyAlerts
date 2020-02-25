@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 class RecallDetailsActivity : DaggerAppCompatActivity() {
 
-    private lateinit var binding: ActivityRecallDetailsBinding
+    private val binding: ActivityRecallDetailsBinding by viewBinding(ActivityRecallDetailsBinding::inflate)
     private val viewModel: RecallDetailsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(RecallDetailsViewModel::class.java)
     }
@@ -50,7 +50,6 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRecallDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val recall = getRecall()

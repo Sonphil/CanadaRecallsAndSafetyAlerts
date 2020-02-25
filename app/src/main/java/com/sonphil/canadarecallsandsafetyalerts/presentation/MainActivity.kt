@@ -13,11 +13,12 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }
@@ -33,7 +34,6 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setupTheme()
         setTheme(R.style.AppTheme)
         setContentView(binding.root)
