@@ -22,6 +22,7 @@ import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentBindin
 import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
@@ -32,11 +33,9 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import javax.inject.Inject
 
 class RecentFragment : DaggerFragment() {
-    // TODO: Use Kotlin delegates to avoid boilerplate
-    private var _binding: FragmentRecentBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentRecentBinding by viewLifecycle()
     private lateinit var mainActivityBinding: ActivityMainBinding
-    private var _categoriesFilterBinding: IncludeCategoriesFilterBinding ? = null
+    private var _categoriesFilterBinding: IncludeCategoriesFilterBinding? = null
     private val categoriesFilterBinding get() = _categoriesFilterBinding!!
     private val viewModel: RecentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(RecentViewModel::class.java)
@@ -52,7 +51,7 @@ class RecentFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRecentBinding.inflate(layoutInflater, container, false)
+        binding = FragmentRecentBinding.inflate(layoutInflater, container, false)
 
         mainActivityBinding = (requireActivity() as MainActivity).binding
 
@@ -207,7 +206,6 @@ class RecentFragment : DaggerFragment() {
             removeView(categoriesFilterBinding.btnFilterRecalls)
         }
 
-        _binding = null
         _categoriesFilterBinding = null
 
         super.onDestroyView()
