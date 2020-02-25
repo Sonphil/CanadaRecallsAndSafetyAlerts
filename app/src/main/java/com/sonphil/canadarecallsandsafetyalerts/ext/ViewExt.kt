@@ -12,14 +12,8 @@ fun View.doApplyInsetsWhenAttached(applyInsets: (View, WindowInsets) -> Unit) {
     }
 }
 
-fun View.doApplyInsetsToMarginsWhenAttached(applyInsetsToMargins: (View, WindowInsets) -> Unit) {
-    doApplyInsetsWhenAttached { view, windowInsets ->
-        applyInsetsToMargins(view, windowInsets)
-    }
-}
-
 fun View.doApplyTopInsetToTopMarginWhenAttached() {
-    doApplyInsetsToMarginsWhenAttached { view, windowInsets ->
+    doApplyInsetsWhenAttached { view, windowInsets ->
         val params = view.layoutParams as ViewGroup.MarginLayoutParams
 
         params.topMargin = view.marginTop + windowInsets.systemWindowInsetTop

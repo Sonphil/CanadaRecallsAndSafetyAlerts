@@ -2,16 +2,19 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import dagger.android.support.DaggerAppCompatActivity
@@ -21,7 +24,10 @@ class MainActivity : DaggerAppCompatActivity() {
     val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
     @Inject
     lateinit var sharedPreferences: SharedPreferences
-    private val navController by lazy { findNavController(R.id.fragment_nav_host_main) }
+    private val navController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.fragment_nav_host_main) as NavHostFragment)
+            .findNavController()
+    }
     /** Last destination selected **/
     private val _selectedDestinationId = MutableLiveData<Int>()
     val selectedDestinationId: LiveData<Int> = _selectedDestinationId
@@ -35,6 +41,8 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupTheme()
+        binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         setTheme(R.style.AppTheme)
         setContentView(binding.root)
         setupActionBar()
@@ -61,6 +69,8 @@ class MainActivity : DaggerAppCompatActivity() {
             navController,
             appBarConfiguration
         )
+
+        binding.appBarLayout.doApplyTopInsetToTopMarginWhenAttached()
     }
 
     private fun resetEmptyView() {
