@@ -21,7 +21,9 @@
     <string name="error_generic">Une erreur est survenue</string>
     <string name="error_offline">Pas de connexion Internet</string>
     <string name="label_action_mark_recall_as_read">Marquer comme lu</string>
+    <string name="message_recall_marked_as_read">Marqué comme lu</string>
     <string name="label_action_bookmark_recall">Sauvegarder</string>
+    <string name="message_recall_bookmarked">Sauvegardé</string>
 
     <!-- My Recalls -->
     <string name="title_empty_bookmark">Aucun rappel sauvegardé</string>
