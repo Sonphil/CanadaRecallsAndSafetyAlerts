@@ -37,7 +37,7 @@ class SyncRecallsWorker @Inject constructor(
          * @param keywordNotificationsEnabled Whether or not the worker should notify the user about
          * a recall or an alert only if it contains at least a keyword
          * @param repeatInterval The repeat interval
-         * @param timeUnit The [TimeUnit] for the [repeatInterval]
+         * @param timeUnit The [TimeUnit] of the [repeatInterval]
          */
         fun schedule(
             context: Context,

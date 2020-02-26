@@ -8,14 +8,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.ext.getColorCompat
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivityArgs
+import com.sonphil.canadarecallsandsafetyalerts.receiver.NotificationActionReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,6 +72,37 @@ class NotificationsUtils @Inject constructor(private val context: Context) {
         }
     }
 
+    private fun createAction(
+        context: Context,
+        recall: Recall,
+        requestCode: Int,
+        @StringRes actionId: Int,
+        @StringRes labelId: Int
+    ): NotificationCompat.Action {
+        val intent = Intent(context, NotificationActionReceiver::class.java).apply {
+            action = context.getString(actionId)
+
+            val args = RecallDetailsActivityArgs(recall).toBundle()
+
+            putExtras(args)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val action = NotificationCompat.Action(null, context.getString(labelId), pendingIntent)
+
+        return NotificationCompat.Action.Builder(action).build()
+    }
+
+    private fun Recall.getNotificationId() = try {
+        id.toInt()
+    } catch (e: NumberFormatException) {
+        0
+    }
+
     /**
      * Creates a notification for a given [Recall
      *
@@ -78,19 +113,38 @@ class NotificationsUtils @Inject constructor(private val context: Context) {
     fun notifyRecall(recall: Recall) {
         val channelId = recall.category.name
         val categoryResources = CategoryResources(recall.category)
-        val notificationId = try {
-            recall.id.toInt()
-        } catch (e: NumberFormatException) {
-            0
-        }
+        val notificationId = recall.getNotificationId()
+        val tapPendingIntent = createDetailsPendingIntentForRecall(
+            context,
+            recall,
+            notificationId
+        )
         val categoryTitle = context.getString(categoryResources.labelId)
+        val markAsReadAction = createAction(
+            context,
+            recall,
+            notificationId,
+            R.string.action_mark_recall_as_read,
+            R.string.label_action_mark_recall_as_read
+        )
+        val bookmarkAction = createAction(
+            context,
+            recall,
+            notificationId,
+            R.string.action_bookmark_recall,
+            R.string.label_action_bookmark_recall
+        )
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(categoryTitle)
             .setContentText(recall.title)
             .setAutoCancel(true)
+            .setVisibility(VISIBILITY_PUBLIC)
             .setStyle(NotificationCompat.BigTextStyle().bigText(recall.title))
-            .setContentIntent(createDetailsPendingIntentForRecall(context, recall, notificationId))
+            .setContentIntent(tapPendingIntent)
+            .setColor(context.getColorCompat(R.color.colorPrimary))
+            .addAction(markAsReadAction)
+            .addAction(bookmarkAction)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = createNotificationChannelForCategory(
@@ -117,5 +171,11 @@ class NotificationsUtils @Inject constructor(private val context: Context) {
                 )
             }
         }
+    }
+
+    fun dismissNotification(context: Context, recall: Recall) {
+        val notificationId = recall.getNotificationId()
+
+        NotificationManagerCompat.from(context).cancel(notificationId)
     }
 }

@@ -39,5 +39,7 @@
             android:name=".presentation.recall.details.RecallDetailsActivity"
             android:parentActivityName=".presentation.MainActivity"
             android:theme="@style/RecallDetailsTheme" />
+
+        <receiver android:name=".receiver.NotificationActionReceiver" />
     </application>
 </manifest>

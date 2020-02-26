@@ -21,7 +21,8 @@ import javax.inject.Singleton
         ActivityBindingModule::class,
         DatabaseModule::class,
         NetworkModule::class,
-        WorkerFactoryModule::class
+        WorkerFactoryModule::class,
+        ReceiverBindingModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {

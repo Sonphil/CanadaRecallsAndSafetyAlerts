@@ -19,6 +19,8 @@
     <string name="label_done">Done</string>
     <string name="error_generic">An error has occurred</string>
     <string name="error_offline">No Internet Connection</string>
+    <string name="label_action_mark_recall_as_read">Mark as Read</string>
+    <string name="label_action_bookmark_recall">Save</string>
 
     <!-- My Recalls -->
     <string name="title_empty_bookmark">No recalls saved</string>
