@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.NavHostFragment
@@ -13,10 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
-import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
-import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
-import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
-import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
+import com.sonphil.canadarecallsandsafetyalerts.ext.*
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -71,6 +69,9 @@ class MainActivity : DaggerAppCompatActivity() {
         )
 
         binding.appBarLayout.doApplyTopInsetToTopMarginWhenAttached()
+        binding.fragmentNavHostMain.doApplyInsetsWhenAttached { view, windowInsets ->
+            view.updatePadding(bottom = view.paddingBottom + windowInsets.systemWindowInsetTop)
+        }
     }
 
     private fun resetEmptyView() {

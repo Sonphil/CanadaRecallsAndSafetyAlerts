@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="80dp"
+        android:paddingBottom="@dimen/recycler_view_with_fab_bottom_padding"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:ignore="PrivateResource"
         tools:listitem="@layout/item_notification_keyword" />

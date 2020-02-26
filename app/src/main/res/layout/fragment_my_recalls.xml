@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/design_bottom_navigation_height"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/recycler_view_bottom_padding"
         android:scrollbars="none"
         tools:ignore="PrivateResource"
         tools:listitem="@layout/item_recall" />

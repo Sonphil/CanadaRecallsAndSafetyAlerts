@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/design_bottom_navigation_height"
         android:clipToPadding="false"
-        android:paddingTop="8dp"
+        android:paddingBottom="@dimen/recycler_view_bottom_padding"
         android:scrollbars="none"
         tools:ignore="PrivateResource"
         tools:itemCount="7"
