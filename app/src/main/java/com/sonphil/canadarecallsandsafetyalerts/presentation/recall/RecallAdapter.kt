@@ -1,11 +1,13 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
+import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
@@ -15,6 +17,7 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_recall.*
 import java.text.DateFormat
@@ -105,6 +108,25 @@ class RecallAdapter(
             tv_recall_date.text = dateFormat.formatUTC(date)
             tv_recall_date.isVisible = true
         }
+    }
+
+    fun setupRecyclerView(context: Context, recyclerView: RecyclerView) {
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+
+        recyclerView.itemAnimator = SlideInLeftAnimator()
+
+        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    if (layoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
+                        recyclerView.smoothScrollToPosition(0)
+                    }
+                }
+            }
+        })
+
+        recyclerView.adapter = this
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<RecallAndBookmarkAndReadStatus>() {

@@ -11,8 +11,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
 import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
@@ -29,7 +27,6 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import es.dmoral.toasty.Toasty
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import javax.inject.Inject
 
 class RecentFragment : DaggerFragment() {
@@ -66,7 +63,7 @@ class RecentFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvRecentRecalls.setupRecyclerView()
+        adapter.setupRecyclerView(requireContext(), binding.rvRecentRecalls)
 
         subscribeUI()
 
@@ -114,15 +111,6 @@ class RecentFragment : DaggerFragment() {
                 }
             }
         }
-    }
-
-    private fun RecyclerView.setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
-        setLayoutManager(layoutManager)
-
-        itemAnimator = SlideInLeftAnimator()
-
-        adapter = this@RecentFragment.adapter
     }
 
     private fun SwipeRefreshLayout.setupSwipeRefreshLayout() {
