@@ -3,7 +3,6 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemRecallBinding
 import com.sonphil.canadarecallsandsafetyalerts.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.entity.ReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
@@ -18,8 +18,6 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadS
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_recall.*
 import java.text.DateFormat
 
 /**
@@ -35,20 +33,17 @@ class RecallAdapter(
     private val dateFormat = dateUtils.getDateFormat(DateFormat.MEDIUM)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecallViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_recall,
-            parent,
-            false
-        )
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemRecallBinding.inflate(inflater, parent, false)
 
-        val holder = RecallViewHolder(view)
+        val holder = RecallViewHolder(binding)
 
         holder.itemView.setOnClickListener {
             val item = getItem(holder.adapterPosition)
             viewModel.clickRecall(item)
         }
 
-        holder.btn_recall_bookmark.setOnClickListener {
+        binding.btnRecallBookmark.setOnClickListener {
             val item = getItem(holder.adapterPosition)
             val isCurrentlyBookmarked = item.bookmark != null
 
@@ -75,20 +70,15 @@ class RecallAdapter(
     private fun RecallViewHolder.bindCategory(category: Category) {
         val res = CategoryResources(category)
 
-        iv_recall_category_icon.setImageResource(res.iconId)
-        tv_category.setText(res.labelId)
+        binding.ivRecallCategoryIcon.setImageResource(res.iconId)
+        binding.tvCategory.setText(res.labelId)
     }
 
     private fun RecallViewHolder.bindTitle(recall: Recall, readStatus: ReadStatus?) {
-        tv_recall_title.text = recall.title
-
+        binding.tvRecallTitle.text = recall.title
         val read = readStatus != null
-
-        if (read) {
-            tv_recall_title.setTypeface(null, Typeface.NORMAL)
-        } else {
-            tv_recall_title.setTypeface(null, Typeface.BOLD)
-        }
+        val typeface = if (read) Typeface.NORMAL else Typeface.BOLD
+        binding.tvRecallTitle.setTypeface(null, typeface)
     }
 
     private fun RecallViewHolder.bindBookmark(bookmarked: Boolean) {
@@ -98,15 +88,15 @@ class RecallAdapter(
             R.drawable.ic_bookmark_border_control_normal_24dp
         }
 
-        btn_recall_bookmark.setImageResource(bookmarkDrawableRes)
+        binding.btnRecallBookmark.setImageResource(bookmarkDrawableRes)
     }
 
     private fun RecallViewHolder.bindDate(date: Long?) {
         if (date == null) {
-            tv_recall_date.isVisible = false
+            binding.tvRecallDate.isVisible = false
         } else {
-            tv_recall_date.text = dateFormat.formatUTC(date)
-            tv_recall_date.isVisible = true
+            binding.tvRecallDate.text = dateFormat.formatUTC(date)
+            binding.tvRecallDate.isVisible = true
         }
     }
 
@@ -141,7 +131,6 @@ class RecallAdapter(
         ): Boolean = oldItem == newItem
     }
 
-    inner class RecallViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer
+    inner class RecallViewHolder(val binding: ItemRecallBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }
