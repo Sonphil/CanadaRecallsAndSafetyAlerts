@@ -1,15 +1,11 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.notification
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sonphil.canadarecallsandsafetyalerts.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_notification_keyword.*
-import kotlinx.android.synthetic.main.item_notification_keyword.view.*
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemNotificationKeywordBinding
 
 /**
  * Created by Sonphil on 13-02-20.
@@ -24,14 +20,15 @@ class NotificationKeywordsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): NotificationKeywordViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_notification_keyword,
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemNotificationKeywordBinding.inflate(
+            inflater,
             parent,
             false
         )
-        val holder = NotificationKeywordViewHolder(view)
+        val holder = NotificationKeywordViewHolder(binding)
 
-        holder.itemView.btn_delete_notification_keyword.setOnClickListener {
+        holder.binding.btnDeleteNotificationKeyword.setOnClickListener {
             viewModel.deleteKeywordAtPosition(holder.adapterPosition)
         }
 
@@ -41,7 +38,7 @@ class NotificationKeywordsAdapter(
     override fun onBindViewHolder(holder: NotificationKeywordViewHolder, position: Int) {
         val keyword = getItem(position)
 
-        holder.tv_notification_keyword.text = keyword
+        holder.binding.tvNotificationKeyword.text = keyword
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<String>() {
@@ -54,7 +51,6 @@ class NotificationKeywordsAdapter(
         }
     }
 
-    inner class NotificationKeywordViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer
+    inner class NotificationKeywordViewHolder(val binding: ItemNotificationKeywordBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

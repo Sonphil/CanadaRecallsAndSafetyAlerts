@@ -1,12 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.more
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sonphil.canadarecallsandsafetyalerts.R
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_more.*
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemMoreBinding
 
 /**
  * Created by Sonphil on 08-02-20.
@@ -17,9 +14,13 @@ class MoreAdapter(private val items: List<MoreItem>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoreItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemView = inflater.inflate(R.layout.item_more, parent, false)
+        val binding = ItemMoreBinding.inflate(
+            inflater,
+            parent,
+            false
+        )
 
-        return MoreItemViewHolder(itemView).apply {
+        return MoreItemViewHolder(binding).apply {
             itemView.setOnClickListener {
                 items[adapterPosition].moreItemClickHandler.invoke(adapterPosition)
             }
@@ -33,12 +34,13 @@ class MoreAdapter(private val items: List<MoreItem>) :
     override fun onBindViewHolder(holder: MoreItemViewHolder, position: Int) {
         val item = items[position]
 
-        holder.iv_item_more_icon.setImageResource(item.icon)
-        holder.tv_item_more_label.setText(item.label)
-        holder.tv_item_more_description.setText(item.description)
+        with(holder.binding) {
+            ivItemMoreIcon.setImageResource(item.icon)
+            tvItemMoreLabel.setText(item.label)
+            tvItemMoreDescription.setText(item.description)
+        }
     }
 
-    inner class MoreItemViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer
+    inner class MoreItemViewHolder(val binding: ItemMoreBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

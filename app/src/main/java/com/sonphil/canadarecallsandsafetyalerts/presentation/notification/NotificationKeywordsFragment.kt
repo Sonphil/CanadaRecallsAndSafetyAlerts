@@ -130,6 +130,8 @@ class NotificationKeywordsFragment : DaggerFragment() {
                     keywordDeletedSnackBar.dismiss()
 
                     mainActivityBinding.root.removeView(addBtnBinding.btnAddNotificationKeyword)
+
+                    _addBtnBinding = null
                 }
             }
         })
