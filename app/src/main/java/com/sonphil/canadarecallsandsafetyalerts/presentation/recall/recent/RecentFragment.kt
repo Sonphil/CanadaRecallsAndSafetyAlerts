@@ -126,6 +126,11 @@ class RecentFragment : DaggerFragment() {
             Observer { destinationId ->
                 if (destinationId == R.id.fragment_recent) {
                     binding.rvRecentRecalls.smoothScrollToPosition(0)
+                } else {
+                    with(mainActivityBinding.root) {
+                        removeView(categoriesFilterBinding.cardViewCategoriesFilter)
+                        removeView(categoriesFilterBinding.btnFilterRecalls)
+                    }
                 }
             })
 
@@ -189,11 +194,6 @@ class RecentFragment : DaggerFragment() {
     }
 
     override fun onDestroyView() {
-        with(mainActivityBinding.root) {
-            removeView(categoriesFilterBinding.cardViewCategoriesFilter)
-            removeView(categoriesFilterBinding.btnFilterRecalls)
-        }
-
         _categoriesFilterBinding = null
 
         super.onDestroyView()
