@@ -13,26 +13,30 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.BuildConfig
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentMoreBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrl
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrlExternal
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : DaggerFragment() {
+    private var binding: FragmentMoreBinding by viewLifecycle()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_more, container, false)
+        binding = FragmentMoreBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv_more.setupRecyclerView()
+        binding.rvMore.setupRecyclerView()
     }
 
     private fun RecyclerView.setupRecyclerView() {

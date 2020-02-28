@@ -11,12 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentDialogAddNotificationKeywordBinding
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_dialog_add_notification_keyword.*
 import javax.inject.Inject
 
 class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
-
+    private var binding: FragmentDialogAddNotificationKeywordBinding by viewLifecycle()
     private val viewModel: AddNotificationKeywordViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(AddNotificationKeywordViewModel::class.java)
     }
@@ -39,19 +40,23 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(
-        R.layout.fragment_dialog_add_notification_keyword,
-        container,
-        false
-    )
+    ): View? {
+        binding = FragmentDialogAddNotificationKeywordBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupEditText()
 
-        btn_add_notification_keyword.setOnClickListener {
-            viewModel.insertNewKeyword(edit_text_notification_keyword.text.toString())
+        binding.btnAddNotificationKeyword.setOnClickListener {
+            viewModel.insertNewKeyword(binding.editTextNotificationKeyword.text.toString())
         }
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
@@ -60,7 +65,7 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupEditText() {
-        edit_text_notification_keyword.setOnEditorActionListener { textView, actionId, _ ->
+        binding.editTextNotificationKeyword.setOnEditorActionListener { textView, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     viewModel.insertNewKeyword(textView.text.toString())
@@ -71,7 +76,7 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
             }
         }
 
-        edit_text_notification_keyword.requestFocus()
+        binding.editTextNotificationKeyword.requestFocus()
     }
 
     companion object {
