@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
@@ -103,6 +104,14 @@ class NotificationKeywordsFragment : DaggerFragment() {
             rv_notification_keywords.isVisible = !show
             requireActivity().empty_view.isVisible = show
         })
+
+        (requireActivity() as MainActivity).selectedDestinationId.observe(
+            viewLifecycleOwner,
+            Observer { destinationId ->
+                if (destinationId != R.id.fragment_notification_keywords) {
+                    keywordDeletedSnackBar.dismiss()
+                }
+            })
     }
 
     override fun onDestroyView() {

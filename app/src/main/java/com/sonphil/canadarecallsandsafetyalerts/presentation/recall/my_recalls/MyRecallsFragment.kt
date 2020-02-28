@@ -77,6 +77,8 @@ class MyRecallsFragment : DaggerFragment() {
             Observer { destinationId ->
                 if (destinationId == R.id.fragment_my_recalls) {
                     binding.rvBookmarkedRecalls.smoothScrollToPosition(0)
+                } else {
+                    unbookmarkSnackbar.dismiss()
                 }
             })
 
@@ -102,5 +104,9 @@ class MyRecallsFragment : DaggerFragment() {
                 unbookmarkSnackbar.dismiss()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }
