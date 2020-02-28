@@ -27,8 +27,8 @@ class MainActivity : DaggerAppCompatActivity() {
             .findNavController()
     }
     /** Last destination selected **/
-    private val _selectedDestinationId = MutableLiveData<Int>()
-    val selectedDestinationId: LiveData<Int> = _selectedDestinationId
+    private val _selectedTopLevelDestinationId = MutableLiveData<Int>()
+    val selectedTopLevelDestinationId: LiveData<Int> = _selectedTopLevelDestinationId
 
     private val topLevelDestinations = setOf(
         R.id.fragment_recent,
@@ -85,7 +85,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun setupBottomNavigation() {
         binding.bottomNavigationView.setupWithNavController(navController)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            _selectedDestinationId.value = item.itemId
+            _selectedTopLevelDestinationId.value = item.itemId
 
             if (item.itemId == navController.currentDestination?.id) {
                 false

@@ -7,22 +7,28 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentNotificationKeywordsBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeFabAddNotificationKeywordBinding
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_notification_keywords.*
-import kotlinx.android.synthetic.main.include_empty_view.*
-import kotlinx.android.synthetic.main.include_fab_add_notification_keyword.*
 import javax.inject.Inject
 
 class NotificationKeywordsFragment : DaggerFragment() {
-
+    private var binding: FragmentNotificationKeywordsBinding by viewLifecycle()
+    private var _addBtnBinding: IncludeFabAddNotificationKeywordBinding? = null
+    private val addBtnBinding get() = _addBtnBinding!!
+    private lateinit var mainActivityBinding: ActivityMainBinding
     private val viewModel: NotificationKeywordsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(NotificationKeywordsViewModel::class.java)
     }
@@ -31,7 +37,7 @@ class NotificationKeywordsFragment : DaggerFragment() {
     private val adapter by lazy { NotificationKeywordsAdapter(viewModel) }
     private val keywordDeletedSnackBar by lazy {
         Snackbar.make(
-            layout_notification_keywords,
+            binding.layoutNotificationKeywords,
             R.string.message_notification_keyword_deleted,
             Snackbar.LENGTH_LONG
         )
@@ -42,15 +48,16 @@ class NotificationKeywordsFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (requireActivity().btn_add_notification_keyword == null) {
-            inflater.inflate(
-                R.layout.include_fab_add_notification_keyword,
-                requireActivity().root,
-                true
-            )
-        }
+        binding = FragmentNotificationKeywordsBinding.inflate(inflater, container, false)
 
-        return inflater.inflate(R.layout.fragment_notification_keywords, container, false)
+        mainActivityBinding = (requireActivity() as MainActivity).binding
+
+        _addBtnBinding = IncludeFabAddNotificationKeywordBinding.inflate(
+            inflater,
+            mainActivityBinding.root
+        )
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,24 +65,26 @@ class NotificationKeywordsFragment : DaggerFragment() {
 
         setupEmptyView()
 
-        requireActivity().btn_add_notification_keyword.setOnClickListener {
+        addBtnBinding.btnAddNotificationKeyword.setOnClickListener {
             AddNotificationKeywordDialogFragment().show(
                 childFragmentManager,
                 AddNotificationKeywordDialogFragment.TAG
             )
         }
 
-        rv_notification_keywords.setupRecyclerView()
+        binding.rvNotificationKeywords.setupRecyclerView()
 
         subscribeUI()
+
+        setupOnDestinationChangedListener()
     }
 
     private fun setupEmptyView() {
-        with(requireActivity()) {
-            iv_empty.setImageResource(R.drawable.ic_notifications_off_control_normal_24dp)
-            tv_title_empty.setText(R.string.title_empty_notification_keyword)
-            tv_text_empty.setText(R.string.text_empty_notification_keyword)
-            tv_text_empty.isVisible = true
+        with(mainActivityBinding.includeEmptyView) {
+            ivEmpty.setImageResource(R.drawable.ic_notifications_off_control_normal_24dp)
+            tvTitleEmpty.setText(R.string.title_empty_notification_keyword)
+            tvTextEmpty.setText(R.string.text_empty_notification_keyword)
+            tvTextEmpty.isVisible = true
         }
     }
 
@@ -101,24 +110,28 @@ class NotificationKeywordsFragment : DaggerFragment() {
         })
 
         viewModel.showEmptyView.observe(viewLifecycleOwner, Observer { show ->
-            rv_notification_keywords.isVisible = !show
-            requireActivity().empty_view.isVisible = show
+            binding.rvNotificationKeywords.isVisible = !show
+            mainActivityBinding.includeEmptyView.emptyView.isVisible = show
         })
-
-        (requireActivity() as MainActivity).selectedDestinationId.observe(
-            viewLifecycleOwner,
-            Observer { destinationId ->
-                if (destinationId != R.id.fragment_notification_keywords) {
-                    keywordDeletedSnackBar.dismiss()
-                }
-            })
     }
 
-    override fun onDestroyView() {
-        requireActivity().btn_add_notification_keyword?.let { btn ->
-            requireActivity().root.removeView(btn)
-        }
+    private fun setupOnDestinationChangedListener() {
+        val navController = findNavController()
 
-        super.onDestroyView()
+        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                if (destination.id != R.id.fragment_notification_keywords) {
+                    navController.removeOnDestinationChangedListener(this)
+
+                    keywordDeletedSnackBar.dismiss()
+
+                    mainActivityBinding.root.removeView(addBtnBinding.btnAddNotificationKeyword)
+                }
+            }
+        })
     }
 }

@@ -121,7 +121,7 @@ class RecentFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
-        (requireActivity() as MainActivity).selectedDestinationId.observe(
+        (requireActivity() as MainActivity).selectedTopLevelDestinationId.observe(
             viewLifecycleOwner,
             Observer { destinationId ->
                 if (destinationId == R.id.fragment_recent) {
