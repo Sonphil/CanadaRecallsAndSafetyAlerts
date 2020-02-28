@@ -11,17 +11,19 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentMyRecallsBinding
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_my_recalls.*
-import kotlinx.android.synthetic.main.include_empty_view.*
 import javax.inject.Inject
 
 class MyRecallsFragment : DaggerFragment() {
+    private var binding: FragmentMyRecallsBinding by viewLifecycle()
+    private lateinit var mainActivityBinding: ActivityMainBinding
 
     private val viewModel: MyRecallsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(MyRecallsViewModel::class.java)
@@ -32,8 +34,8 @@ class MyRecallsFragment : DaggerFragment() {
     lateinit var dateUtils: DateUtils
     private val adapter by lazy { RecallAdapter(viewModel, dateUtils) }
     private val unbookmarkSnackbar by lazy {
-        Snackbar.make(requireActivity().root, R.string.message_unbookmark, Snackbar.LENGTH_LONG)
-            .setAnchorView(requireActivity().bottom_navigation_view)
+        Snackbar.make(mainActivityBinding.root, R.string.message_unbookmark, Snackbar.LENGTH_LONG)
+            .setAnchorView(mainActivityBinding.bottomNavigationView)
             .setAction(R.string.label_undo_unbookmark) {
                 viewModel.undoLastUnbookmark()
             }
@@ -45,7 +47,11 @@ class MyRecallsFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_my_recalls, container, false)
+        binding = FragmentMyRecallsBinding.inflate(inflater, container, false)
+
+        mainActivityBinding = (requireActivity() as MainActivity).binding
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,16 +59,16 @@ class MyRecallsFragment : DaggerFragment() {
 
         setupEmptyView()
 
-        adapter.setupRecyclerView(requireContext(), rv_bookmarked_recalls)
+        adapter.setupRecyclerView(requireContext(), binding.rvBookmarkedRecalls)
 
         subscribeUI()
     }
 
-    private fun setupEmptyView() = with(requireActivity()) {
-        iv_empty.setImageResource(R.drawable.ic_bookmark_border_control_normal_24dp)
-        tv_title_empty.setText(R.string.title_empty_bookmark)
-        tv_text_empty.setText(R.string.text_empty_bookmark)
-        tv_text_empty.isVisible = true
+    private fun setupEmptyView() = with(mainActivityBinding.includeEmptyView) {
+        ivEmpty.setImageResource(R.drawable.ic_bookmark_border_control_normal_24dp)
+        tvTitleEmpty.setText(R.string.title_empty_bookmark)
+        tvTextEmpty.setText(R.string.text_empty_bookmark)
+        tvTextEmpty.isVisible = true
     }
 
     private fun subscribeUI() {
@@ -70,7 +76,7 @@ class MyRecallsFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { destinationId ->
                 if (destinationId == R.id.fragment_my_recalls) {
-                    rv_bookmarked_recalls.smoothScrollToPosition(0)
+                    binding.rvBookmarkedRecalls.smoothScrollToPosition(0)
                 }
             })
 
@@ -79,8 +85,8 @@ class MyRecallsFragment : DaggerFragment() {
         })
 
         viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { visible ->
-            rv_bookmarked_recalls.isVisible = !visible
-            requireActivity().empty_view.isVisible = visible
+            binding.rvBookmarkedRecalls.isVisible = !visible
+            mainActivityBinding.includeEmptyView.emptyView.isVisible = visible
         })
 
         viewModel.navigateToDetails.observe(viewLifecycleOwner, EventObserver {
