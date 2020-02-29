@@ -7,6 +7,10 @@ import com.sonphil.canadarecallsandsafetyalerts.repository.NotificationKeywordsR
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Provider
@@ -31,7 +35,7 @@ class SyncRecallsWorker @Inject constructor(
 
         /**
          * Schedules a worker that synchronize recalls with the API and notify the user about new
-         * ones according to his settings
+         * ones
          *
          * @param context
          * @param keywordNotificationsEnabled Whether or not the worker should notify the user about
@@ -81,32 +85,22 @@ class SyncRecallsWorker @Inject constructor(
         fun cancel(context: Context) = WorkManager.getInstance(context).cancelAllWork()
     }
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = withContext(Dispatchers.Default) {
         try {
             val lang = localeUtils.getCurrentLanguage()
-            val newRecalls = recallRepository.getNewRecalls(lang)
+            val newRecalls = withContext(Dispatchers.IO) {
+                recallRepository.getNewRecalls(lang)
+            }
             val keywordNotificationsEnabled = inputData.getBoolean(
                 KEY_KEYWORD_NOTIFICATIONS_ENABLED,
                 false
             )
 
-            if (newRecalls.isNotEmpty()) {
-                val keywords = if (keywordNotificationsEnabled) {
-                    notificationKeywordsRepository.getKeywords()
-                } else {
-                    emptyList()
-                }
+            newRecalls.notify(this, keywordNotificationsEnabled)
 
-                newRecalls.forEach { recall ->
-                    if (shouldNotifyAboutRecall(recall, keywordNotificationsEnabled, keywords)) {
-                        notificationsUtils.notifyRecall(recall)
-                    }
-                }
-            }
-
-            return Result.success()
+            Result.success()
         } catch (e: Exception) {
-            return Result.failure()
+            Result.failure()
         }
     }
 
@@ -124,6 +118,31 @@ class SyncRecallsWorker @Inject constructor(
             ?.findAnyOf(keywords, ignoreCase = true)
 
         return firstMatch != null
+    }
+
+    private suspend fun List<Recall>.notify(
+        coroutineScope: CoroutineScope,
+        keywordNotificationsEnabled: Boolean
+    ) {
+        if (this.isNotEmpty()) {
+            val keywords = if (keywordNotificationsEnabled) {
+                notificationKeywordsRepository.getKeywords()
+            } else {
+                emptyList()
+            }
+
+            run loop@{
+                this.forEach { recall ->
+                    if (coroutineScope.isActive) {
+                        if (shouldNotifyAboutRecall(recall, keywordNotificationsEnabled, keywords)) {
+                            notificationsUtils.notifyRecall(recall)
+                        }
+                    } else {
+                        return@loop
+                    }
+                }
+            }
+        }
     }
 
     class Factory @Inject constructor(
