@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallDetailsRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
@@ -12,9 +11,6 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,14 +19,12 @@ import javax.inject.Inject
  */
 
 class RecallDetailsViewModel @Inject constructor(
-    private val app: App,
     private val recall: Recall,
     private val localeUtils: LocaleUtils,
     private val bookmarkRepository: BookmarkRepository,
     private val recallRepository: RecallRepository,
     private val recallDetailsRepository: RecallDetailsRepository
 ) : ViewModel() {
-
     init {
         viewModelScope.launch {
             recallRepository.markRecallAsRead(recall)
@@ -46,7 +40,7 @@ class RecallDetailsViewModel @Inject constructor(
     private val recallAndDetailsSectionsAndImages = recallDetailsRepository
         .getRecallAndDetailsSectionsAndImages(recall, localeUtils.getCurrentLanguage())
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
-
+    val detailsSections = recallAndDetailsSectionsAndImages.map { it.data?.detailsSections }
     val images = recallAndDetailsSectionsAndImages.map { it.data?.images }
     val galleryVisible = images.map { !it.isNullOrEmpty() }
 
@@ -93,50 +87,30 @@ class RecallDetailsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getRecallUrl(): String? {
-        var url = recallAndDetailsSectionsAndImages
-            .value
-            ?.url
-
-        if (url == null) {
-            url = recallAndDetailsSectionsAndImages
-                .asFlow()
-                .filter { stateData ->
-                    stateData !is StateData.Loading && stateData.url != null
-                }
-                .map {
-                    it.url
-                }
-                .first()
-        }
-
-        return url
+    val menuItemsVisible = recallAndDetailsSectionsAndImages.map { stateData ->
+        stateData.data?.basicInformation?.url != null
     }
 
-    val _navigateToUrl = MutableLiveData<Event<Uri>>()
+    private val _navigateToUrl = MutableLiveData<Event<Uri>>()
     val navigateToUrl = _navigateToUrl
     private inline val StateData<RecallAndBasicInformationAndDetailsSectionsAndImages>.url: String?
         get() = this.data?.basicInformation?.url
 
     fun clickRecallUrl() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val url = getRecallUrl()
+        val url = recallAndDetailsSectionsAndImages.value?.url
 
-            if (url != null) {
-                _navigateToUrl.postValue(Event(Uri.parse(url)))
-            }
+        if (url != null) {
+            _navigateToUrl.value = Event(Uri.parse(url))
         }
     }
 
     private val _shareUrl = MutableLiveData<Event<String>>()
     val shareUrl = _shareUrl
     fun clickShareUrl() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val url = getRecallUrl()
+        val url = recallAndDetailsSectionsAndImages.value?.url
 
-            if (url != null) {
-                _shareUrl.postValue(Event(url))
-            }
+        if (url != null) {
+            _shareUrl.value = Event(url)
         }
     }
 }

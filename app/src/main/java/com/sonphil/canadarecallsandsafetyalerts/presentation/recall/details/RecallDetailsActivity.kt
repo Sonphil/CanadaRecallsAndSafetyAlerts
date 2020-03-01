@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
@@ -200,6 +201,14 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
                 view.layoutParams = params
             }
+        })
+
+        viewModel.menuItemsVisible.observe(this, Observer { visible ->
+            binding.bottomAppBar.menu.children.forEach { it.isVisible = visible }
+        })
+
+        viewModel.detailsSections.observe(this, Observer { sections ->
+            // TODO
         })
     }
 
