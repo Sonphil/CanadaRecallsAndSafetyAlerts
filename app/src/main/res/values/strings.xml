@@ -75,7 +75,7 @@
     <string name="text_description_report">Report a health and safety concern to the Government of Canada</string>
     <string name="url_report">https://www.canada.ca/en/services/health/report-health-safety-concern.html</string>
     <string name="title_contact_health_canada">Contact Health Canada</string>
-    <string name="text_description_contact_health_canada">Share your questions or comments with Health Canada</string>
+    <string name="text_description_contact_health_canada">Share your questions, comments or concerns with Health Canada</string>
     <string name="url_contact_health_canada">https://healthycanadians.gc.ca/contact-contactez/index-eng.php</string>
     <string name="title_website">Website</string>
     <string name="url_website">https://healthycanadians.gc.ca/recall-alert-rappel-avis/index-eng.php</string>

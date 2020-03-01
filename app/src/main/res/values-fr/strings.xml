@@ -75,7 +75,7 @@
     <string name="title_report">Signaler un rappel</string>
     <string name="text_description_report">Signaler un problème lié à la santé ou à la sécurité au Gouvernement du Canada</string>
     <string name="url_report">https://www.canada.ca/fr/services/sante/signaler-probleme-lie-sante-ou-securite.html</string>
-    <string name="text_description_contact_health_canada">Faites part de vos questions ou commentaires à Santé Canada</string>
+    <string name="text_description_contact_health_canada">Faites part de vos questions, commentaires ou préoccupations à Santé Canada</string>
     <string name="title_contact_health_canada">Contacter Santé Canada</string>
     <string name="url_contact_health_canada">https://canadiensensante.gc.ca/contact-contactez/index-fra.php</string>
     <string name="title_website">Site web</string>
