@@ -40,8 +40,21 @@ class RecallDetailsViewModel @Inject constructor(
     private val recallAndDetailsSectionsAndImages = recallDetailsRepository
         .getRecallAndDetailsSectionsAndImages(recall, localeUtils.getCurrentLanguage())
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
-    val detailsSections = recallAndDetailsSectionsAndImages.map { it.data?.detailsSections }
+
+    val detailsSectionsItems = recallAndDetailsSectionsAndImages.map { stateData ->
+        stateData
+            .data
+            ?.detailsSections
+            ?.map { section ->
+                setOf(
+                    RecallDetailsSectionItem.RecallDetailsSectionHeaderItem(section.title),
+                    RecallDetailsSectionItem.RecallDetailsSectionContentItem(section.text)
+                )
+            }
+            ?.flatten()
+    }
     val images = recallAndDetailsSectionsAndImages.map { it.data?.images }
+
     val galleryVisible = images.map { !it.isNullOrEmpty() }
 
     private val _loading = MediatorLiveData<Boolean>().apply {

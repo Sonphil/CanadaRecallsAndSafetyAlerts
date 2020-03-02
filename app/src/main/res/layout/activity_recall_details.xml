@@ -42,13 +42,14 @@
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/scroll_view_recall_details"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/recycler_view_with_fab_bottom_padding">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_layout_recall_details"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/iv_recall_category_icon"
@@ -67,6 +68,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
                         android:textColor="@color/colorPrimary"
+                        android:textIsSelectable="true"
                         app:layout_constraintBottom_toBottomOf="@+id/iv_recall_category_icon"
                         app:layout_constraintStart_toEndOf="@+id/iv_recall_category_icon"
                         app:layout_constraintTop_toTopOf="@+id/iv_recall_category_icon"
@@ -81,6 +83,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:textColor="?android:attr/textColorPrimary"
+                        android:textIsSelectable="true"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:textIsSelectable="true"
                         app:layout_constraintStart_toStartOf="@+id/tv_recall_title"
                         app:layout_constraintTop_toBottomOf="@+id/tv_recall_title"
                         tools:text="01-02-20" />
@@ -113,6 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:textIsSelectable="true"
                         android:textStyle="italic"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_recall_date"
@@ -120,6 +125,17 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_recall_date"
                         tools:text="@string/label_bookmarked_on"
                         tools:visibility="visible" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_recall_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recall_date"
+                        tools:listitem="@layout/item_recall_details_section_header" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

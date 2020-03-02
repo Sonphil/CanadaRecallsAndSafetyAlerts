@@ -4,14 +4,14 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import androidx.core.view.marginTop
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
@@ -45,9 +45,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     lateinit var dateUtils: DateUtils
 
     private val dateFormat by lazy { dateUtils.getDateFormat(DateFormat.LONG) }
-    private val constraintLayoutInitialTopMargin by lazy {
-        binding.constraintLayoutRecallDetails.marginTop
-    }
+    private val adapter = RecallDetailsSectionAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +64,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             binding.flipperLayout.setupFlipperLayout()
             binding.btnRecallBookmark.setOnClickListener { viewModel.clickBookmark() }
             binding.swipeRefreshLayoutRecallDetails.setupSwipeRefreshLayout()
+            setupRecyclerView()
             setupBottomAppBar()
             subscribeUI()
         }
@@ -114,6 +113,15 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         removeAutoCycle()
         showInnerPagerIndicator()
         addPageTransformer(false, ZoomOutPageTransformer())
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(this)
+
+        with(binding.rvRecallDetails) {
+            this.layoutManager = layoutManager
+            adapter = this@RecallDetailsActivity.adapter
+        }
     }
 
     private fun setupBottomAppBar() {
@@ -190,16 +198,13 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             binding.flipperLayout.isVisible = visible
 
             binding.constraintLayoutRecallDetails.doApplyInsetsWhenAttached { view, windowInsets ->
-                val params = view.layoutParams as ViewGroup.MarginLayoutParams
 
                 if (visible) {
-                    params.topMargin = constraintLayoutInitialTopMargin
+                    view.updatePadding(top = 0)
                 } else {
                     val toolbarHeight = getDimensionFromAttr(R.attr.actionBarSize)
-                    params.topMargin = constraintLayoutInitialTopMargin + toolbarHeight + windowInsets.systemWindowInsetTop
+                    view.updatePadding(top = toolbarHeight + windowInsets.systemWindowInsetTop)
                 }
-
-                view.layoutParams = params
             }
         })
 
@@ -207,8 +212,8 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             binding.bottomAppBar.menu.children.forEach { it.isVisible = visible }
         })
 
-        viewModel.detailsSections.observe(this, Observer { sections ->
-            // TODO
+        viewModel.detailsSectionsItems.observe(this, Observer { sections ->
+            adapter.submitList(sections)
         })
     }
 
