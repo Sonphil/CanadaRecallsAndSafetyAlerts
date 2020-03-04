@@ -77,29 +77,23 @@ class RecallRepository @Inject constructor(
      * @param lang Whether the response from the server should be in English (en) or French (fr)
      */
     suspend fun getNewRecalls(lang: String): List<Recall> {
-        val dbMostRecentRecall = recallDao.getMostRecentRecall()
-        val dbMostRecentRecallDatePublished = dbMostRecentRecall?.datePublished ?: 0
-
-        return api
-            .recentRecalls(lang)
-            .results
-            .all
-            .orEmpty()
-            .filter { apiRecall ->
-                val datePublishedMillis = apiRecall.datePublished?.times(1000L)
-
-                if (datePublishedMillis == null || datePublishedMillis == dbMostRecentRecallDatePublished) {
+        return if (recallDao.isEmpty()) {
+            emptyList()
+        } else {
+            api.recentRecalls(lang)
+                .results
+                .all
+                .orEmpty()
+                .filter { apiRecall ->
                     val existsInDb = recallDao.getRecallsWithIdCount(apiRecall.recallId) == 1
 
                     !existsInDb
-                } else {
-                    datePublishedMillis > dbMostRecentRecallDatePublished
                 }
-            }
-            .toRecalls()
-            .also { newRecalls ->
-                recallDao.insertAll(newRecalls)
-            }
+                .toRecalls()
+                .also { newRecalls ->
+                    recallDao.insertAll(newRecalls)
+                }
+        }
     }
 
     companion object {

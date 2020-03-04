@@ -12,7 +12,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="60"
+            app:defaultValue="30"
             app:entries="@array/array_notifications_sync_frequency_pref_entries"
             app:entryValues="@array/array_notifications_sync_frequency_pref_entries_values"
             app:icon="@drawable/ic_sync_control_normal_24dp"

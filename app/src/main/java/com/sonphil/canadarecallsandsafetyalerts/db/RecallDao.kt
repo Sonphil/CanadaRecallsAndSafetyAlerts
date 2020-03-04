@@ -40,13 +40,15 @@ interface RecallDao {
 
     @Query(
         """
-            SELECT * 
-            FROM recall 
-            WHERE datePublished = (SELECT MAX(datePublished) FROM recall)
+            SELECT *
+            FROM recall
             LIMIT 1
     """
     )
-    suspend fun getMostRecentRecall(): Recall?
+    suspend fun getOneRecall(): Recall?
+
+    @Transaction
+    suspend fun isEmpty() = getOneRecall() == null
 
     @Query(
         """
