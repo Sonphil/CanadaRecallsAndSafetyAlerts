@@ -15,6 +15,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
+import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
+import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -22,6 +24,8 @@ class MainActivity : DaggerAppCompatActivity() {
     val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var syncRecallsWorkerScheduler: SyncRecallsWorkerScheduler
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.fragment_nav_host_main) as NavHostFragment)
             .findNavController()
@@ -45,6 +49,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(binding.root)
         setupActionBar()
         setupBottomNavigation()
+        syncRecallsWorkerScheduler.scheduleAccordingToPreferences()
     }
 
     private fun setupTheme() {

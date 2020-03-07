@@ -11,12 +11,26 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
+import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
+import dagger.android.AndroidInjector
+import dagger.android.HasAndroidInjector
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+
+    @Inject
+    lateinit var syncRecallsWorkerScheduler: SyncRecallsWorkerScheduler
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+
+        super.onAttach(context)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
         addPreferencesFromResource(R.xml.preferences)
@@ -87,7 +101,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
                 true
             }
             getString(R.string.key_notifications_sync_frequency_in_minutes_pref) -> {
-                scheduleRecallsSyncWorker()
+                syncRecallsWorkerScheduler.scheduleAccordingToPreferences()
                 true
             }
             getString(R.string.key_theme_pref) -> {
@@ -107,11 +121,7 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         if (newValue is String) {
             enableOrDisableNotificationsPreferences(newValue)
 
-            if (newValue == getString(R.string.value_notifications_pref_no)) {
-                SyncRecallsWorker.cancel(requireContext().applicationContext)
-            } else {
-                scheduleRecallsSyncWorker()
-            }
+            syncRecallsWorkerScheduler.scheduleAccordingToPreferences()
         }
     }
 
@@ -129,29 +139,5 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         val keywordsPref = preferenceScreen.findPreference<Preference>(keywordsPrefKey)
         val keywordValue = getString(R.string.value_notifications_pref_keyword)
         keywordsPref?.isEnabled = notificationsPrefValue == keywordValue
-    }
-
-    private fun scheduleRecallsSyncWorker() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val repeatIntervalPrefKey =
-            getString(R.string.key_notifications_sync_frequency_in_minutes_pref)
-        val notificationsPrefKey = getString(R.string.key_notifications_pref)
-        val notificationsPrefValue = prefs.getString(notificationsPrefKey, "")
-        try {
-            val repeatInterval = prefs
-                .getString(repeatIntervalPrefKey, null)
-                ?.toLong()
-            val keywordNotificationsEnabled =
-                notificationsPrefValue == getString(R.string.value_notifications_pref_keyword)
-
-            if (repeatInterval != null) {
-                SyncRecallsWorker.schedule(
-                    requireContext().applicationContext,
-                    keywordNotificationsEnabled,
-                    repeatInterval
-                )
-            }
-        } catch (e: NumberFormatException) {
-        }
     }
 }

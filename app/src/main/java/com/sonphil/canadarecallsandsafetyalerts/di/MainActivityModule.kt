@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 
 import androidx.lifecycle.ViewModel
 import com.sonphil.canadarecallsandsafetyalerts.presentation.more.MoreFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.more.preference.PreferenceFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.notification.AddNotificationKeywordDialogFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.notification.AddNotificationKeywordViewModel
 import com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationKeywordsFragment
@@ -36,6 +37,9 @@ interface MainActivityModule {
     @ContributesAndroidInjector
     fun contributeMoreFragment(): MoreFragment
 
+    @ContributesAndroidInjector
+    fun contributePreferenceFragment(): PreferenceFragment
+
     @Binds
     @IntoMap
     @ViewModelKey(NotificationKeywordsViewModel::class)
@@ -51,4 +55,5 @@ interface MainActivityModule {
     @IntoMap
     @ViewModelKey(AddNotificationKeywordViewModel::class)
     fun bindAddNotificationKeywordViewModel(addNotificationKeywordViewModel: AddNotificationKeywordViewModel): ViewModel
+
 }

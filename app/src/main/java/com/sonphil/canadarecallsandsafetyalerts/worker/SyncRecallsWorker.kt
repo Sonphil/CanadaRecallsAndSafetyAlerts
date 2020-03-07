@@ -1,7 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
+import androidx.preference.PreferenceManager
 import androidx.work.*
+import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.repository.NotificationKeywordsRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
@@ -28,63 +30,6 @@ class SyncRecallsWorker @Inject constructor(
     private val notificationsUtils: NotificationsUtils
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    companion object {
-        private const val UNIQUE_WORK_NAME = "SyncRecallsWork"
-        private const val INITIAL_DELAY_IN_MINUTES = 5L
-        private const val KEY_KEYWORD_NOTIFICATIONS_ENABLED = "KeywordNotificationsEnabled"
-
-        /**
-         * Schedules a worker that synchronize recalls with the API and notify the user about new
-         * ones
-         *
-         * @param context
-         * @param keywordNotificationsEnabled Whether or not the worker should notify the user about
-         * a recall or an alert only if it contains at least a keyword
-         * @param repeatInterval The repeat interval
-         * @param timeUnit The [TimeUnit] of the [repeatInterval]
-         */
-        fun schedule(
-            context: Context,
-            keywordNotificationsEnabled: Boolean,
-            repeatInterval: Long,
-            timeUnit: TimeUnit = TimeUnit.MINUTES
-        ) {
-            val workManager = WorkManager.getInstance(context)
-
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .setRequiresBatteryNotLow(true)
-                .build()
-
-            val inputData = Data.Builder()
-                .putBoolean(
-                    KEY_KEYWORD_NOTIFICATIONS_ENABLED,
-                    keywordNotificationsEnabled
-                )
-                .build()
-
-            val syncRequest =
-                PeriodicWorkRequestBuilder<SyncRecallsWorker>(repeatInterval, timeUnit)
-                    .setConstraints(constraints)
-                    .setInitialDelay(INITIAL_DELAY_IN_MINUTES, timeUnit)
-                    .setInputData(inputData)
-                    .build()
-
-            workManager.enqueueUniquePeriodicWork(
-                UNIQUE_WORK_NAME,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                syncRequest
-            )
-        }
-
-        /**
-         * Cancels scheduled worker
-         *
-         * @param context
-         */
-        fun cancel(context: Context) = WorkManager.getInstance(context).cancelAllWork()
-    }
-
     override suspend fun doWork(): Result = withContext(Dispatchers.Default) {
         try {
             val lang = localeUtils.getCurrentLanguage()
@@ -92,7 +37,7 @@ class SyncRecallsWorker @Inject constructor(
                 recallRepository.getNewRecalls(lang)
             }
             val keywordNotificationsEnabled = inputData.getBoolean(
-                KEY_KEYWORD_NOTIFICATIONS_ENABLED,
+                SyncRecallsWorkerScheduler.KEY_KEYWORD_NOTIFICATIONS_ENABLED,
                 false
             )
 

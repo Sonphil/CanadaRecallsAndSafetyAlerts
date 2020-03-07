@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
+import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -29,4 +30,12 @@ internal object AppModule {
     @JvmStatic
     fun provideSharedPreferences(context: Context): SharedPreferences = PreferenceManager
         .getDefaultSharedPreferences(context)
+
+    @Singleton
+    @Provides
+    @JvmStatic
+    fun provideSyncRecallsWorkerScheduler(
+        context: Context,
+        prefs: SharedPreferences
+    ) = SyncRecallsWorkerScheduler(context, prefs)
 }
