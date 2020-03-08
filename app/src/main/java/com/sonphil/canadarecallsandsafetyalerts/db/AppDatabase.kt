@@ -22,7 +22,7 @@ import com.sonphil.canadarecallsandsafetyalerts.entity.*
     ],
     version = 1
 )
-@TypeConverters(CategoryTypeConverter::class)
+@TypeConverters(value = [CategoryTypeConverter::class, RecallDetailsSectionTypeConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
     abstract fun recallDetailsBasicInformationDao(): RecallDetailsBasicInformationDao

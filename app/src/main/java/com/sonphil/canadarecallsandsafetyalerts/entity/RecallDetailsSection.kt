@@ -7,11 +7,12 @@ import androidx.room.Entity
  */
 
 @Entity(
-    primaryKeys = ["recallId", "name"]
+    primaryKeys = ["recallId", "panelName"]
 )
 data class RecallDetailsSection(
     val recallId: String,
-    val name: String,
+    val panelName: String,
+    val type: RecallDetailsSectionType,
     val title: String,
     val text: String
 )

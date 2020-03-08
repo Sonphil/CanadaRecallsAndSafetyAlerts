@@ -33,8 +33,6 @@ class RecallDetailsRepository @Inject constructor(
 
         val dbValue = recallDao
             .getRecallAndSectionsAndImagesById(recall.id)
-            .catch { }
-            .first()
 
         emit(StateData.Loading(dbValue))
 
@@ -44,7 +42,7 @@ class RecallDetailsRepository @Inject constructor(
             emit(StateData.Error(cause.message, dbValue))
         } finally {
             // Continue to emit DB value
-            emitAll(recallDao.getRecallAndSectionsAndImagesById(recall.id).map { recalls ->
+            emitAll(recallDao.getRecallAndSectionsAndImagesByIdFlow(recall.id).map { recalls ->
                 StateData.Success(recalls)
             })
         }

@@ -35,16 +35,34 @@ fun ApiSearchResult.toRecall() = Recall(
 
 fun ApiSearchResponse.toRecalls(): List<Recall> = results.orEmpty().map { it.toRecall() }
 
-fun ApiRecallDetailsPanel.toRecallDetailsSection(recall: Recall) = RecallDetailsSection(
-    recall.id,
-    this.panelName,
-    this.title,
-    this.text ?: ""
-)
+fun ApiRecallDetailsPanel.toRecallDetailsSection(recall: Recall): RecallDetailsSection {
+    val type = RecallDetailsSectionType
+        .values()
+        .find { type ->
+            type.name.equals(panelName, true)
+        } ?: RecallDetailsSectionType.OTHER
 
-fun List<ApiRecallDetailsPanel>?.toRecallDetailsSections(recall: Recall) = orEmpty()
+    return RecallDetailsSection(
+        recall.id,
+        panelName,
+        type,
+        this.title,
+        this.text ?: ""
+    )
+}
+
+fun List<ApiRecallDetailsPanel>?.toRecallDetailsSections(
+    recall: Recall,
+    ignoredPanelsNames: Set<String> = setOf(
+        "images",
+        "details",
+        "media_enquiries",
+        "id_numbers",
+        "product_"
+    )
+): List<RecallDetailsSection> = orEmpty()
     .filter { panel ->
-        !panel.title.equals("images", true)
+        !ignoredPanelsNames.any { panel.panelName.startsWith(it, true) }
     }.map { panel ->
         panel.toRecallDetailsSection(recall)
     }

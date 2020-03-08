@@ -30,8 +30,6 @@ class RecallRepository @Inject constructor(
     ): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
 
         val dBValues = recallDao.getAllRecallsAndBookmarksFilteredByCategories()
-            .catch { }
-            .first()
 
         emit(StateData.Loading(dBValues))
 
@@ -41,7 +39,7 @@ class RecallRepository @Inject constructor(
             emit(StateData.Error(cause.message, dBValues))
         } finally {
             // Always emit DB values because the user might try again on failure
-            emitAll(recallDao.getAllRecallsAndBookmarksFilteredByCategories().map { recalls ->
+            emitAll(recallDao.getAllRecallsAndBookmarksFilteredByCategoriesFlow().map { recalls ->
                 StateData.Success(recalls)
             })
         }

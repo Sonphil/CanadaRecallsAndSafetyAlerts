@@ -27,7 +27,6 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
 import technolifestyle.com.imageslider.FlipperLayout
 import technolifestyle.com.imageslider.FlipperView
-import technolifestyle.com.imageslider.pagetransformers.ZoomOutPageTransformer
 import java.text.DateFormat
 import javax.inject.Inject
 

@@ -26,7 +26,17 @@ interface RecallDao {
         ORDER BY datePublished DESC, id DESC
         """
     )
-    fun getAllRecallsAndBookmarksFilteredByCategories(): Flow<List<RecallAndBookmarkAndReadStatus>>
+    suspend fun getAllRecallsAndBookmarksFilteredByCategories(): List<RecallAndBookmarkAndReadStatus>
+
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM recall 
+        WHERE category IN (SELECT category FROM categoryfilter) 
+        ORDER BY datePublished DESC, id DESC
+        """
+    )
+    fun getAllRecallsAndBookmarksFilteredByCategoriesFlow(): Flow<List<RecallAndBookmarkAndReadStatus>>
 
     @Transaction
     @Query(
@@ -66,5 +76,9 @@ interface RecallDao {
 
     @Transaction
     @Query("SELECT * FROM recall WHERE id = :recallId")
-    fun getRecallAndSectionsAndImagesById(recallId: String): Flow<RecallAndBasicInformationAndDetailsSectionsAndImages>
+    suspend fun getRecallAndSectionsAndImagesById(recallId: String): RecallAndBasicInformationAndDetailsSectionsAndImages?
+
+    @Transaction
+    @Query("SELECT * FROM recall WHERE id = :recallId")
+    fun getRecallAndSectionsAndImagesByIdFlow(recallId: String): Flow<RecallAndBasicInformationAndDetailsSectionsAndImages>
 }
