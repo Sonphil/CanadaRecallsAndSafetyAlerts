@@ -112,7 +112,6 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     private fun FlipperLayout.setupFlipperLayout() {
         removeAutoCycle()
         showInnerPagerIndicator()
-        addPageTransformer(false, ZoomOutPageTransformer())
     }
 
     private fun setupRecyclerView() {
@@ -242,9 +241,16 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
                     setImageUrl(recallImage.fullUrl, ::setFlipperImage)
                 }
             }
-            .apply {
-                binding.flipperLayout.removeAllFlipperViews()
-                binding.flipperLayout.addFlipperViewList(this)
+            .also { flipperViews ->
+                with(binding.flipperLayout) {
+                    removeAllFlipperViews()
+                    if (flipperViews.count() < 2) {
+                        removeCircleIndicator()
+                    } else {
+                        showCircleIndicator()
+                    }
+                    addFlipperViewList(flipperViews)
+                }
             }
     }
 }

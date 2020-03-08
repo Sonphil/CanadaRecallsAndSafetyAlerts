@@ -55,5 +55,4 @@ interface MainActivityModule {
     @IntoMap
     @ViewModelKey(AddNotificationKeywordViewModel::class)
     fun bindAddNotificationKeywordViewModel(addNotificationKeywordViewModel: AddNotificationKeywordViewModel): ViewModel
-
 }

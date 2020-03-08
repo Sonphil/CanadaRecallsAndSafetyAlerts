@@ -13,10 +13,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
-import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
-import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 

@@ -15,7 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
-import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorker
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
