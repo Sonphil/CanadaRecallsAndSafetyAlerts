@@ -5,12 +5,15 @@ import android.content.SharedPreferences
 import androidx.work.*
 import com.sonphil.canadarecallsandsafetyalerts.R
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Sonphil on 04-03-20.
  */
 
-class SyncRecallsWorkerScheduler(
+@Singleton
+class SyncRecallsWorkerScheduler @Inject constructor(
     private val context: Context,
     private val prefs: SharedPreferences
 ) {

@@ -1,9 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
-import com.sonphil.canadarecallsandsafetyalerts.db.ReadStatusDao
 import com.sonphil.canadarecallsandsafetyalerts.db.RecallDao
-import com.sonphil.canadarecallsandsafetyalerts.entity.ReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.repository.mapper.toRecalls
@@ -17,8 +15,7 @@ import javax.inject.Inject
 
 class RecallRepository @Inject constructor(
     private val api: CanadaGovernmentApi,
-    private val recallDao: RecallDao,
-    private val readStatusDao: ReadStatusDao
+    private val recallDao: RecallDao
 ) {
     /**
      * Returns the recent recalls and their bookmarks
@@ -57,12 +54,6 @@ class RecallRepository @Inject constructor(
         emitAll(recallDao.getBookmarkedRecalls().map { recalls ->
             StateData.Success(recalls)
         })
-    }
-
-    suspend fun markRecallAsRead(recall: Recall) {
-        val readStatus = ReadStatus(recall.id)
-
-        readStatusDao.insertReadStatus(readStatus)
     }
 
     /**

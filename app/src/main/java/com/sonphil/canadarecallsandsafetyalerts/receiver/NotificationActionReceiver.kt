@@ -7,6 +7,7 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.ext.toast
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivityArgs
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.repository.ReadStatusRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import dagger.android.DaggerBroadcastReceiver
@@ -27,6 +28,8 @@ class NotificationActionReceiver : DaggerBroadcastReceiver() {
     lateinit var recallRepository: RecallRepository
     @Inject
     lateinit var bookmarkRepository: BookmarkRepository
+    @Inject
+    lateinit var readStatusRepository: ReadStatusRepository
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
@@ -42,7 +45,7 @@ class NotificationActionReceiver : DaggerBroadcastReceiver() {
 
             GlobalScope.launch(Dispatchers.IO) {
                 if (action == context.getString(R.string.action_mark_recall_as_read)) {
-                    recallRepository.markRecallAsRead(recall)
+                    readStatusRepository.markRecallAsRead(recall)
 
                     showSuccessMessage(context, R.string.message_recall_marked_as_read)
                 } else if (action == context.getString(R.string.action_bookmark_recall)) {

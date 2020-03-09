@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.repository.ReadStatusRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallDetailsRepository
 import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
@@ -23,11 +24,12 @@ class RecallDetailsViewModel @Inject constructor(
     private val localeUtils: LocaleUtils,
     private val bookmarkRepository: BookmarkRepository,
     private val recallRepository: RecallRepository,
-    private val recallDetailsRepository: RecallDetailsRepository
+    private val recallDetailsRepository: RecallDetailsRepository,
+    private val readStatusRepository: ReadStatusRepository
 ) : ViewModel() {
     init {
         viewModelScope.launch {
-            recallRepository.markRecallAsRead(recall)
+            readStatusRepository.markRecallAsRead(recall)
         }
     }
 
