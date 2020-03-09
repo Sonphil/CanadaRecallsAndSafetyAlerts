@@ -80,6 +80,9 @@
     <string name="title_website">Website</string>
     <string name="url_website">https://healthycanadians.gc.ca/recall-alert-rappel-avis/index-eng.php</string>
     <string name="text_description_website">@string/url_website</string>
+    <string name="title_motor_vehicle_safety_recalls_database">Motor Vehicle Safety Recalls Database</string>
+    <string name="url_motor_vehicle_safety_recalls_database">https://wwwapps.tc.gc.ca/Saf-Sec-Sur/7/VRDB-BDRV/search-recherche/menu.aspx?lang=eng</string>
+    <string name="text_description_motor_vehicle_safety_recalls_database">For the latest information on vehicle recalls</string>
     <string name="title_data_licence">Data Licence</string>
     <string name="text_description_data_licence">Open Government Licence - Canada</string>
     <string name="url_data_licence">https://open.canada.ca/en/open-government-licence-canada</string>

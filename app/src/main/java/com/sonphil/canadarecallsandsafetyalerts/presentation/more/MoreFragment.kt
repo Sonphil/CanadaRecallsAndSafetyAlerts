@@ -73,6 +73,7 @@ class MoreFragment : DaggerFragment() {
                     R.string.title_report -> openUrlExternal(R.string.url_report)
                     R.string.title_contact_health_canada -> openUrlExternal(R.string.url_contact_health_canada)
                     R.string.title_website -> openUrlExternal(R.string.url_website)
+                    R.string.title_motor_vehicle_safety_recalls_database -> openUrlExternal(R.string.url_motor_vehicle_safety_recalls_database)
                     R.string.title_data_licence -> openUrl(R.string.url_data_licence)
                     R.string.title_source_code -> openUrl(R.string.url_source_code)
                     R.string.title_contact_dev -> composeEmailDev()

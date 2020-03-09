@@ -22,7 +22,7 @@ class CategoryResources(category: Category) {
                 labelId = R.string.label_category_food
             }
             Category.VEHICLE -> {
-                iconId = R.drawable.ic_directions_car_black_24dp
+                iconId = R.drawable.ic_car_black_24dp
                 labelId = R.string.label_category_vehicle
             }
             Category.HEALTH_PRODUCT -> {
