@@ -2,12 +2,12 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details
 
 import android.net.Uri
 import androidx.lifecycle.*
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.ReadStatusRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.RecallDetailsRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.ReadStatusRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallDetailsRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData

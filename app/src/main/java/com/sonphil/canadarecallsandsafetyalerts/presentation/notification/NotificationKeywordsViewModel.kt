@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.notification
 
 import androidx.lifecycle.*
-import com.sonphil.canadarecallsandsafetyalerts.repository.NotificationKeywordsRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.NotificationKeywordsRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

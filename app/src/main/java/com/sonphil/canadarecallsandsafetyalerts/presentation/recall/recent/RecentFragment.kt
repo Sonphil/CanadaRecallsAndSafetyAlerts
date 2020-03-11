@@ -18,7 +18,7 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentBinding
 import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
-import com.sonphil.canadarecallsandsafetyalerts.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity

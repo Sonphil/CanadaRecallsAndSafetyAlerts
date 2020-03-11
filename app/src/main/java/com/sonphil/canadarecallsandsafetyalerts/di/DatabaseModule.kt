@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 
 import android.app.Application
 import androidx.room.Room
-import com.sonphil.canadarecallsandsafetyalerts.db.*
+import com.sonphil.canadarecallsandsafetyalerts.data.db.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

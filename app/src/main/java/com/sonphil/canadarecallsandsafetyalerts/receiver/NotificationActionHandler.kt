@@ -3,10 +3,10 @@ package com.sonphil.canadarecallsandsafetyalerts.receiver
 import android.content.Context
 import androidx.annotation.StringRes
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.ext.toast
-import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.ReadStatusRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.ReadStatusRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

@@ -2,9 +2,9 @@ package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
 import androidx.work.*
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.repository.NotificationKeywordsRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.NotificationKeywordsRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import kotlinx.coroutines.CoroutineScope

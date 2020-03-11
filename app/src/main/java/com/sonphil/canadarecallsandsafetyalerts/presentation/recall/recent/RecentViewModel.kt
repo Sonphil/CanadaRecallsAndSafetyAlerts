@@ -2,14 +2,14 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
-import com.sonphil.canadarecallsandsafetyalerts.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.CategoryFilterRepository
-import com.sonphil.canadarecallsandsafetyalerts.repository.RecallRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.CategoryFilterRepository
+import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers

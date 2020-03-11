@@ -17,8 +17,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
-import com.sonphil.canadarecallsandsafetyalerts.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallImage
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils

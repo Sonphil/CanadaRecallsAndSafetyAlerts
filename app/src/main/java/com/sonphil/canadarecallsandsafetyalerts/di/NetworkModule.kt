@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.di
 
-import com.sonphil.canadarecallsandsafetyalerts.api.CanadaGovernmentApi
+import com.sonphil.canadarecallsandsafetyalerts.data.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.di.qualifier.CanadaApiBaseUrl
 import com.squareup.moshi.Moshi
 import dagger.Module
