@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.domain
+package com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword
 
 import com.sonphil.canadarecallsandsafetyalerts.data.repository.NotificationKeywordsRepository
 import javax.inject.Inject
@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetNotificationKeywordsUseCase @Inject constructor(
     private val notificationKeywordsRepository: NotificationKeywordsRepository
 ) {
-    suspend operator fun invoke() = notificationKeywordsRepository.getKeywords()
+    operator fun invoke() = notificationKeywordsRepository.getKeywords()
 }

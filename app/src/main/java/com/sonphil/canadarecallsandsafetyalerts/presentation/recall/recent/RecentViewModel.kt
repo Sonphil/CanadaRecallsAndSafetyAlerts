@@ -7,10 +7,11 @@ import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAnd
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.CategoryFilterRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
-import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.GetCategoryFiltersUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.UpdateFilterForCategoryUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall.GetRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall.RefreshRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,21 +23,14 @@ import javax.inject.Inject
 
 class RecentViewModel @Inject constructor(
     private val app: App,
-    private val localeUtils: LocaleUtils,
-    private val recallRepository: RecallRepository,
-    bookmarkRepository: BookmarkRepository,
-    private val categoryFilterRepository: CategoryFilterRepository
-) : RecallBaseViewModel(bookmarkRepository) {
+    getRecallsUseCase: GetRecallsUseCase,
+    private val refreshRecallsUseCase: RefreshRecallsUseCase,
+    getCategoryFiltersUseCase: GetCategoryFiltersUseCase,
+    private val updateFilterForCategoryUseCase: UpdateFilterForCategoryUseCase,
+    updateBookmarkUseCase: UpdateBookmarkUseCase
+) : RecallBaseViewModel(updateBookmarkUseCase) {
     private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmarkAndReadStatus>>> =
-        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val currentLang = localeUtils.getCurrentLanguage()
-
-            val source = recallRepository
-                .getRecallsAndBookmarks(currentLang)
-                .asLiveData()
-
-            emitSource(source)
-        }
+        getRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
     val recentRecalls = recentRecallsWithLoadState.map { stateData ->
         stateData.data
@@ -107,25 +101,18 @@ class RecentViewModel @Inject constructor(
         try {
             _loading.postValue(true)
 
-            val currentLang = localeUtils.getCurrentLanguage()
-
-            recallRepository.refreshRecallsAndBookmarks(currentLang)
+            refreshRecallsUseCase()
         } catch (t: Throwable) {
             _loading.postValue(false)
             _error.postValue(t.message)
         }
     }
 
-    val categoryFilters: LiveData<List<Category>> = categoryFilterRepository
-        .getFilters()
+    val categoryFilters: LiveData<List<Category>> = getCategoryFiltersUseCase()
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
 
     fun updateCategoryFilter(category: Category, checked: Boolean) = viewModelScope
         .launch(Dispatchers.IO) {
-            if (checked) {
-                categoryFilterRepository.addFilter(category)
-            } else {
-                categoryFilterRepository.removeFilter(category)
-            }
+            updateFilterForCategoryUseCase(category, checked)
         }
 }

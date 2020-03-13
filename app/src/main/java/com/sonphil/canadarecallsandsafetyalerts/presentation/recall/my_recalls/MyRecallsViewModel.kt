@@ -4,9 +4,10 @@ import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Bookmark
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.AddBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.GetBookmarkedRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,17 +18,12 @@ import javax.inject.Inject
  */
 
 class MyRecallsViewModel @Inject constructor(
-    private val recallRepository: RecallRepository,
-    private val bookmarkRepository: BookmarkRepository
-) : RecallBaseViewModel(bookmarkRepository) {
+    getBookmarkedRecallsUseCase: GetBookmarkedRecallsUseCase,
+    updateBookmarkUseCase: UpdateBookmarkUseCase,
+    private val addBookmarkUseCase: AddBookmarkUseCase
+) : RecallBaseViewModel(updateBookmarkUseCase) {
     private val bookmarkedRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmarkAndReadStatus>>> =
-        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-            val source = recallRepository
-                .getBookmarkedRecalls()
-                .asLiveData()
-
-            emitSource(source)
-        }
+        getBookmarkedRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
     val bookmarkedRecalls = bookmarkedRecallsWithLoadState.map { stateData ->
         stateData.data
@@ -62,7 +58,7 @@ class MyRecallsViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             lastBookmarkRemoved.value?.let {
-                bookmarkRepository.insertBookmark(it)
+                addBookmarkUseCase(it)
             }
         }
     }

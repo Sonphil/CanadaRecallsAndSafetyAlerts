@@ -22,7 +22,7 @@ class RecallRepository @Inject constructor(
      *
      * @param lang Whether the response is in English (en) or French (fr)
      */
-    fun getRecallsAndBookmarks(
+    fun getRecallAndBookmarkAndReadStatus(
         lang: String
     ): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
 
@@ -56,34 +56,19 @@ class RecallRepository @Inject constructor(
         })
     }
 
-    /**
-     * Fetches recent recalls from the server and returns [Recall]s that are more recent than the
-     * most recent one of the DB
-     *
-     * If a recall from the server has a date whose value is null or is equal to the date of the DB,
-     * this function considers that the recall is new if the recall doesn't exist in the DB.
-     *
-     * @param lang Whether the response from the server should be in English (en) or French (fr)
-     */
-    suspend fun getNewRecalls(lang: String): List<Recall> {
-        return if (recallDao.isEmpty()) {
-            emptyList()
-        } else {
-            api.recentRecalls(lang)
-                .results
-                .all
-                .orEmpty()
-                .filter { apiRecall ->
-                    val existsInDb = recallDao.getRecallsWithIdCount(apiRecall.recallId) == 1
-
-                    !existsInDb
-                }
-                .toRecalls()
-                .also { newRecalls ->
-                    recallDao.insertAll(newRecalls)
-                }
-        }
+    suspend fun getNewRecallsFromApi(lang: String): List<Recall> {
+        return api.recentRecalls(lang)
+            .results
+            .all
+            .orEmpty()
+            .toRecalls()
     }
+
+    suspend fun isThereAnyRecall() = !recallDao.isEmpty()
+
+    suspend fun recallExists(recallId: String) = recallDao.getRecallsWithIdCount(recallId) == 1
+
+    suspend fun insertRecalls(recalls: List<Recall>) = recallDao.insertAll(recalls)
 
     companion object {
         const val SEARCH_DEFAULT_TEXT = ""

@@ -5,8 +5,8 @@ import androidx.annotation.StringRes
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.ext.toast
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.ReadStatusRepository
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -22,8 +22,8 @@ import javax.inject.Singleton
 @Singleton
 class NotificationActionHandler @Inject constructor(
     private val notificationUtils: NotificationsUtils,
-    private val bookmarkRepository: BookmarkRepository,
-    private val readStatusRepository: ReadStatusRepository
+    private val updateBookmarkUseCase: UpdateBookmarkUseCase,
+    private val markRecallAsReadUseCase: MarkRecallAsReadUseCase
 ) {
     fun handleRecallAction(context: Context, recall: Recall?, action: String?) {
         if (recall != null) {
@@ -31,11 +31,11 @@ class NotificationActionHandler @Inject constructor(
 
             GlobalScope.launch(Dispatchers.IO) {
                 if (action == context.getString(R.string.action_mark_recall_as_read)) {
-                    readStatusRepository.markRecallAsRead(recall)
+                    markRecallAsReadUseCase(recall)
 
                     showSuccessMessage(context, R.string.message_recall_marked_as_read)
                 } else if (action == context.getString(R.string.action_bookmark_recall)) {
-                    bookmarkRepository.updateBookmark(recall, true)
+                    updateBookmarkUseCase(recall, true)
 
                     showSuccessMessage(context, R.string.message_recall_bookmarked)
                 }

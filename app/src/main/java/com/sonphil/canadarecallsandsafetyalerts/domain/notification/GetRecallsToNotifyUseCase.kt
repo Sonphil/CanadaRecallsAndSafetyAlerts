@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.domain
+package com.sonphil.canadarecallsandsafetyalerts.domain.notification
 
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import javax.inject.Inject

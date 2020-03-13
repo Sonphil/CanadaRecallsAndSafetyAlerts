@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
  */
 
 abstract class RecallBaseViewModel constructor(
-    private val bookmarkRepository: BookmarkRepository
+    private val updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : ViewModel() {
     private val _navigateToDetails = MutableLiveData<Event<RecallAndBookmarkAndReadStatus>>()
     val navigateToDetails = _navigateToDetails
@@ -24,7 +24,7 @@ abstract class RecallBaseViewModel constructor(
     @CallSuper
     open fun updateBookmark(recall: Recall, bookmarked: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            bookmarkRepository.updateBookmark(recall, bookmarked)
+            updateBookmarkUseCase(recall, bookmarked)
         }
     }
 

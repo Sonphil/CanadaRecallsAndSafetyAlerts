@@ -12,9 +12,7 @@ import javax.inject.Inject
 class NotificationKeywordsRepository @Inject constructor(
     private val dao: NotificationKeyworkDao
 ) {
-    suspend fun getKeywords(): List<String> = dao.getKeywords()
-
-    fun getKeywordsFlow(): Flow<List<String>> = dao.getKeywordsFlow()
+    fun getKeywords(): Flow<List<String>> = dao.getKeywordsFlow()
 
     suspend fun insertNewKeyword(keyword: String) = dao.insertKeyword(NotificationKeyword(keyword))
 

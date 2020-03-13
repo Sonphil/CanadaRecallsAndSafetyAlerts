@@ -4,12 +4,12 @@ import android.net.Uri
 import androidx.lifecycle.*
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.BookmarkRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.ReadStatusRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallDetailsRepository
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.GetBookmarkForRecallUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.read_status.MarkRecallAsReadUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.recall_details.GetRecallsDetailsSectionsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.recall_details.RefreshRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,39 +21,36 @@ import javax.inject.Inject
 
 class RecallDetailsViewModel @Inject constructor(
     private val recall: Recall,
-    private val localeUtils: LocaleUtils,
-    private val bookmarkRepository: BookmarkRepository,
-    private val recallRepository: RecallRepository,
-    private val recallDetailsRepository: RecallDetailsRepository,
-    private val readStatusRepository: ReadStatusRepository
+    getRecallsDetailsSectionsUseCase: GetRecallsDetailsSectionsUseCase,
+    private val refreshRecallsDetailsSectionsUseCase: RefreshRecallsDetailsSectionsUseCase,
+    private val updateBookmarkUseCase: UpdateBookmarkUseCase,
+    getBookmarkForRecallUseCase: GetBookmarkForRecallUseCase,
+    markRecallAsReadUseCase: MarkRecallAsReadUseCase
 ) : ViewModel() {
     init {
         viewModelScope.launch {
-            readStatusRepository.markRecallAsRead(recall)
+            markRecallAsReadUseCase(recall)
         }
     }
 
-    private val bookmark = bookmarkRepository
-        .getBookmark(recall)
+    private val bookmark = getBookmarkForRecallUseCase(recall)
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
     val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
     val bookmarkDate: LiveData<Long?> = bookmark.map { bookmark -> bookmark?.date }
 
-    private val recallAndDetailsSectionsAndImages = recallDetailsRepository
-        .getRecallAndDetailsSectionsAndImages(recall, localeUtils.getCurrentLanguage())
+    private val recallAndDetailsSectionsAndImages = getRecallsDetailsSectionsUseCase(recall)
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
 
     val detailsSectionsItems = recallAndDetailsSectionsAndImages.map { stateData ->
         stateData
             .data
             ?.detailsSections
-            ?.map { section ->
+            ?.flatMap { section ->
                 setOf(
                     RecallDetailsSectionItem.RecallDetailsSectionHeaderItem(section.title),
                     RecallDetailsSectionItem.RecallDetailsSectionContentItem(section.text)
                 )
             }
-            ?.flatten()
     }
     val images = recallAndDetailsSectionsAndImages.map { it.data?.images }
 
@@ -84,7 +81,7 @@ class RecallDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val bookmarked = bookmark.value != null
 
-            bookmarkRepository.updateBookmark(recall, !bookmarked)
+            updateBookmarkUseCase(recall, !bookmarked)
         }
     }
 
@@ -92,10 +89,7 @@ class RecallDetailsViewModel @Inject constructor(
         try {
             _loading.postValue(true)
 
-            recallDetailsRepository.refreshRecallAndDetailsSectionsAndImages(
-                recall,
-                localeUtils.getCurrentLanguage()
-            )
+            refreshRecallsDetailsSectionsUseCase(recall)
         } catch (t: Throwable) {
             _loading.postValue(false)
             _error.postValue(t.message)
