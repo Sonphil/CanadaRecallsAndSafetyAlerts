@@ -12,17 +12,9 @@ import javax.inject.Inject
 class BookmarkRepository @Inject constructor(
     private val dao: BookmarkDao
 ) {
-    suspend fun updateBookmark(recall: Recall, bookmarked: Boolean) {
-        if (bookmarked) {
-            val bookmark = Bookmark(recall.id, System.currentTimeMillis())
-
-            dao.insertBookmark(bookmark)
-        } else {
-            dao.deleteBookmark(recall.id)
-        }
-    }
-
     suspend fun insertBookmark(bookmark: Bookmark) = dao.insertBookmark(bookmark)
 
     fun getBookmark(recall: Recall) = dao.getBookmarkByRecallId(recall.id)
+
+    suspend fun deleteBookmark(recallId: String) = dao.deleteBookmark(recallId)
 }

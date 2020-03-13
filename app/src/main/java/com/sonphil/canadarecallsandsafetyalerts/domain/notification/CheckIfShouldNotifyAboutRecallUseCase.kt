@@ -1,6 +1,8 @@
-package com.sonphil.canadarecallsandsafetyalerts.domain
+package com.sonphil.canadarecallsandsafetyalerts.domain.notification
 
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword.GetNotificationKeywordsUseCase
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 /**
@@ -12,7 +14,7 @@ class CheckIfShouldNotifyAboutRecallUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(recall: Recall, keywordNotificationsEnabled: Boolean): Boolean {
         val keywords = if (keywordNotificationsEnabled) {
-            getNotificationKeywordsUseCase()
+            runCatching { getNotificationKeywordsUseCase().first() }.getOrNull().orEmpty()
         } else {
             emptyList()
         }

@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
 import androidx.work.*
-import com.sonphil.canadarecallsandsafetyalerts.domain.GetRecallsToNotifyUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.notification.GetRecallsToNotifyUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
