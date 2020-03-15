@@ -55,14 +55,16 @@ fun List<ApiRecallDetailsPanel>?.toRecallDetailsSections(
     recall: Recall,
     ignoredPanelsNames: Set<String> = setOf(
         "images",
-        "details",
         "media_enquiries",
         "id_numbers",
         "product_"
     )
 ): List<RecallDetailsSection> = orEmpty()
     .filter { panel ->
-        !ignoredPanelsNames.any { panel.panelName.startsWith(it, true) }
+        val containsTable = panel.text?.contains("<table")
+
+        !ignoredPanelsNames.any { panel.panelName.startsWith(it, true) } &&
+                containsTable == false // Ignore texts with tables until we implement a way to display them properly
     }.map { panel ->
         panel.toRecallDetailsSection(recall)
     }
