@@ -13,11 +13,10 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
+            style="@style/Widget.AppTheme.Main.CollapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:statusBarScrim="@color/colorPrimary"
             app:titleEnabled="false">
 
             <technolifestyle.com.imageslider.FlipperLayout
