@@ -34,4 +34,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
+
+    <style name="Widget.AppTheme.Main.CollapsingToolbarLayout" parent="AppTheme">
+        <item name="contentScrim">@android:color/white</item>
+    </style>
 </resources>
