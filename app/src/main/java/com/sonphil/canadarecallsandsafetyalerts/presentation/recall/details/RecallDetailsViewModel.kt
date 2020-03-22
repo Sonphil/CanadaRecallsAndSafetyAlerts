@@ -10,7 +10,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.read_status.MarkRecallAsR
 import com.sonphil.canadarecallsandsafetyalerts.domain.recall_details.GetRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recall_details.RefreshRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
+import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,8 +41,8 @@ class RecallDetailsViewModel @Inject constructor(
     private val recallAndDetailsSectionsAndImages = getRecallsDetailsSectionsUseCase(recall)
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
 
-    val detailsSectionsItems = recallAndDetailsSectionsAndImages.map { stateData ->
-        stateData
+    val detailsSectionsItems = recallAndDetailsSectionsAndImages.map { result ->
+        result
             .data
             ?.detailsSections
             ?.flatMap { section ->
@@ -57,8 +57,8 @@ class RecallDetailsViewModel @Inject constructor(
     val galleryVisible = images.map { !it.isNullOrEmpty() }
 
     private val _loading = MediatorLiveData<Boolean>().apply {
-        val source = recallAndDetailsSectionsAndImages.map { stateData ->
-            stateData is StateData.Loading
+        val source = recallAndDetailsSectionsAndImages.map { result ->
+            result is Result.Loading
         }
 
         addSource(source) { loading ->
@@ -68,8 +68,8 @@ class RecallDetailsViewModel @Inject constructor(
     val loading: LiveData<Boolean> = _loading
 
     private val _error = MediatorLiveData<String?>().apply {
-        val source = recallAndDetailsSectionsAndImages.map { stateData ->
-            stateData.message
+        val source = recallAndDetailsSectionsAndImages.map { result ->
+            result.message
         }
 
         addSource(source) { errorMessage ->
@@ -96,13 +96,13 @@ class RecallDetailsViewModel @Inject constructor(
         }
     }
 
-    val menuItemsVisible = recallAndDetailsSectionsAndImages.map { stateData ->
-        stateData.data?.basicInformation?.url != null
+    val menuItemsVisible = recallAndDetailsSectionsAndImages.map { result ->
+        result.data?.basicInformation?.url != null
     }
 
     private val _navigateToUrl = MutableLiveData<Event<Uri>>()
     val navigateToUrl = _navigateToUrl
-    private inline val StateData<RecallAndBasicInformationAndDetailsSectionsAndImages>.url: String?
+    private inline val Result<RecallAndBasicInformationAndDetailsSectionsAndImages>.url: String?
         get() = this.data?.basicInformation?.url
 
     fun clickRecallUrl() {

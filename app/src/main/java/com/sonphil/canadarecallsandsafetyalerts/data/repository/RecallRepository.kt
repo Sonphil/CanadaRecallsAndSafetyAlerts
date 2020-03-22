@@ -5,7 +5,8 @@ import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDao
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.data.repository.mapper.toRecalls
-import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
+import com.sonphil.canadarecallsandsafetyalerts.ext.getRefreshedDatabaseFlow
+import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -24,23 +25,11 @@ class RecallRepository @Inject constructor(
      */
     fun getRecallAndBookmarkAndReadStatus(
         lang: String
-    ): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
-
-        val dBValues = recallDao.getAllRecallsAndBookmarksFilteredByCategories()
-
-        emit(StateData.Loading(dBValues))
-
-        try {
-            refreshRecallsAndBookmarks(lang)
-        } catch (cause: Throwable) {
-            emit(StateData.Error(cause.message, dBValues))
-        } finally {
-            // Always emit DB values because the user might try again on failure
-            emitAll(recallDao.getAllRecallsAndBookmarksFilteredByCategoriesFlow().map { recalls ->
-                StateData.Success(recalls)
-            })
-        }
-    }
+    ): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = getRefreshedDatabaseFlow(
+        initialDbCall = recallDao::getAllRecallsAndBookmarksFilteredByCategories,
+        refreshCall = { refreshRecallsAndBookmarks(lang) },
+        dbFlow = recallDao::getAllRecallsAndBookmarksFilteredByCategoriesFlow
+    )
 
     suspend fun refreshRecallsAndBookmarks(lang: String) {
         val apiValues = api
@@ -50,9 +39,9 @@ class RecallRepository @Inject constructor(
         recallDao.refreshRecalls(apiValues)
     }
 
-    fun getBookmarkedRecalls(): Flow<StateData<List<RecallAndBookmarkAndReadStatus>>> = flow {
+    fun getBookmarkedRecalls(): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = flow {
         emitAll(recallDao.getBookmarkedRecalls().map { recalls ->
-            StateData.Success(recalls)
+            Result.Success(recalls)
         })
     }
 

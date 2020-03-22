@@ -12,7 +12,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.GetCatego
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.UpdateFilterForCategoryUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall.GetRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall.RefreshRecallsUseCase
-import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
+import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,16 +29,16 @@ class RecentViewModel @Inject constructor(
     private val updateFilterForCategoryUseCase: UpdateFilterForCategoryUseCase,
     updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : RecallBaseViewModel(updateBookmarkUseCase) {
-    private val recentRecallsWithLoadState: LiveData<StateData<List<RecallAndBookmarkAndReadStatus>>> =
+    private val recentRecallsWithLoadResult: LiveData<Result<List<RecallAndBookmarkAndReadStatus>>> =
         getRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
-    val recentRecalls = recentRecallsWithLoadState.map { stateData ->
-        stateData.data
+    val recentRecalls = recentRecallsWithLoadResult.map { result ->
+        result.data
     }
 
     private val _loading = MediatorLiveData<Boolean>().apply {
-        val source = recentRecallsWithLoadState.map { stateData ->
-            stateData is StateData.Loading
+        val source = recentRecallsWithLoadResult.map { result ->
+            result is Result.Loading
         }
 
         addSource(source) { loading ->
@@ -48,8 +48,8 @@ class RecentViewModel @Inject constructor(
     val loading: LiveData<Boolean> = _loading
 
     private val _error = MediatorLiveData<String?>().apply {
-        val source = recentRecallsWithLoadState.map { stateData ->
-            stateData.message
+        val source = recentRecallsWithLoadResult.map { result ->
+            result.message
         }
 
         addSource(source) { errorMessage ->
@@ -71,8 +71,8 @@ class RecentViewModel @Inject constructor(
         }
     }
 
-    val emptyViewVisible = recentRecallsWithLoadState.map { stateData ->
-        stateData !is StateData.Loading && stateData.data.isNullOrEmpty()
+    val emptyViewVisible = recentRecallsWithLoadResult.map { result ->
+        result !is Result.Loading && result.data.isNullOrEmpty()
     }
 
     val emptyViewIconResId = emptyViewVisible.map {

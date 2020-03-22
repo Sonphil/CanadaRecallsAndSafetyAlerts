@@ -9,7 +9,8 @@ import com.sonphil.canadarecallsandsafetyalerts.di.qualifier.CanadaApiBaseUrl
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.data.repository.mapper.toRecallAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.utils.StateData
+import com.sonphil.canadarecallsandsafetyalerts.ext.getRefreshedDatabaseFlow
+import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -28,25 +29,11 @@ class RecallDetailsRepository @Inject constructor(
     fun getRecallAndDetailsSectionsAndImages(
         recall: Recall,
         lang: String
-    ): Flow<StateData<RecallAndBasicInformationAndDetailsSectionsAndImages>> = flow {
-        emit(StateData.Loading<RecallAndBasicInformationAndDetailsSectionsAndImages>(null))
-
-        val dbValue = recallDao
-            .getRecallAndSectionsAndImagesById(recall.id)
-
-        emit(StateData.Loading(dbValue))
-
-        try {
-            refreshRecallAndDetailsSectionsAndImages(recall, lang)
-        } catch (cause: Throwable) {
-            emit(StateData.Error(cause.message, dbValue))
-        } finally {
-            // Continue to emit DB value
-            emitAll(recallDao.getRecallAndSectionsAndImagesByIdFlow(recall.id).map { recalls ->
-                StateData.Success(recalls)
-            })
-        }
-    }
+    ): Flow<Result<RecallAndBasicInformationAndDetailsSectionsAndImages>> = getRefreshedDatabaseFlow(
+        initialDbCall = { recallDao.getRecallAndSectionsAndImagesById(recall.id) },
+        refreshCall = { refreshRecallAndDetailsSectionsAndImages(recall, lang) },
+        dbFlow = { recallDao.getRecallAndSectionsAndImagesByIdFlow(recall.id) }
+    )
 
     suspend fun refreshRecallAndDetailsSectionsAndImages(recall: Recall, lang: String) {
         val apiValue = api
