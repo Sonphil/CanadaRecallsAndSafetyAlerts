@@ -83,7 +83,7 @@
     <string name="text_description_website">@string/url_website</string>
     <string name="title_motor_vehicle_safety_recalls_database">Banque de données des rappels de sécurité automobile</string>
     <string name="url_motor_vehicle_safety_recalls_database">https://wwwapps.tc.gc.ca/Saf-Sec-Sur/7/VRDB-BDRV/search-recherche/menu.aspx?lang=fra</string>
-    <string name="text_description_motor_vehicle_safety_recalls_database">Pour obtenir de l\'information sur rappels de véhicules les plus récents</string>
+    <string name="text_description_motor_vehicle_safety_recalls_database">Pour obtenir de l\'information sur les rappels de véhicules les plus récents</string>
     <string name="title_data_licence">Licence des données</string>
     <string name="text_description_data_licence">Licence du gouvernement ouvert – Canada</string>
     <string name="url_data_licence">https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada</string>
