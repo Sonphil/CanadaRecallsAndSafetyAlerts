@@ -49,7 +49,7 @@ class RecentViewModel @Inject constructor(
 
     private val _error = MediatorLiveData<String?>().apply {
         val source = recentRecallsWithLoadResult.map { result ->
-            result.message
+            result.throwable?.message
         }
 
         addSource(source) { errorMessage ->

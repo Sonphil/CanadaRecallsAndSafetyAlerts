@@ -69,7 +69,7 @@ class RecallDetailsViewModel @Inject constructor(
 
     private val _error = MediatorLiveData<String?>().apply {
         val source = recallAndDetailsSectionsAndImages.map { result ->
-            result.message
+            result.throwable?.message
         }
 
         addSource(source) { errorMessage ->
