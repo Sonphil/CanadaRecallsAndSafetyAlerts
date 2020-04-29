@@ -1,11 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
 import androidx.core.transition.addListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
@@ -15,16 +13,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
-import com.google.android.material.transition.MaterialContainerTransform.*
+import com.google.android.material.transition.MaterialContainerTransform.FADE_MODE_IN
 import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
@@ -32,7 +28,6 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import dagger.android.support.DaggerAppCompatActivity
 import technolifestyle.com.imageslider.FlipperLayout
-import technolifestyle.com.imageslider.FlipperView
 import java.text.DateFormat
 import javax.inject.Inject
 
@@ -250,41 +245,17 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         })
     }
 
-    private fun ImageView.loadWithGlide(recallImage: RecallImage) {
-        val thumbnailRequest: RequestBuilder<Drawable> = Glide
-            .with(this)
-            .load(recallImage.thumbUrl)
-
-        Glide.with(this)
-            .load(recallImage.fullUrl)
-            .optionalCenterCrop()
-            .thumbnail(thumbnailRequest)
-            .into(this)
-    }
-
     private fun fillImagesGallery(recallImages: List<RecallImage>?) {
-        recallImages
-            .orEmpty()
-            .map { recallImage ->
-                FlipperView(this).apply {
-                    setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                    setDescriptionBackgroundAlpha(0f)
-                    fun setFlipperImage(flipperImageView: ImageView, imageUrl: String) {
-                        flipperImageView.loadWithGlide(recallImage)
-                    }
-                    setImageUrl(recallImage.fullUrl, ::setFlipperImage)
-                }
+        val flipperViews = recallImages.toFlipperViews(this)
+
+        with(binding.flipperLayout) {
+            removeAllFlipperViews()
+            if (flipperViews.count() < 2) {
+                removeCircleIndicator()
+            } else {
+                showCircleIndicator()
             }
-            .also { flipperViews ->
-                with(binding.flipperLayout) {
-                    removeAllFlipperViews()
-                    if (flipperViews.count() < 2) {
-                        removeCircleIndicator()
-                    } else {
-                        showCircleIndicator()
-                    }
-                    addFlipperViewList(flipperViews)
-                }
-            }
+            addFlipperViewList(flipperViews)
+        }
     }
 }
