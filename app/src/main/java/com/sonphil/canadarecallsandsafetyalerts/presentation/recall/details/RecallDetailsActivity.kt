@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -15,6 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialContainerTransform.*
+import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
@@ -49,6 +54,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupSharedElementTransition()
 
         val recall = getRecall()
 
@@ -71,6 +77,20 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
     fun getRecall(): Recall? = intent?.extras?.run {
         RecallDetailsActivityArgs.fromBundle(this).recall
+    }
+
+    private fun setupSharedElementTransition() {
+        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        val transitionName = getString(R.string.name_recall_details_shared_element_transition)
+        ViewCompat.setTransitionName(binding.root, transitionName)
+        val transform = MaterialContainerTransform().apply {
+            addTarget(binding.root)
+            duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+            pathMotion = MaterialArcMotion()
+            fadeMode = FADE_MODE_IN
+        }
+        window.sharedElementEnterTransition = transform
+        window.sharedElementReturnTransition = transform
     }
 
     private fun setupWindow() {

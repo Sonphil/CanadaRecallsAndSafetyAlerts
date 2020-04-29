@@ -25,7 +25,7 @@ import java.text.DateFormat
  */
 
 class RecallAdapter(
-    private val viewModel: RecallBaseViewModel,
+    private val viewModel: BaseRecallViewModel,
     dateUtils: DateUtils
 ) : ListAdapter<RecallAndBookmarkAndReadStatus, RecallAdapter.RecallViewHolder>(
     DiffCallback()

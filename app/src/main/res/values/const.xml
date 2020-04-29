@@ -16,4 +16,5 @@
     <string name="email_dev" translatable="false">T.S.Philippe_Lam@hotmail.com</string>
     <string name="action_mark_recall_as_read" translatable="false">ActionMarkRecallAsRead</string>
     <string name="action_bookmark_recall" translatable="false">ActionBookmarkRecall</string>
+    <string name="name_recall_details_shared_element_transition" translatable="false">RecallsDetailsSharedContainer</string>
 </resources>

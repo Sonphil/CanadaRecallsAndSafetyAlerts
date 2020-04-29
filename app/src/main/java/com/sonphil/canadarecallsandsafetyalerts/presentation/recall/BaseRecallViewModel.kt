@@ -1,6 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
 import androidx.annotation.CallSuper
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,11 +16,13 @@ import kotlinx.coroutines.launch
  * Created by Sonphil on 01-02-20.
  */
 
-abstract class RecallBaseViewModel constructor(
+abstract class BaseRecallViewModel constructor(
     private val updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : ViewModel() {
     private val _navigateToDetails = MutableLiveData<Event<RecallAndBookmarkAndReadStatus>>()
     val navigateToDetails = _navigateToDetails
+
+    abstract val emptyViewVisible: LiveData<Boolean>
 
     @CallSuper
     open fun updateBookmark(recall: Recall, bookmarked: Boolean) {

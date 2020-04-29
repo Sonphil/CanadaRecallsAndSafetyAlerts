@@ -9,7 +9,7 @@ import com.sonphil.canadarecallsandsafetyalerts.presentation.notification.Notifi
 import com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationKeywordsViewModel
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.my_recalls.MyRecallsViewModel
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentRecallsFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentViewModel
 import dagger.Binds
 import dagger.Module
@@ -24,7 +24,7 @@ interface MainActivityModule {
     fun bindRecentViewModel(recentViewModel: RecentViewModel): ViewModel
 
     @ContributesAndroidInjector
-    fun contributeRecentFragment(): RecentFragment
+    fun contributeRecentRecallsFragment(): RecentRecallsFragment
 
     @Binds
     @IntoMap

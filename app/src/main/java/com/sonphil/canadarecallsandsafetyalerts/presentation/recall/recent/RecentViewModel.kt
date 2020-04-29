@@ -6,7 +6,7 @@ import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
 import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.GetCategoryFiltersUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.UpdateFilterForCategoryUseCase
@@ -28,7 +28,7 @@ class RecentViewModel @Inject constructor(
     getCategoryFiltersUseCase: GetCategoryFiltersUseCase,
     private val updateFilterForCategoryUseCase: UpdateFilterForCategoryUseCase,
     updateBookmarkUseCase: UpdateBookmarkUseCase
-) : RecallBaseViewModel(updateBookmarkUseCase) {
+) : BaseRecallViewModel(updateBookmarkUseCase) {
     private val recentRecallsWithLoadResult: LiveData<Result<List<RecallAndBookmarkAndReadStatus>>> =
         getRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
@@ -71,7 +71,7 @@ class RecentViewModel @Inject constructor(
         }
     }
 
-    val emptyViewVisible = recentRecallsWithLoadResult.map { result ->
+    override val emptyViewVisible = recentRecallsWithLoadResult.map { result ->
         result !is Result.Loading && result.data.isNullOrEmpty()
     }
 

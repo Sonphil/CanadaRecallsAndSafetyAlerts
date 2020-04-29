@@ -4,7 +4,7 @@
     android:id="@+id/swipe_refresh_layout_recent_recalls"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.recall.recent.RecentFragment">
+    tools:context=".presentation.recall.recent.RecentRecallsFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

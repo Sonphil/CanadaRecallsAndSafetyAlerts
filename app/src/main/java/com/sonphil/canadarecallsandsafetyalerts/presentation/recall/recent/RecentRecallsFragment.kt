@@ -10,45 +10,36 @@ import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
-import com.sonphil.canadarecallsandsafetyalerts.NavGraphMainDirections
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
-import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentBinding
-import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentRecallsBinding
+import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallAdapter
-import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
-import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
-import dagger.android.support.DaggerFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallsFragment
 import es.dmoral.toasty.Toasty
-import javax.inject.Inject
 
-class RecentFragment : DaggerFragment() {
-    private var binding: FragmentRecentBinding by viewLifecycle()
+class RecentRecallsFragment : BaseRecallsFragment() {
+    private var binding: FragmentRecentRecallsBinding by viewLifecycle()
     private lateinit var mainActivityBinding: ActivityMainBinding
     private var _categoriesFilterBinding: IncludeCategoriesFilterBinding? = null
     private val categoriesFilterBinding get() = _categoriesFilterBinding!!
-    private val viewModel: RecentViewModel by lazy {
+
+    override val currentDestinationId = R.id.fragment_recent
+    override val viewModel: RecentViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(RecentViewModel::class.java)
     }
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject
-    lateinit var dateUtils: DateUtils
-    private val adapter by lazy { RecallAdapter(viewModel, dateUtils) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRecentBinding.inflate(layoutInflater, container, false)
+        binding = FragmentRecentRecallsBinding.inflate(layoutInflater, container, false)
 
         mainActivityBinding = (requireActivity() as MainActivity).binding
 
@@ -63,8 +54,6 @@ class RecentFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter.setupRecyclerView(requireContext(), binding.rvRecentRecalls)
-
         subscribeUI()
 
         binding.swipeRefreshLayoutRecentRecalls.setupSwipeRefreshLayout()
@@ -75,6 +64,17 @@ class RecentFragment : DaggerFragment() {
             viewModel.refresh()
         }
     }
+
+    override fun onOtherDestinationSelected() {
+        with(mainActivityBinding.root) {
+            removeView(categoriesFilterBinding.cardViewCategoriesFilter)
+            removeView(categoriesFilterBinding.btnFilterRecalls)
+        }
+    }
+
+    override fun getRecyclerView() = binding.rvRecentRecalls
+
+    override fun getEmptyView() = mainActivityBinding.includeEmptyView.emptyView
 
     private fun setupFilter() {
         with(categoriesFilterBinding) {
@@ -121,19 +121,6 @@ class RecentFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
-        (requireActivity() as MainActivity).selectedTopLevelDestinationId.observe(
-            viewLifecycleOwner,
-            Observer { destinationId ->
-                if (destinationId == R.id.fragment_recent) {
-                    binding.rvRecentRecalls.smoothScrollToPosition(0)
-                } else {
-                    with(mainActivityBinding.root) {
-                        removeView(categoriesFilterBinding.cardViewCategoriesFilter)
-                        removeView(categoriesFilterBinding.btnFilterRecalls)
-                    }
-                }
-            })
-
         viewModel.recentRecalls.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
@@ -156,11 +143,6 @@ class RecentFragment : DaggerFragment() {
             }
         })
 
-        viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { emptyViewVisible ->
-            binding.rvRecentRecalls.isVisible = !emptyViewVisible
-            mainActivityBinding.includeEmptyView.emptyView.isVisible = emptyViewVisible
-        })
-
         viewModel.emptyViewIconResId.observe(viewLifecycleOwner, Observer { iconId ->
             mainActivityBinding.includeEmptyView.ivEmpty.setImageResource(iconId)
         })
@@ -175,21 +157,11 @@ class RecentFragment : DaggerFragment() {
 
         viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
             with(categoriesFilterBinding) {
-                chipCategoryFilterFood.isChecked =
-                    Category.FOOD in visibleCategories
-                chipCategoryFilterVehicle.isChecked =
-                    Category.VEHICLE in visibleCategories
-                chipCategoryFilterHealthProduct.isChecked =
-                    Category.HEALTH_PRODUCT in visibleCategories
-                chipCategoryFilterConsumerProduct.isChecked =
-                    Category.CONSUMER_PRODUCT in visibleCategories
+                chipCategoryFilterFood.isChecked = Category.FOOD in visibleCategories
+                chipCategoryFilterVehicle.isChecked = Category.VEHICLE in visibleCategories
+                chipCategoryFilterHealthProduct.isChecked = Category.HEALTH_PRODUCT in visibleCategories
+                chipCategoryFilterConsumerProduct.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
             }
-        })
-
-        viewModel.navigateToDetails.observe(viewLifecycleOwner, EventObserver {
-            val action = NavGraphMainDirections.actionToActivityRecallDetails(it.recall)
-
-            findNavController().navigate(action)
         })
     }
 

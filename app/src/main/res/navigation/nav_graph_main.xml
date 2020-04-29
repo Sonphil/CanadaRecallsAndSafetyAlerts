@@ -6,9 +6,9 @@
     app:startDestination="@id/fragment_recent">
     <fragment
         android:id="@+id/fragment_recent"
-        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentFragment"
+        android:name="com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecentRecallsFragment"
         android:label="@string/title_recent"
-        tools:layout="@layout/fragment_recent"></fragment>
+        tools:layout="@layout/fragment_recent_recalls"></fragment>
 
     <fragment
         android:id="@+id/fragment_my_recalls"

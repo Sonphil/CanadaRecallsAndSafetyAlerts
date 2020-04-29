@@ -5,7 +5,7 @@ import com.sonphil.canadarecallsandsafetyalerts.data.entity.Bookmark
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.AddBookmarkUseCase
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallBaseViewModel
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
 import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.GetBookmarkedRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
@@ -21,7 +21,7 @@ class MyRecallsViewModel @Inject constructor(
     getBookmarkedRecallsUseCase: GetBookmarkedRecallsUseCase,
     updateBookmarkUseCase: UpdateBookmarkUseCase,
     private val addBookmarkUseCase: AddBookmarkUseCase
-) : RecallBaseViewModel(updateBookmarkUseCase) {
+) : BaseRecallViewModel(updateBookmarkUseCase) {
     private val bookmarkedRecallsWithLoadResult: LiveData<Result<List<RecallAndBookmarkAndReadStatus>>> =
         getBookmarkedRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
@@ -29,7 +29,7 @@ class MyRecallsViewModel @Inject constructor(
         result.data
     }
 
-    val emptyViewVisible = bookmarkedRecalls.map { list ->
+    override val emptyViewVisible = bookmarkedRecalls.map { list ->
         list.orEmpty().isEmpty()
     }
 

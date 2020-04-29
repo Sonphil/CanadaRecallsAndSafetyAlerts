@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
@@ -42,6 +43,7 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupTheme()
+        setupSharedElementTransition()
         binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         setTheme(R.style.AppTheme)
@@ -49,6 +51,11 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBar()
         setupBottomNavigation()
         syncRecallsWorkerScheduler.scheduleAccordingToPreferences()
+    }
+
+    private fun setupSharedElementTransition() {
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        window.sharedElementsUseOverlay = false
     }
 
     private fun setupTheme() {
