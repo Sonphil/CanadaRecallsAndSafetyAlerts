@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.core.transition.addListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -54,7 +55,10 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setupSharedElementTransition()
+
+        if (savedInstanceState == null) {
+            setupSharedElementTransition()
+        }
 
         val recall = getRecall()
 
@@ -90,6 +94,17 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             fadeMode = FADE_MODE_IN
         }
         window.sharedElementEnterTransition = transform
+
+        window.sharedElementEnterTransition.addListener(
+            onStart = {
+                binding.btnRecallBookmark.visibility = View.INVISIBLE
+                binding.bottomAppBar.performHide()
+            },
+            onEnd = {
+                binding.btnRecallBookmark.show()
+                binding.bottomAppBar.performShow()
+            })
+
         window.sharedElementReturnTransition = transform
     }
 
