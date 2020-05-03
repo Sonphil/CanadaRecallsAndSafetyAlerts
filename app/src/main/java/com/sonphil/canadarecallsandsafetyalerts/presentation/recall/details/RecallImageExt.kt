@@ -19,7 +19,6 @@ private fun ImageView.loadWithGlide(recallImage: RecallImage) {
 
     Glide.with(this)
         .load(recallImage.fullUrl)
-        .optionalCenterCrop()
         .thumbnail(thumbnailRequest)
         .into(this)
 }
