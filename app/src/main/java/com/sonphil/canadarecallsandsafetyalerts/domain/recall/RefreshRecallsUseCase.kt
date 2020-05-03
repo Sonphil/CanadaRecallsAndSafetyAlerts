@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall
+package com.sonphil.canadarecallsandsafetyalerts.domain.recall
 
 import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils

@@ -10,8 +10,8 @@ import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallVi
 import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.GetCategoryFiltersUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.UpdateFilterForCategoryUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall.GetRecallsUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.recent_recall.RefreshRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.recall.GetRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.recall.RefreshRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
