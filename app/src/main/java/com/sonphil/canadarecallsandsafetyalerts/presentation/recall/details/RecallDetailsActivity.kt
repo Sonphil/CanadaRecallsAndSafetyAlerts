@@ -92,11 +92,9 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
         window.sharedElementEnterTransition.addListener(
             onStart = {
-                binding.btnRecallBookmark.visibility = View.INVISIBLE
                 binding.bottomAppBar.performHide()
             },
             onEnd = {
-                binding.btnRecallBookmark.show()
                 binding.bottomAppBar.performShow()
             })
 
