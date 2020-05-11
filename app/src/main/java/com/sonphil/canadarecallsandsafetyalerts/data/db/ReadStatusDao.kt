@@ -3,6 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.data.db
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.ReadStatus
 
 /**
@@ -13,4 +14,7 @@ import com.sonphil.canadarecallsandsafetyalerts.data.entity.ReadStatus
 interface ReadStatusDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReadStatus(readStatus: ReadStatus)
+
+    @Query("SELECT * FROM readstatus WHERE recallId = :recallId")
+    suspend fun getReadStatus(recallId: String): ReadStatus?
 }

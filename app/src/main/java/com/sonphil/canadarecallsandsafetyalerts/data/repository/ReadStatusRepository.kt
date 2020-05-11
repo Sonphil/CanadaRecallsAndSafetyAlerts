@@ -11,4 +11,6 @@ import javax.inject.Inject
 class ReadStatusRepository @Inject constructor(private val readStatusDao: ReadStatusDao) {
     suspend fun insertReadStatus(readStatus: ReadStatus) = readStatusDao
         .insertReadStatus(readStatus)
+
+    suspend fun getReadStatus(recallId: String) = readStatusDao.getReadStatus(recallId)
 }
