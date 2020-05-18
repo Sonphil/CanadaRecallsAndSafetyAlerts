@@ -14,7 +14,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.recall.GetRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recall.RefreshRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -99,13 +98,7 @@ class RecentViewModel @Inject constructor(
         }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        refreshRecallsUseCase().collect { result ->
-            _loading.postValue(result is Result.Loading)
-
-            result.throwable?.message?.let {
-                _error.postValue(it)
-            }
-        }
+        refreshRecallsUseCase()
     }
 
     val categoryFilters: LiveData<List<Category>> = getCategoryFiltersUseCase()

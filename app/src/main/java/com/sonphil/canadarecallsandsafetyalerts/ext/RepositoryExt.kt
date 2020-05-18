@@ -30,6 +30,10 @@ fun <T> getRefreshedDatabaseFlow(
 
     try {
         refreshCall()
+
+        emitAll(dbFlow().map { value ->
+            Result.Success(value)
+        })
     } catch (cause: Throwable) {
         emit(Result.Error(dBValues, cause))
     } finally {
