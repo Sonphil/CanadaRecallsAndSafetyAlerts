@@ -14,6 +14,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.recall.GetRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recall.RefreshRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -98,13 +99,12 @@ class RecentViewModel @Inject constructor(
         }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            _loading.postValue(true)
+        refreshRecallsUseCase().collect { result ->
+            _loading.postValue(result is Result.Loading)
 
-            refreshRecallsUseCase()
-        } catch (t: Throwable) {
-            _loading.postValue(false)
-            _error.postValue(t.message)
+            result.throwable?.message?.let {
+                _error.postValue(it)
+            }
         }
     }
 
