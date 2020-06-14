@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -30,11 +30,11 @@ class AppWorkerFactory @Inject constructor(
 
             if (factoryProvider == null) {
                 val msg = "Unknown worker class name: $workerClassName"
-                Crashlytics.logException(IllegalArgumentException(msg))
+                FirebaseCrashlytics.getInstance().recordException(IllegalArgumentException(msg))
             }
             return factoryProvider?.get()?.create(appContext, workerParameters)
         } catch (e: Exception) {
-            Crashlytics.logException(e)
+            FirebaseCrashlytics.getInstance().recordException(e)
 
             return null
         }
