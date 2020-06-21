@@ -6,4 +6,6 @@
     <color name="colorSurface">#FAFAFA</color>
     <color name="colorCardView">#FFF</color>
     <color name="colorSplashBackground">@color/colorPrimary</color>
+    <color name="colorViewPagerIndicatorFocused">@color/colorPrimary</color>
+    <color name="colorViewPagerIndicatorNormal">#878787</color>
 </resources>

@@ -91,7 +91,9 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
 
     // ScrollGalleryView
-    implementation "com.github.therealshabi:AutoImageFlipper:1.6.0"
+    implementation ('com.alibaba.android:ultraviewpager:1.0.7.8@aar') {
+        transitive = true
+    }
 
     // Dagger
     implementation "com.google.dagger:dagger:$versions.dagger"

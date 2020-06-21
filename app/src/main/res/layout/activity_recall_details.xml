@@ -24,12 +24,14 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
 
-                <technolifestyle.com.imageslider.FlipperLayout
-                    android:id="@+id/flipper_layout"
+                <com.tmall.ultraviewpager.UltraViewPager
+                    android:id="@+id/ultra_viewpager_recall_details_images"
                     android:layout_width="match_parent"
                     android:layout_height="304dp"
+                    android:layout_centerInParent="true"
                     android:background="?attr/colorSurface"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax"
+                    app:upv_scrollmode="horizontal" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

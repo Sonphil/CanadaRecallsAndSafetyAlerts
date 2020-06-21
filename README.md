@@ -35,6 +35,7 @@ This allows the user to get access to recalls and safety alerts from the Governm
 * [LeakCanary](https://square.github.io/leakcanary/)
 * [Toasty](https://github.com/GrenderG/Toasty)
 * [RecyclerView Animators](https://github.com/wasabeef/recyclerview-animators)
+* [UltraViewPager](https://github.com/alibaba/UltraViewPager)
 
 ## Data source
 

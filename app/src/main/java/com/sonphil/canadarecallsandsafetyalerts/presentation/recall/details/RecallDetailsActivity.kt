@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import androidx.core.transition.addListener
@@ -19,15 +20,15 @@ import com.google.android.material.transition.MaterialContainerTransform.FADE_MO
 import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallImage
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.*
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
+import com.tmall.ultraviewpager.UltraViewPager
+import com.tmall.ultraviewpager.UltraViewPagerAdapter
 import dagger.android.support.DaggerAppCompatActivity
-import technolifestyle.com.imageslider.FlipperLayout
 import java.text.DateFormat
 import javax.inject.Inject
 
@@ -45,6 +46,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     lateinit var dateUtils: DateUtils
 
     private val dateFormat by lazy { dateUtils.getDateFormat(DateFormat.LONG) }
+    private val recallDetailsImagePagerAdapter = RecallDetailsImagePagerAdapter()
     private val adapter = RecallDetailsSectionAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +67,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             binding.tvRecallTitle.text = recall.title
             bindRecallPublicationDate(recall)
             setupBackButton()
-            binding.flipperLayout.setupFlipperLayout()
+            setupUltraViewPager()
             binding.btnRecallBookmark.setOnClickListener { viewModel.clickBookmark() }
             binding.swipeRefreshLayoutRecallDetails.setupSwipeRefreshLayout()
             setupRecyclerView()
@@ -136,9 +138,31 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun FlipperLayout.setupFlipperLayout() {
-        removeAutoCycle()
-        showInnerPagerIndicator()
+    private fun setupUltraViewPager() {
+        val ultraViewPager = binding.ultraViewpagerRecallDetailsImages
+        ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
+        val adapter = UltraViewPagerAdapter(recallDetailsImagePagerAdapter)
+        ultraViewPager.adapter = adapter
+        ultraViewPager.setupRecallDetailsImageIndicator()
+        ultraViewPager.setInfiniteLoop(true)
+        ultraViewPager.setAutoScroll(7000)
+    }
+
+    private fun UltraViewPager.setupRecallDetailsImageIndicator() {
+        initIndicator()
+        indicator
+            .setOrientation(UltraViewPager.Orientation.HORIZONTAL)
+            .setFocusColor(context.getColorCompat(R.color.colorViewPagerIndicatorFocused))
+            .setNormalColor(context.getColorCompat(R.color.colorViewPagerIndicatorNormal))
+            .setMargin(
+                0,
+                0,
+                0,
+                resources.getDimensionPixelSize(R.dimen.recall_details_images_view_pager_indicator_bottom_margin)
+            )
+            .setRadius(resources.getDimensionPixelSize(R.dimen.recall_details_images_view_pager_indicator_radius))
+            .setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
+            .build()
     }
 
     private fun setupRecyclerView() {
@@ -216,12 +240,22 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
 
         viewModel.images.observe(this, Observer { images ->
             if (!images.isNullOrEmpty()) {
-                fillImagesGallery(images)
+                recallDetailsImagePagerAdapter.recallImages = images
+                val viewPager = binding.ultraViewpagerRecallDetailsImages
+                viewPager.refresh()
+
+                if (images.size > 1) {
+                    if (viewPager.indicator == null) {
+                        viewPager.setupRecallDetailsImageIndicator()
+                    }
+                } else {
+                    viewPager.disableIndicator()
+                }
             }
         })
 
         viewModel.galleryVisible.observe(this, Observer { visible ->
-            binding.flipperLayout.isVisible = visible
+            binding.ultraViewpagerRecallDetailsImages.isVisible = visible
 
             binding.constraintLayoutRecallDetails.doApplyInsetsWhenAttached { view, windowInsets ->
 
@@ -241,19 +275,5 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
         viewModel.detailsSectionsItems.observe(this, Observer { sections ->
             adapter.submitList(sections)
         })
-    }
-
-    private fun fillImagesGallery(recallImages: List<RecallImage>?) {
-        val flipperViews = recallImages.toFlipperViews(this)
-
-        with(binding.flipperLayout) {
-            removeAllFlipperViews()
-            if (flipperViews.count() < 2) {
-                removeCircleIndicator()
-            } else {
-                showCircleIndicator()
-            }
-            addFlipperViewList(flipperViews)
-        }
     }
 }

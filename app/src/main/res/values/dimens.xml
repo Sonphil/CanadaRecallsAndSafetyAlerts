@@ -3,4 +3,6 @@
     <dimen name="space_collapsing_toolbar_layout_height">80dp</dimen>
     <dimen name="recycler_view_bottom_padding">8dp</dimen>
     <dimen name="recycler_view_with_fab_bottom_padding">88dp</dimen>
+    <dimen name="recall_details_images_view_pager_indicator_radius">5dp</dimen>
+    <dimen name="recall_details_images_view_pager_indicator_bottom_margin">6dp</dimen>
 </resources>
