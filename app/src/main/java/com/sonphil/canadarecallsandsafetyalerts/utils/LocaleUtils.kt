@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.utils
 
 import android.content.Context
 import android.os.Build
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 

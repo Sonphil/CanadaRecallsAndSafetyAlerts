@@ -59,9 +59,12 @@ class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
             viewModel.insertNewKeyword(binding.editTextNotificationKeyword.text.toString())
         }
 
-        viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
-            dismiss()
-        })
+        viewModel.dismissDialog.observe(
+            viewLifecycleOwner,
+            Observer {
+                dismiss()
+            }
+        )
     }
 
     private fun setupEditText() {

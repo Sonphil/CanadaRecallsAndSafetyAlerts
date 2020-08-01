@@ -33,7 +33,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$versions.gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:8.1.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:9.3.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
         classpath "com.google.gms:google-services:4.3.3"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'

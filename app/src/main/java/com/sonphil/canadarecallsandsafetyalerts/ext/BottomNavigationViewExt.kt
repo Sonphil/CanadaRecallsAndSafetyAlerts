@@ -7,10 +7,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 fun BottomNavigationView.setVisible(visible: Boolean, duration: Long = 200) {
     clearAnimation()
     animate()
-        .translationY(when (visible) {
-            true -> 0f
-            false -> height.toFloat()
-        })
+        .translationY(
+            when (visible) {
+                true -> 0f
+                false -> height.toFloat()
+            }
+        )
         .setDuration(duration)
         .setListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animator: Animator) {}

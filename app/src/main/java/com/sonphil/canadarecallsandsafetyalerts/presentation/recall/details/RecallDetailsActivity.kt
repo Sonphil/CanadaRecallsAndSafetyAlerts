@@ -21,7 +21,15 @@ import com.google.android.material.transition.MaterialContainerTransformSharedEl
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
-import com.sonphil.canadarecallsandsafetyalerts.ext.*
+import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsWhenAttached
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
+import com.sonphil.canadarecallsandsafetyalerts.ext.formatDefaultTimeZone
+import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
+import com.sonphil.canadarecallsandsafetyalerts.ext.getColorCompat
+import com.sonphil.canadarecallsandsafetyalerts.ext.getDimensionFromAttr
+import com.sonphil.canadarecallsandsafetyalerts.ext.open
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
@@ -98,14 +106,15 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             },
             onEnd = {
                 binding.bottomAppBar.performShow()
-            })
+            }
+        )
 
         window.sharedElementReturnTransition = transform
     }
 
     private fun setupWindow() {
         binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -193,87 +202,114 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
     }
 
     private fun subscribeUI() {
-        viewModel.bookmarked.observe(this, Observer { bookmarked ->
-            if (bookmarked) {
-                binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
-            } else {
-                binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
+        viewModel.bookmarked.observe(
+            this,
+            Observer { bookmarked ->
+                if (bookmarked) {
+                    binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
+                } else {
+                    binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
+                }
             }
-        })
+        )
 
-        viewModel.bookmarkDate.observe(this, Observer { date ->
-            if (date != null) {
-                binding.dividerRecallDates.isVisible = true
-                binding.tvRecallBookmarkDate.isVisible = true
+        viewModel.bookmarkDate.observe(
+            this,
+            Observer { date ->
+                if (date != null) {
+                    binding.dividerRecallDates.isVisible = true
+                    binding.tvRecallBookmarkDate.isVisible = true
 
-                val dateStr = dateFormat.formatDefaultTimeZone(date)
+                    val dateStr = dateFormat.formatDefaultTimeZone(date)
 
-                binding.tvRecallBookmarkDate.text = String.format(
-                    getString(R.string.label_bookmarked_on),
-                    dateStr
-                )
-            } else {
-                binding.dividerRecallDates.isVisible = false
-                binding.tvRecallBookmarkDate.isVisible = false
+                    binding.tvRecallBookmarkDate.text = String.format(
+                        getString(R.string.label_bookmarked_on),
+                        dateStr
+                    )
+                } else {
+                    binding.dividerRecallDates.isVisible = false
+                    binding.tvRecallBookmarkDate.isVisible = false
+                }
             }
-        })
+        )
 
-        viewModel.loading.observe(this, Observer { loading ->
-            binding.swipeRefreshLayoutRecallDetails.isRefreshing = loading
-        })
-
-        viewModel.navigateToUrl.observe(this, EventObserver { uri ->
-            uri.open(this)
-        })
-
-        viewModel.shareUrl.observe(this, EventObserver { url ->
-            val sendIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, url)
-                type = "text/plain"
+        viewModel.loading.observe(
+            this,
+            Observer { loading ->
+                binding.swipeRefreshLayoutRecallDetails.isRefreshing = loading
             }
+        )
 
-            val shareIntent = Intent.createChooser(sendIntent, null)
+        viewModel.navigateToUrl.observe(
+            this,
+            EventObserver { uri ->
+                uri.open(this)
+            }
+        )
 
-            startActivity(shareIntent)
-        })
+        viewModel.shareUrl.observe(
+            this,
+            EventObserver { url ->
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, url)
+                    type = "text/plain"
+                }
 
-        viewModel.images.observe(this, Observer { images ->
-            if (!images.isNullOrEmpty()) {
-                recallDetailsImagePagerAdapter.recallImages = images
-                val viewPager = binding.ultraViewpagerRecallDetailsImages
-                viewPager.refresh()
+                val shareIntent = Intent.createChooser(sendIntent, null)
 
-                if (images.size > 1) {
-                    if (viewPager.indicator == null) {
-                        viewPager.setupRecallDetailsImageIndicator()
+                startActivity(shareIntent)
+            }
+        )
+
+        viewModel.images.observe(
+            this,
+            Observer { images ->
+                if (!images.isNullOrEmpty()) {
+                    recallDetailsImagePagerAdapter.recallImages = images
+                    val viewPager = binding.ultraViewpagerRecallDetailsImages
+                    viewPager.refresh()
+
+                    if (images.size > 1) {
+                        if (viewPager.indicator == null) {
+                            viewPager.setupRecallDetailsImageIndicator()
+                        }
+                    } else {
+                        viewPager.disableIndicator()
                     }
-                } else {
-                    viewPager.disableIndicator()
                 }
             }
-        })
+        )
 
-        viewModel.galleryVisible.observe(this, Observer { visible ->
-            binding.ultraViewpagerRecallDetailsImages.isVisible = visible
+        viewModel.galleryVisible.observe(
+            this,
+            Observer { visible ->
+                binding.ultraViewpagerRecallDetailsImages.isVisible = visible
 
-            binding.constraintLayoutRecallDetails.doApplyInsetsWhenAttached { view, windowInsets ->
+                binding.constraintLayoutRecallDetails.doApplyInsetsWhenAttached { view, windowInsets ->
 
-                if (visible) {
-                    view.updatePadding(top = 0)
-                } else {
-                    val toolbarHeight = getDimensionFromAttr(R.attr.actionBarSize)
-                    view.updatePadding(top = toolbarHeight + windowInsets.systemWindowInsetTop)
+                    if (visible) {
+                        view.updatePadding(top = 0)
+                    } else {
+                        val toolbarHeight = getDimensionFromAttr(R.attr.actionBarSize)
+                        view.updatePadding(top = toolbarHeight + windowInsets.systemWindowInsetTop)
+                    }
                 }
             }
-        })
+        )
 
-        viewModel.menuItemsVisible.observe(this, Observer { visible ->
-            binding.bottomAppBar.menu.children.forEach { it.isVisible = visible }
-        })
+        viewModel.menuItemsVisible.observe(
+            this,
+            Observer { visible ->
+                binding.bottomAppBar.menu.children.forEach { it.isVisible = visible }
+            }
+        )
 
-        viewModel.detailsSectionsItems.observe(this, Observer { sections ->
-            adapter.submitList(sections)
-        })
+        viewModel.detailsSectionsItems.observe(
+            this,
+            Observer { sections ->
+                adapter.submitList(sections)
+            }
+        )
     }
 }

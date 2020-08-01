@@ -15,7 +15,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
-import com.sonphil.canadarecallsandsafetyalerts.ext.*
+import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsWhenAttached
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
+import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
+import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -45,7 +49,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setupTheme()
         setupSharedElementTransition()
         binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         setTheme(R.style.AppTheme)
         setContentView(binding.root)
         setupActionBar()

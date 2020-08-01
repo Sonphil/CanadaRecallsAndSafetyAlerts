@@ -3,7 +3,8 @@ package com.sonphil.canadarecallsandsafetyalerts.domain.notification
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.repository.RecallRepository
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 

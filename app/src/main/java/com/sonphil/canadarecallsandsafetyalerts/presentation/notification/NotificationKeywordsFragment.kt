@@ -99,20 +99,29 @@ class NotificationKeywordsFragment : DaggerFragment() {
     }
 
     private fun subscribeUI() {
-        viewModel.keywords.observe(viewLifecycleOwner, Observer { keywords ->
-            adapter.submitList(keywords)
-        })
-
-        viewModel.showKeywordDeletedSnackBar.observe(viewLifecycleOwner, EventObserver { show ->
-            if (show) {
-                keywordDeletedSnackBar.show()
+        viewModel.keywords.observe(
+            viewLifecycleOwner,
+            Observer { keywords ->
+                adapter.submitList(keywords)
             }
-        })
+        )
 
-        viewModel.showEmptyView.observe(viewLifecycleOwner, Observer { show ->
-            binding.rvNotificationKeywords.isVisible = !show
-            mainActivityBinding.includeEmptyView.emptyView.isVisible = show
-        })
+        viewModel.showKeywordDeletedSnackBar.observe(
+            viewLifecycleOwner,
+            EventObserver { show ->
+                if (show) {
+                    keywordDeletedSnackBar.show()
+                }
+            }
+        )
+
+        viewModel.showEmptyView.observe(
+            viewLifecycleOwner,
+            Observer { show ->
+                binding.rvNotificationKeywords.isVisible = !show
+                mainActivityBinding.includeEmptyView.emptyView.isVisible = show
+            }
+        )
     }
 
     private fun setupOnDestinationChangedListener() {

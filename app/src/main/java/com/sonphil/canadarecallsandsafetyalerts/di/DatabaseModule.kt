@@ -2,7 +2,15 @@ package com.sonphil.canadarecallsandsafetyalerts.di
 
 import android.app.Application
 import androidx.room.Room
-import com.sonphil.canadarecallsandsafetyalerts.data.db.*
+import com.sonphil.canadarecallsandsafetyalerts.data.db.AppDatabase
+import com.sonphil.canadarecallsandsafetyalerts.data.db.BookmarkDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.CategoryFilterDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.NotificationKeyworkDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.ReadStatusDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsBasicInformationDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsImageDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsSectionDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

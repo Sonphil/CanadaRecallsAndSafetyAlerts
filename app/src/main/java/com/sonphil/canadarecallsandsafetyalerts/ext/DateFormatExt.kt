@@ -1,7 +1,8 @@
 package com.sonphil.canadarecallsandsafetyalerts.ext
 
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
+import java.util.TimeZone
 
 /**
  * Created by Sonphil on 14-02-20.

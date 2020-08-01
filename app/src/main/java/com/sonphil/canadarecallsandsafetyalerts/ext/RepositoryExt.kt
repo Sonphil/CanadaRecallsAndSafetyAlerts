@@ -34,8 +34,10 @@ fun <T> getRefreshedDatabaseFlow(
         emit(Result.Error(dBValues, cause))
     } finally {
         // Always emit DB values because the user might try again on failure
-        emitAll(dbFlow().map { value ->
-            Result.Success(value)
-        })
+        emitAll(
+            dbFlow().map { value ->
+                Result.Success(value)
+            }
+        )
     }
 }

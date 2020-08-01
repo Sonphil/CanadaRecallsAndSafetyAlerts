@@ -65,16 +65,23 @@ abstract class BaseRecallsFragment : DaggerFragment() {
                 } else {
                     onOtherDestinationSelected()
                 }
-            })
+            }
+        )
 
-        viewModel.emptyViewVisible.observe(viewLifecycleOwner, Observer { visible ->
-            getRecyclerView().isVisible = !visible
-            getEmptyView().isVisible = visible
-        })
+        viewModel.emptyViewVisible.observe(
+            viewLifecycleOwner,
+            Observer { visible ->
+                getRecyclerView().isVisible = !visible
+                getEmptyView().isVisible = visible
+            }
+        )
 
-        viewModel.navigateToDetails.observe(viewLifecycleOwner, EventObserver {
-            navigateToDetails(it)
-        })
+        viewModel.navigateToDetails.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                navigateToDetails(it)
+            }
+        )
     }
 
     private fun navigateToDetails(recallAndBookmarkAndReadStatus: RecallAndBookmarkAndReadStatus) {

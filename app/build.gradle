@@ -68,6 +68,7 @@ dependencies {
     // Architecture components
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
     kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"

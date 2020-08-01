@@ -37,8 +37,8 @@ sealed class RecallDetailsSectionItemViewHolder<T : RecallDetailsSectionItem>(op
                 // TODO: Display HTML content in a nicer way
                 binding.tvRecallDetailsSectionContent.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     val flags = Html.FROM_HTML_SEPARATOR_LINE_BREAK_DIV or
-                            Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST or
-                            Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
+                        Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST or
+                        Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
 
                     Html.fromHtml(item.htmlContent, flags)
                 } else {

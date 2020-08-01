@@ -70,16 +70,22 @@ class MyRecallsFragment : BaseRecallsFragment() {
     }
 
     private fun subscribeUI() {
-        viewModel.bookmarkedRecalls.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
-
-        viewModel.showUndoUnbookmarkSnackbar.observe(viewLifecycleOwner, Observer { show ->
-            if (show) {
-                unbookmarkSnackbar.show()
-            } else {
-                unbookmarkSnackbar.dismiss()
+        viewModel.bookmarkedRecalls.observe(
+            viewLifecycleOwner,
+            Observer {
+                adapter.submitList(it)
             }
-        })
+        )
+
+        viewModel.showUndoUnbookmarkSnackbar.observe(
+            viewLifecycleOwner,
+            Observer { show ->
+                if (show) {
+                    unbookmarkSnackbar.show()
+                } else {
+                    unbookmarkSnackbar.dismiss()
+                }
+            }
+        )
     }
 }

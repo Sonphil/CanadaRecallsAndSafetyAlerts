@@ -121,48 +121,72 @@ class RecentRecallsFragment : BaseRecallsFragment() {
     }
 
     private fun subscribeUI() {
-        viewModel.recentRecalls.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-        })
-
-        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
-            binding.swipeRefreshLayoutRecentRecalls.isRefreshing = loading
-        })
-
-        viewModel.genericError.observe(viewLifecycleOwner, Observer { error ->
-            error?.let {
-                Toasty.error(requireContext(), error, Toast.LENGTH_SHORT, true).show()
+        viewModel.recentRecalls.observe(
+            viewLifecycleOwner,
+            Observer {
+                adapter.submitList(it)
             }
-        })
+        )
 
-        viewModel.networkError.observe(viewLifecycleOwner, Observer { error ->
-            error?.let {
-                val icon = requireContext().getDrawable(R.drawable.ic_cloud_off_white_24dp)
-
-                Toasty.normal(requireContext(), error, Toast.LENGTH_SHORT, icon).show()
+        viewModel.loading.observe(
+            viewLifecycleOwner,
+            Observer { loading ->
+                binding.swipeRefreshLayoutRecentRecalls.isRefreshing = loading
             }
-        })
+        )
 
-        viewModel.emptyViewIconResId.observe(viewLifecycleOwner, Observer { iconId ->
-            mainActivityBinding.includeEmptyView.ivEmpty.setImageResource(iconId)
-        })
-
-        viewModel.emptyViewTitleResId.observe(viewLifecycleOwner, Observer { titleId ->
-            mainActivityBinding.includeEmptyView.tvTitleEmpty.setText(titleId)
-        })
-
-        viewModel.emptyViewRetryButtonVisible.observe(viewLifecycleOwner, Observer { visible ->
-            mainActivityBinding.includeEmptyView.btnRetry.isVisible = visible
-        })
-
-        viewModel.categoryFilters.observe(viewLifecycleOwner, Observer { visibleCategories ->
-            with(categoriesFilterBinding) {
-                chipCategoryFilterFood.isChecked = Category.FOOD in visibleCategories
-                chipCategoryFilterVehicle.isChecked = Category.VEHICLE in visibleCategories
-                chipCategoryFilterHealthProduct.isChecked = Category.HEALTH_PRODUCT in visibleCategories
-                chipCategoryFilterConsumerProduct.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
+        viewModel.genericError.observe(
+            viewLifecycleOwner,
+            Observer { error ->
+                error?.let {
+                    Toasty.error(requireContext(), error, Toast.LENGTH_SHORT, true).show()
+                }
             }
-        })
+        )
+
+        viewModel.networkError.observe(
+            viewLifecycleOwner,
+            Observer { error ->
+                error?.let {
+                    val icon = requireContext().getDrawable(R.drawable.ic_cloud_off_white_24dp)
+
+                    Toasty.normal(requireContext(), error, Toast.LENGTH_SHORT, icon).show()
+                }
+            }
+        )
+
+        viewModel.emptyViewIconResId.observe(
+            viewLifecycleOwner,
+            Observer { iconId ->
+                mainActivityBinding.includeEmptyView.ivEmpty.setImageResource(iconId)
+            }
+        )
+
+        viewModel.emptyViewTitleResId.observe(
+            viewLifecycleOwner,
+            Observer { titleId ->
+                mainActivityBinding.includeEmptyView.tvTitleEmpty.setText(titleId)
+            }
+        )
+
+        viewModel.emptyViewRetryButtonVisible.observe(
+            viewLifecycleOwner,
+            Observer { visible ->
+                mainActivityBinding.includeEmptyView.btnRetry.isVisible = visible
+            }
+        )
+
+        viewModel.categoryFilters.observe(
+            viewLifecycleOwner,
+            Observer { visibleCategories ->
+                with(categoriesFilterBinding) {
+                    chipCategoryFilterFood.isChecked = Category.FOOD in visibleCategories
+                    chipCategoryFilterVehicle.isChecked = Category.VEHICLE in visibleCategories
+                    chipCategoryFilterHealthProduct.isChecked = Category.HEALTH_PRODUCT in visibleCategories
+                    chipCategoryFilterConsumerProduct.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
+                }
+            }
+        )
     }
 
     override fun onDestroyView() {

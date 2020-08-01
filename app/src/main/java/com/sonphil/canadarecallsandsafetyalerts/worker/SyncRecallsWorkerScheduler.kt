@@ -2,7 +2,12 @@ package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.sonphil.canadarecallsandsafetyalerts.R
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

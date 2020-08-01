@@ -1,7 +1,9 @@
 package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
+import androidx.work.WorkerParameters
 import com.sonphil.canadarecallsandsafetyalerts.domain.notification.GetRecallsToNotifyUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import kotlinx.coroutines.Dispatchers

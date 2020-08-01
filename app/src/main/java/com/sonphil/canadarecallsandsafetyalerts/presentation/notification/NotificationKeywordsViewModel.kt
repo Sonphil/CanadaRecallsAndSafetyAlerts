@@ -1,6 +1,11 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.notification
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword.DeleteNotificationKeywordUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword.GetNotificationKeywordsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event

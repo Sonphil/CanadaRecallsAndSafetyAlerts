@@ -1,17 +1,22 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
-import com.sonphil.canadarecallsandsafetyalerts.presentation.App
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
 import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.GetCategoryFiltersUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.category_filter.UpdateFilterForCategoryUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recall.GetRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.recall.RefreshRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
+import com.sonphil.canadarecallsandsafetyalerts.presentation.App
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect

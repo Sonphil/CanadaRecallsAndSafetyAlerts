@@ -3,7 +3,11 @@ package com.sonphil.canadarecallsandsafetyalerts.ext
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -23,11 +27,14 @@ fun <T : ViewBinding> Fragment.viewLifecycle(): ReadWriteProperty<Fragment, T> =
         init {
             this@viewLifecycle
                 .viewLifecycleOwnerLiveData
-                .observe(this@viewLifecycle, Observer { newLifecycleOwner ->
-                    viewLifecycleOwner?.lifecycle?.removeObserver(this)
-                    newLifecycleOwner.lifecycle.addObserver(this)
-                    viewLifecycleOwner = newLifecycleOwner
-                })
+                .observe(
+                    this@viewLifecycle,
+                    Observer { newLifecycleOwner ->
+                        viewLifecycleOwner?.lifecycle?.removeObserver(this)
+                        newLifecycleOwner.lifecycle.addObserver(this)
+                        viewLifecycleOwner = newLifecycleOwner
+                    }
+                )
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

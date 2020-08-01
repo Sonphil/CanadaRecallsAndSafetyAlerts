@@ -7,7 +7,10 @@ import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAnd
 import com.sonphil.canadarecallsandsafetyalerts.data.repository.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.ext.getRefreshedDatabaseFlow
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
@@ -40,9 +43,11 @@ class RecallRepository @Inject constructor(
     }
 
     fun getBookmarkedRecalls(): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = flow {
-        emitAll(recallDao.getBookmarkedRecalls().map { recalls ->
-            Result.Success(recalls)
-        })
+        emitAll(
+            recallDao.getBookmarkedRecalls().map { recalls ->
+                Result.Success(recalls)
+            }
+        )
     }
 
     suspend fun getNewRecallsFromApi(lang: String): List<Recall> {

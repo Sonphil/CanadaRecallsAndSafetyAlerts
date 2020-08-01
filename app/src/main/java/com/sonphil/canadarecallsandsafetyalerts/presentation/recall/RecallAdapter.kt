@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemRecallBinding
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.ReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemRecallBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator

@@ -7,7 +7,13 @@ import com.sonphil.canadarecallsandsafetyalerts.data.api.recent.ApiRecall
 import com.sonphil.canadarecallsandsafetyalerts.data.api.recent.ApiRecentRecallsResponse
 import com.sonphil.canadarecallsandsafetyalerts.data.api.search.ApiSearchResponse
 import com.sonphil.canadarecallsandsafetyalerts.data.api.search.ApiSearchResult
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.*
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallDetailsBasicInformation
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallDetailsSection
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallDetailsSectionType
+import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallImage
 
 /**
  * Created by Sonphil on 01-02-20.
@@ -64,7 +70,7 @@ fun List<ApiRecallDetailsPanel>?.toRecallDetailsSections(
         val containsTable = panel.text?.contains("<table")
 
         !ignoredPanelsNames.any { panel.panelName.startsWith(it, true) } &&
-                containsTable == false // Ignore texts with tables until we implement a way to display them properly
+            containsTable == false // Ignore texts with tables until we implement a way to display them properly
     }.map { panel ->
         panel.toRecallDetailsSection(recall)
     }
