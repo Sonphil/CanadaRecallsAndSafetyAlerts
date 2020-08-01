@@ -115,7 +115,7 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     // Toasty
     implementation 'com.github.GrenderG:Toasty:1.4.2'
