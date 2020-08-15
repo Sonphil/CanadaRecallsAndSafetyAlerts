@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Bookmark
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.AddBookmarkUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.GetBookmarkedRecallsUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.AddBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkedRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers

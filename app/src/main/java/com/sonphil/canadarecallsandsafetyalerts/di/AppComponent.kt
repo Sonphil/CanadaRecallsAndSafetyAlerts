@@ -15,14 +15,15 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        ActivityBindingModule::class,
         AndroidSupportInjectionModule::class,
         AppModule::class,
-        ViewModelFactoryModule::class,
-        ActivityBindingModule::class,
         DatabaseModule::class,
         NetworkModule::class,
-        WorkerFactoryModule::class,
-        ReceiverBindingModule::class
+        ReceiverBindingModule::class,
+        RepositoryModule::class,
+        ViewModelFactoryModule::class,
+        WorkerFactoryModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {

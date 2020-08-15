@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword.DeleteNotificationKeywordUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword.GetNotificationKeywordsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.DeleteNotificationKeywordUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.GetNotificationKeywordsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

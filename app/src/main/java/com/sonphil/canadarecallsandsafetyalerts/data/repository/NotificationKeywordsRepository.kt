@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.data.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.data.db.NotificationKeyworkDao
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.NotificationKeyword
+import com.sonphil.canadarecallsandsafetyalerts.domain.repository.NotificationKeywordsRepositoryInterface
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -11,10 +12,12 @@ import javax.inject.Inject
 
 class NotificationKeywordsRepository @Inject constructor(
     private val dao: NotificationKeyworkDao
-) {
-    fun getKeywords(): Flow<List<String>> = dao.getKeywordsFlow()
+) : NotificationKeywordsRepositoryInterface {
+    override fun getKeywords(): Flow<List<String>> = dao.getKeywordsFlow()
 
-    suspend fun insertNewKeyword(keyword: String) = dao.insertKeyword(NotificationKeyword(keyword))
+    override suspend fun insertNewKeyword(keyword: String) = dao
+        .insertKeyword(NotificationKeyword(keyword))
 
-    suspend fun deleteKeyword(keyword: String) = dao.deleteKeyword(NotificationKeyword(keyword))
+    override suspend fun deleteKeyword(keyword: String) = dao
+        .deleteKeyword(NotificationKeyword(keyword))
 }

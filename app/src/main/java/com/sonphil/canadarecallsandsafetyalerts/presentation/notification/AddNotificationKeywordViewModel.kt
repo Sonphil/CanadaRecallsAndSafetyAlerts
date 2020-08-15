@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sonphil.canadarecallsandsafetyalerts.domain.notification_keyword.AddNotificationKeywordUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.AddNotificationKeywordUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

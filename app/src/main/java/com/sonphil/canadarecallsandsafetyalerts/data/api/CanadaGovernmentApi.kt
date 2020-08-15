@@ -1,8 +1,8 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.api
 
-import com.sonphil.canadarecallsandsafetyalerts.data.api.details.ApiRecallDetailsResponse
-import com.sonphil.canadarecallsandsafetyalerts.data.api.recent.ApiRecentRecallsResponse
-import com.sonphil.canadarecallsandsafetyalerts.data.api.search.ApiSearchResponse
+import com.sonphil.canadarecallsandsafetyalerts.data.api.model.details.ApiRecallDetailsResponse
+import com.sonphil.canadarecallsandsafetyalerts.data.api.model.recent.ApiRecentRecallsResponse
+import com.sonphil.canadarecallsandsafetyalerts.data.api.model.search.ApiSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

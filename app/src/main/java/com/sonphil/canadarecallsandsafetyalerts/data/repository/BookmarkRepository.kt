@@ -3,6 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.data.repository
 import com.sonphil.canadarecallsandsafetyalerts.data.db.BookmarkDao
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Bookmark
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.repository.BookmarkRepositoryInterface
 import javax.inject.Inject
 
 /**
@@ -11,10 +12,10 @@ import javax.inject.Inject
 
 class BookmarkRepository @Inject constructor(
     private val dao: BookmarkDao
-) {
-    suspend fun insertBookmark(bookmark: Bookmark) = dao.insertBookmark(bookmark)
+) : BookmarkRepositoryInterface {
+    override suspend fun insertBookmark(bookmark: Bookmark) = dao.insertBookmark(bookmark)
 
-    fun getBookmark(recall: Recall) = dao.getBookmarkByRecallId(recall.id)
+    override fun getBookmark(recall: Recall) = dao.getBookmarkByRecallId(recall.id)
 
-    suspend fun deleteBookmark(recallId: String) = dao.deleteBookmark(recallId)
+    override suspend fun deleteBookmark(recallId: String) = dao.deleteBookmark(recallId)
 }

@@ -1,14 +1,15 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.data.api.CanadaGovernmentApi
+import com.sonphil.canadarecallsandsafetyalerts.data.api.mapper.toRecallAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsBasicInformationDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsImageDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsSectionDao
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.data.repository.mapper.toRecallAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.di.qualifier.CanadaApiBaseUrl
+import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.ext.getRefreshedDatabaseFlow
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.flow.Flow
@@ -25,8 +26,8 @@ class RecallDetailsRepository @Inject constructor(
     private val recallDetailsSectionDao: RecallDetailsSectionDao,
     private val recallDetailsImageDao: RecallDetailsImageDao,
     @CanadaApiBaseUrl private val apiBaseUrl: String
-) {
-    fun getRecallAndDetailsSectionsAndImages(
+) : RecallDetailsRepositoryInterface {
+    override fun getRecallAndDetailsSectionsAndImages(
         recall: Recall,
         lang: String
     ): Flow<Result<RecallAndBasicInformationAndDetailsSectionsAndImages>> = getRefreshedDatabaseFlow(
@@ -35,7 +36,7 @@ class RecallDetailsRepository @Inject constructor(
         dbFlow = { recallDao.getRecallAndSectionsAndImagesByIdFlow(recall.id) }
     )
 
-    suspend fun refreshRecallAndDetailsSectionsAndImages(recall: Recall, lang: String) {
+    override suspend fun refreshRecallAndDetailsSectionsAndImages(recall: Recall, lang: String) {
         val apiValue = api
             .recallDetails(recall.id, lang)
             .toRecallAndDetailsSectionsAndImages(recall, apiBaseUrl)

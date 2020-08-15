@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.CheckIfRecallIsBookmarkedUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.bookmark.UpdateBookmarkUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.read_status.CheckIfRecallHasBeenReadUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.read_status.MarkRecallAsReadUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.CheckIfRecallIsBookmarkedUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.CheckIfRecallHasBeenReadUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.ext.toast
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import kotlinx.coroutines.Dispatchers
