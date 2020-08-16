@@ -13,8 +13,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.ext.getColorCompat
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity

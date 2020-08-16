@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.NotificationKeyword
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.NotificationKeyword
 import kotlinx.coroutines.flow.Flow
 
 /**

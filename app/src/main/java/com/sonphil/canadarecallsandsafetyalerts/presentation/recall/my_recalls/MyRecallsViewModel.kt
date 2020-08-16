@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Bookmark
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Bookmark
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.AddBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkedRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase

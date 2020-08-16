@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.data.entity
+package com.sonphil.canadarecallsandsafetyalerts.domain.entity
 
 import android.os.Parcelable
 import androidx.room.Entity

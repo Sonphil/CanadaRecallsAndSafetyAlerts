@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentRecallsBinding
 import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity

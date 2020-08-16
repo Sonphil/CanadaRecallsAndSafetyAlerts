@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallImage
 
 /**
  * Created by Sonphil on 22-02-20.

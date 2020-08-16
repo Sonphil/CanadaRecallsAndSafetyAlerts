@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.data.entity
+package com.sonphil.canadarecallsandsafetyalerts.domain.entity
 
 /**
  * Created by Sonphil on 01-02-20.

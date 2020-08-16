@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.CategoryFilter
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.CategoryFilter
 import kotlinx.coroutines.flow.Flow
 
 /**

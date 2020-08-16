@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.category_filter
 
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.CategoryFilterRepositoryInterface
 import javax.inject.Inject
 

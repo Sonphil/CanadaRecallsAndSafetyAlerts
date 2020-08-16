@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark
 
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.BookmarkRepositoryInterface
 import javax.inject.Inject
 

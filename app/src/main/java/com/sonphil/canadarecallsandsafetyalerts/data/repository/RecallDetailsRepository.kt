@@ -6,9 +6,9 @@ import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsBasicInformationDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsImageDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsSectionDao
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.di.qualifier.CanadaApiBaseUrl
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.ext.getRefreshedDatabaseFlow
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result

@@ -1,8 +1,8 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.data.db.BookmarkDao
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Bookmark
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Bookmark
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.BookmarkRepositoryInterface
 import javax.inject.Inject
 

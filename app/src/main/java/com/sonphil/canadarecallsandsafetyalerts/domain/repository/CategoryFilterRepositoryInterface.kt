@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.repository
 
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
 import kotlinx.coroutines.flow.Flow
 
 /**

@@ -1,8 +1,8 @@
 package com.sonphil.canadarecallsandsafetyalerts.di
 
 import androidx.lifecycle.ViewModel
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.di.scope.RecallDetailsScope
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsViewModel
 import dagger.Binds

@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.db
 
 import androidx.room.TypeConverter
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
 
 /**
  * Created by Sonphil on 01-02-20.

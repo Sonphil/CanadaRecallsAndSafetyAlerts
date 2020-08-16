@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.data.entity
+package com.sonphil.canadarecallsandsafetyalerts.domain.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

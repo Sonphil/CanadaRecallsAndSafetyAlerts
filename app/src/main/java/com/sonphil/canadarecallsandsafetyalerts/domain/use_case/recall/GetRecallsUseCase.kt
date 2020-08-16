@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall
 
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result

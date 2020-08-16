@@ -1,8 +1,8 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.data.db.CategoryFilterDao
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.CategoryFilter
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.CategoryFilter
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.CategoryFilterRepositoryInterface
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

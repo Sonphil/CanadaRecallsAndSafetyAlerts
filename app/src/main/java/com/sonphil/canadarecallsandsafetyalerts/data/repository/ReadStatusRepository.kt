@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.data.db.ReadStatusDao
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.ReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.ReadStatusRepositoryInterface
 import javax.inject.Inject
 

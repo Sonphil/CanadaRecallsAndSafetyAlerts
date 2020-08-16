@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.repository
 
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.ReadStatus
 
 /**
  * Created by Sonphil on 15-08-20.

@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.data.db.NotificationKeyworkDao
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.NotificationKeyword
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.NotificationKeyword
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.NotificationKeywordsRepositoryInterface
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

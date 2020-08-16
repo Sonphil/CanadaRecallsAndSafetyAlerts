@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallImage
 
 /**
  * Created by Sonphil on 29-04-20.

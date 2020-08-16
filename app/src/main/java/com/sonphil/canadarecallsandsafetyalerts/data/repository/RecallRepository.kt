@@ -3,8 +3,8 @@ package com.sonphil.canadarecallsandsafetyalerts.data.repository
 import com.sonphil.canadarecallsandsafetyalerts.data.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.data.api.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDao
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.ext.getRefreshedDatabaseFlow
 import com.sonphil.canadarecallsandsafetyalerts.utils.Result

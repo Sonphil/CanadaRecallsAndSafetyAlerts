@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status
 
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.ReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.data.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.ReadStatusRepositoryInterface
 import javax.inject.Inject
 
