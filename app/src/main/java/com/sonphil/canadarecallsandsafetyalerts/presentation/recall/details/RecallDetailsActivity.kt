@@ -24,7 +24,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsWhenAttached
 import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
-import com.sonphil.canadarecallsandsafetyalerts.ext.formatDefaultTimeZone
 import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
 import com.sonphil.canadarecallsandsafetyalerts.ext.getColorCompat
 import com.sonphil.canadarecallsandsafetyalerts.ext.getDimensionFromAttr
@@ -209,26 +208,6 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
                     binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
                 } else {
                     binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_black_24dp)
-                }
-            }
-        )
-
-        viewModel.bookmarkDate.observe(
-            this,
-            Observer { date ->
-                if (date != null) {
-                    binding.dividerRecallDates.isVisible = true
-                    binding.tvRecallBookmarkDate.isVisible = true
-
-                    val dateStr = dateFormat.formatDefaultTimeZone(date)
-
-                    binding.tvRecallBookmarkDate.text = String.format(
-                        getString(R.string.label_bookmarked_on),
-                        dateStr
-                    )
-                } else {
-                    binding.dividerRecallDates.isVisible = false
-                    binding.tvRecallBookmarkDate.isVisible = false
                 }
             }
         )

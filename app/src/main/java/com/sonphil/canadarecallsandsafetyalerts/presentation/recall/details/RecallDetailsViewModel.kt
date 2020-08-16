@@ -42,7 +42,6 @@ class RecallDetailsViewModel @Inject constructor(
     private val bookmark = getBookmarkForRecallUseCase(recall)
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
     val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
-    val bookmarkDate: LiveData<Long?> = bookmark.map { bookmark -> bookmark?.date }
 
     private val recallAndDetailsSectionsAndImages = getRecallsDetailsSectionsUseCase(recall)
         .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)

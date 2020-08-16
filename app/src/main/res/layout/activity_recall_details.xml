@@ -106,32 +106,6 @@
                             app:layout_constraintTop_toBottomOf="@+id/tv_recall_title"
                             tools:text="01-02-20" />
 
-                        <View
-                            android:id="@+id/divider_recall_dates"
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="8dp"
-                            android:background="?android:attr/dividerVertical"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/tv_recall_date"
-                            app:layout_constraintStart_toEndOf="@+id/tv_recall_date"
-                            app:layout_constraintTop_toTopOf="@+id/tv_recall_date"
-                            tools:visibility="visible" />
-
-                        <TextView
-                            android:id="@+id/tv_recall_bookmark_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:textIsSelectable="true"
-                            android:textStyle="italic"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/tv_recall_date"
-                            app:layout_constraintStart_toEndOf="@+id/divider_recall_dates"
-                            app:layout_constraintTop_toTopOf="@+id/tv_recall_date"
-                            tools:text="@string/label_bookmarked_on"
-                            tools:visibility="visible" />
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_recall_details"
                             android:layout_width="match_parent"

@@ -31,7 +31,6 @@
     <string name="label_undo_unbookmark">Cancel</string>
 
     <!-- Recall Details -->
-    <string name="label_bookmarked_on">Saved on %1$s</string>
     <string name="label_back">Back</string>
     <string name="label_recall_link">Link</string>
     <string name="label_share_recall">Share</string>
