@@ -44,7 +44,7 @@
                 android:background="?android:selectableItemBackgroundBorderless"
                 android:contentDescription="@string/label_done"
                 android:padding="16dp"
-                android:src="@drawable/ic_done_all_white_24dp"
+                android:src="@drawable/ic_close_white_24dp"
                 android:tooltipText="@string/label_done"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
