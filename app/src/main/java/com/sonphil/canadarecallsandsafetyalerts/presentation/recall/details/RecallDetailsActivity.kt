@@ -21,6 +21,7 @@ import com.google.android.material.transition.MaterialContainerTransformSharedEl
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
 import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsWhenAttached
 import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
@@ -32,7 +33,6 @@ import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
-import com.sonphil.canadarecallsandsafetyalerts.utils.LocaleUtils
 import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.UltraViewPagerAdapter
 import dagger.android.support.DaggerAppCompatActivity

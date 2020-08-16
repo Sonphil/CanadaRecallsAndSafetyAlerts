@@ -1,5 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.utils
 
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import javax.inject.Inject

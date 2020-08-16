@@ -14,10 +14,10 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.category_filter.
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.category_filter.UpdateFilterForCategoryUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall.GetRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall.RefreshRecallsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
-import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

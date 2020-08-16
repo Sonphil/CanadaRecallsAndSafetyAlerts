@@ -11,8 +11,8 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBookmarkA
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.AddBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkedRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
-import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

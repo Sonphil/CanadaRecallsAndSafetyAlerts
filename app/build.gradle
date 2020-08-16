@@ -6,24 +6,15 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply from: rootProject.file('android.gradle')
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.sonphil.canadarecallsandsafetyalerts"
-        minSdkVersion 23
-        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas".toString())
-            }
-        }
     }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -36,25 +27,13 @@ android {
             manifestPlaceholders = [enableCrashReporting: "true"]
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
+
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
-
     // Support libraries
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation "com.google.android.material:material:$versions.material_components"
@@ -68,7 +47,6 @@ dependencies {
     // Architecture components
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
     kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
@@ -76,9 +54,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle_viewmodel_ktx"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
-    implementation "androidx.room:room-runtime:$versions.room"
-    implementation "androidx.room:room-ktx:$versions.room"
-    kapt "androidx.room:room-compiler:$versions.room"
+
+    // Test
+    testImplementation "junit:junit:$versions.junit"
 
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$versions.work_manager"
@@ -103,15 +81,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$versions.moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$versions.moshi"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
-
-    // Retrofit
-    api "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    api "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
-
     // Android Debug Database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
@@ -123,4 +92,7 @@ dependencies {
 
     // RecyclerView Animators
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+
+    implementation project(":domain")
+    implementation project(":data")
 }

@@ -15,8 +15,8 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateB
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.GetRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.RefreshRecallsDetailsSectionsUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import com.sonphil.canadarecallsandsafetyalerts.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
