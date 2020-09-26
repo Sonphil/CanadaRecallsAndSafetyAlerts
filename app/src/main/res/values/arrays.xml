@@ -8,7 +8,6 @@
         <item>@drawable/ic_car_black_24dp</item>
         <item>@drawable/ic_licence_black_24dp</item>
         <item>@drawable/ic_github_black_24dp</item>
-        <item>@drawable/ic_email_black_24dp</item>
     </integer-array>
 
     <string-array name="array_more_items_labels">
@@ -19,7 +18,6 @@
         <item>@string/title_motor_vehicle_safety_recalls_database</item>
         <item>@string/title_data_licence</item>
         <item>@string/title_source_code</item>
-        <item>@string/title_contact_dev</item>
     </string-array>
 
     <string-array name="array_more_items_descriptions">

@@ -1,8 +1,5 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.more
 
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +8,6 @@ import androidx.core.content.res.getResourceIdOrThrow
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sonphil.canadarecallsandsafetyalerts.BuildConfig
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentMoreBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrl
@@ -76,7 +72,6 @@ class MoreFragment : DaggerFragment() {
                     R.string.title_motor_vehicle_safety_recalls_database -> openUrlExternal(R.string.url_motor_vehicle_safety_recalls_database)
                     R.string.title_data_licence -> openUrl(R.string.url_data_licence)
                     R.string.title_source_code -> openUrl(R.string.url_source_code)
-                    R.string.title_contact_dev -> composeEmailDev()
                 }
             }
 
@@ -88,24 +83,5 @@ class MoreFragment : DaggerFragment() {
         descriptions.recycle()
 
         return moreItems
-    }
-
-    private fun composeEmailDev() {
-        val email = getString(R.string.email_dev)
-        val text = String.format(
-            getString(R.string.text_body_contact_dev),
-            BuildConfig.VERSION_NAME,
-            "${Build.MANUFACTURER} ${Build.MODEL}",
-            Build.VERSION.RELEASE
-        )
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
-
-        if (intent.resolveActivity(requireContext().packageManager) != null) {
-            startActivity(intent)
-        }
     }
 }
