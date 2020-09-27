@@ -8,11 +8,17 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply from: rootProject.file('android.gradle')
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = Integer.valueOf(System.getenv("GITHUB_RUN_NUMBER") ?: 0)
+println("versionBuild: " + versionBuild)
+
 android {
     defaultConfig {
         applicationId "com.sonphil.canadarecallsandsafetyalerts"
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
     }
 
     buildTypes {
