@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Recalls and Safety Alerts</string>
+    <string name="app_name">Recalls and Safety Alerts</string>
 
     <!-- Bottom navigation view -->
     <string name="title_recent">Recent Recalls</string>

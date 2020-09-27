@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Rappels et avis de sécurité</string>
+    <string name="app_name">Rappels et avis de sécurité</string>
 
     <!-- Bottom navigation view -->
     <string name="title_recent">Rappels récents</string>
