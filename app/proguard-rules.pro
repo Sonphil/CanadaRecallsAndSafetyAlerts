@@ -35,3 +35,10 @@
   **[] $VALUES;
   public *;
 }
+
+# Navigation Components
+-keepnames class androidx.fragment.app.FragmentContainerView
+-keepnames class androidx.navigation.fragment.NavHostFragment
+
+# Entities Classes
+-keepnames class com.sonphil.canadarecallsandsafetyalerts.domain.entity.*
