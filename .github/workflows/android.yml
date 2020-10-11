@@ -19,8 +19,33 @@ jobs:
       run: bash ./gradlew ktlintCheck
     - name: Build debug APK
       run: bash ./gradlew assembleDebug --stacktrace
-    - name: Upload debug APK
+    - name: Upload debug APK to GitHub
       uses: actions/upload-artifact@v1
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
+  release_aab:
+    if: github.ref == 'refs/heads/master'
+    needs: debug_apk
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Decrypt secret files
+      shell: bash
+      run: chmod u+r+x scripts/decrypt_secrets.sh; scripts/decrypt_secrets.sh
+      env:
+        GOOGLE_SERVICES_ENC_PW: ${{ secrets.GOOGLE_SERVICES_ENC_PW }}
+        KEYSTORE_ENC_PW: ${{ secrets.KEYSTORE_ENC_PW }}
+    - name: Build release AAB
+      id: create-aab
+      run: chmod +x ./gradlew; chmod u+r+x scripts/create-aab.sh; scripts/create-aab.sh
+    - name: Upload release AAB to GitHub
+      uses: actions/upload-artifact@v1
+      with:
+        name: app-release
+        path: ${{ steps.create-aab.outputs.path }}
