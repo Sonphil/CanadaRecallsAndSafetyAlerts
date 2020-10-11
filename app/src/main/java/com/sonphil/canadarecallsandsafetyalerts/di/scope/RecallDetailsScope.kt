@@ -9,3 +9,5 @@ import javax.inject.Scope
 @Scope
 @Retention
 annotation class RecallDetailsScope
+// TODO: Change to activity scope
+// https://developer.android.com/training/dependency-injection/dagger-android
