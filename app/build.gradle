@@ -8,6 +8,10 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply from: rootProject.file('android.gradle')
 
+def keyPropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(keyPropertiesFile.newReader())
+
 def versionMajor = 1
 def versionMinor = 0
 def versionPatch = 0
@@ -19,6 +23,15 @@ android {
         applicationId "com.sonphil.canadarecallsandsafetyalerts"
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['releaseKeyAlias']
+            keyPassword keystoreProperties['releaseKeyPassword']
+            storeFile rootProject.file("./" + keystoreProperties['releaseKeyStore'])
+            storePassword keystoreProperties['releaseStorePassword']
+        }
     }
 
     buildTypes {
