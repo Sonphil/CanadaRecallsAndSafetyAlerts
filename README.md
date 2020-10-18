@@ -1,7 +1,10 @@
 # 🍁Canada recalls and safety alerts Android application
 
-This allows the user to get access to recalls and safety alerts from the Government of Canada. Please note that this project is a WIP.
+This allows the user to get access to recalls and safety alerts from the Government of Canada. 
 
+Please note that this project is a WIP and is not affiliated with the Goverment of Canada.
+
+[<img src="https://play.google.com/intl/ja/badges/static/images/badges/en_badge_web_generic.png" alt="You can install the production app via Get it on Google Play" width="155px">](https://play.google.com/store/apps/details?id=com.sonphil.canadarecallsandsafetyalerts)
 ### Features
 
 - View recent recalls
