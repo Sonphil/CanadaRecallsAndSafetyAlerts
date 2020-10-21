@@ -12,8 +12,8 @@ import javax.inject.Inject
 class CheckIfShouldNotifyAboutRecallUseCase @Inject constructor(
     private val getNotificationKeywordsUseCase: GetNotificationKeywordsUseCase
 ) {
-    suspend operator fun invoke(recall: Recall, keywordNotificationsEnabled: Boolean): Boolean {
-        val keywords = if (keywordNotificationsEnabled) {
+    suspend operator fun invoke(recall: Recall, isKeywordNotificationsEnabled: Boolean): Boolean {
+        val keywords = if (isKeywordNotificationsEnabled) {
             runCatching { getNotificationKeywordsUseCase().first() }.getOrNull().orEmpty()
         } else {
             emptyList()

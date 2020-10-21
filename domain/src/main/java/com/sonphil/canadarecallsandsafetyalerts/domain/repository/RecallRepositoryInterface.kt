@@ -23,7 +23,7 @@ interface RecallRepositoryInterface {
 
     fun getBookmarkedRecalls(): Flow<Result<List<RecallAndBookmarkAndReadStatus>>>
 
-    suspend fun getNewRecallsFromApi(lang: String): List<Recall>
+    suspend fun getNewRecalls(lang: String): List<Recall>
 
     suspend fun isThereAnyRecall(): Boolean
 

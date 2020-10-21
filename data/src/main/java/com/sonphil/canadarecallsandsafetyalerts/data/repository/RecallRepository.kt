@@ -51,7 +51,7 @@ class RecallRepository @Inject constructor(
         )
     }
 
-    override suspend fun getNewRecallsFromApi(lang: String): List<Recall> {
+    override suspend fun getNewRecalls(lang: String): List<Recall> {
         return api.recentRecalls(lang)
             .results
             .all

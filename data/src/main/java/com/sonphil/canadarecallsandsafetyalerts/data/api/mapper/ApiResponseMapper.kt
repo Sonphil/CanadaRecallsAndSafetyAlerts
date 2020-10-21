@@ -96,7 +96,7 @@ fun ApiRecallDetailsPanel.toRecallDetailsImages(
  * 2) /recall-alert-rappel-avis/hc-sc/2020/assets/ra-72335-01_s_fs_3_20200214-150635_17_fr.jpg
  *
  * For the first case, we need to remove the first part and remove "qa" from the URL and use https.
- * For the second case, we simply to add the base url at the beginning.
+ * For the second case, we simply need to add the base url at the beginning.
  */
 private fun String.processedUrl(apiBaseUrl: String): String {
     val delimiter = "http"

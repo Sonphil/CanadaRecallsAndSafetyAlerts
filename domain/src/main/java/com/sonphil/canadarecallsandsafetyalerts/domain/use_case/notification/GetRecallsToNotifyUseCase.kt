@@ -11,14 +11,14 @@ class GetRecallsToNotifyUseCase @Inject constructor(
     private val getNewRecallsUseCase: GetNewRecallsUseCase,
     private val checkIfShouldNotifyAboutRecallUseCase: CheckIfShouldNotifyAboutRecallUseCase
 ) {
-    suspend operator fun invoke(keywordNotificationsEnabled: Boolean): List<Recall> {
+    suspend operator fun invoke(isKeywordNotificationsEnabled: Boolean): List<Recall> {
         val newRecalls = getNewRecallsUseCase()
 
         return if (newRecalls.isEmpty()) {
             emptyList()
         } else {
             newRecalls.filter { recall ->
-                checkIfShouldNotifyAboutRecallUseCase(recall, keywordNotificationsEnabled)
+                checkIfShouldNotifyAboutRecallUseCase(recall, isKeywordNotificationsEnabled)
             }
         }
     }
