@@ -16,7 +16,7 @@ buildscript {
             "lifecycle_viewmodel_ktx": "2.2.0-rc01",
             "material_components"    : "1.2.0-alpha06",
             "moshi"                  : "1.10.0",
-            "navigation"             : "2.3.0",
+            "navigation"             : "2.3.1",
             "retrofit"               : "2.9.0",
             "room"                   : "2.2.5",
             "support"                : "1.2.0",

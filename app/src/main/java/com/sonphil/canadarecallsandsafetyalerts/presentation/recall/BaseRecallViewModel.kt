@@ -1,5 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
+import android.os.SystemClock
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,10 +20,12 @@ import kotlinx.coroutines.launch
 abstract class BaseRecallViewModel constructor(
     private val updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : ViewModel() {
+    abstract val emptyViewVisible: LiveData<Boolean>
+
     private val _navigateToDetails = MutableLiveData<Event<RecallAndBookmarkAndReadStatus>>()
     val navigateToDetails = _navigateToDetails
 
-    abstract val emptyViewVisible: LiveData<Boolean>
+    private var lastClickTime = 0L
 
     @CallSuper
     open fun updateBookmark(recall: Recall, bookmarked: Boolean) {
@@ -32,6 +35,17 @@ abstract class BaseRecallViewModel constructor(
     }
 
     fun clickRecall(recallAndBookmarkAndReadStatus: RecallAndBookmarkAndReadStatus) {
+        if (navigateToDetails.value?.peekContent() == recallAndBookmarkAndReadStatus) {
+            if (SystemClock.elapsedRealtime() - lastClickTime < DOUBLE_CLICK_MIN_DELAY_IN_MS) {
+                return
+            }
+        }
+        lastClickTime = SystemClock.elapsedRealtime()
+
         _navigateToDetails.value = Event(recallAndBookmarkAndReadStatus)
+    }
+
+    companion object {
+        private const val DOUBLE_CLICK_MIN_DELAY_IN_MS = 1000
     }
 }
