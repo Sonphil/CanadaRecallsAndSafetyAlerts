@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Recalls and Safety Alerts (debug)</string>
+    <string name="leak_canary_display_activity_label" translatable="false">Recalls and Safety Alerts Leaks</string>
 </resources>
