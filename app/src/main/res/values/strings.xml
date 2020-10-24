@@ -40,7 +40,7 @@
     <string name="title_notifications_pref">Notifications Setting</string>
     <string name="label_notifications_pref_no">No notification</string>
     <string name="label_notifications_pref_all">All recalls and alerts</string>
-    <string name="label_notifications_pref_keyword">Only if the recall or alert includes a keyword</string>
+    <string name="label_notifications_pref_keyword">Only if the title of the recall or the alert includes a keyword</string>
     <string name="title_notifications_sync_frequency_pref">Synchronization Frequency</string>
     <string name="label_notifications_sync_frequency_pref_15_min">15 minutes</string>
     <string name="label_notifications_sync_frequency_pref_30_min">30 minutes</string>

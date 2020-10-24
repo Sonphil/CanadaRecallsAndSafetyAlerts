@@ -12,7 +12,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$versions.room"
 
     // Test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
     testImplementation "junit:junit:$versions.junit"
+    testImplementation "androidx.test:core:$versions.test_core"
+    testImplementation "io.mockk:mockk:$versions.mockk"
 
     // Dagger
     api "com.google.dagger:dagger:$versions.dagger"
