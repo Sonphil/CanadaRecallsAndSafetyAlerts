@@ -127,22 +127,24 @@ class NotificationKeywordsFragment : DaggerFragment() {
     private fun setupOnDestinationChangedListener() {
         val navController = findNavController()
 
-        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                if (destination.id != R.id.fragment_notification_keywords) {
-                    navController.removeOnDestinationChangedListener(this)
+        navController.addOnDestinationChangedListener(
+            object : NavController.OnDestinationChangedListener {
+                override fun onDestinationChanged(
+                    controller: NavController,
+                    destination: NavDestination,
+                    arguments: Bundle?
+                ) {
+                    if (destination.id != R.id.fragment_notification_keywords) {
+                        navController.removeOnDestinationChangedListener(this)
 
-                    keywordDeletedSnackBar.dismiss()
+                        keywordDeletedSnackBar.dismiss()
 
-                    mainActivityBinding.root.removeView(addBtnBinding.btnAddNotificationKeyword)
+                        mainActivityBinding.root.removeView(addBtnBinding.btnAddNotificationKeyword)
 
-                    _addBtnBinding = null
+                        _addBtnBinding = null
+                    }
                 }
             }
-        })
+        )
     }
 }

@@ -106,15 +106,17 @@ class RecallAdapter(
 
         recyclerView.itemAnimator = SlideInLeftAnimator()
 
-        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (positionStart == 0) {
-                    if (layoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
-                        recyclerView.smoothScrollToPosition(0)
+        registerAdapterDataObserver(
+            object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    if (positionStart == 0) {
+                        if (layoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
+                            recyclerView.smoothScrollToPosition(0)
+                        }
                     }
                 }
             }
-        })
+        )
 
         recyclerView.adapter = this
     }

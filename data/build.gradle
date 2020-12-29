@@ -17,16 +17,16 @@ android {
 
 dependencies {
     // Test
-    testImplementation "junit:junit:$versions.junit"
+    testImplementation "junit:junit:$junit_version"
 
     // Moshi
-    implementation "com.squareup.moshi:moshi:$versions.moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$versions.moshi"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     // Retrofit
-    api "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    api "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     implementation project(":domain")
 }

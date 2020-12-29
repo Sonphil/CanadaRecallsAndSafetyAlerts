@@ -14,21 +14,23 @@ fun BottomNavigationView.setVisible(visible: Boolean, duration: Long = 200) {
             }
         )
         .setDuration(duration)
-        .setListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animator: Animator) {}
-            override fun onAnimationEnd(animator: Animator) {
-                if (!visible) { // Need to hide view
-                    // Set visibility to GONE at the end of animation
-                    isVisible = false
+        .setListener(
+            object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animator: Animator) {}
+                override fun onAnimationEnd(animator: Animator) {
+                    if (!visible) { // Need to hide view
+                        // Set visibility to GONE at the end of animation
+                        isVisible = false
+                    }
                 }
-            }
 
-            override fun onAnimationCancel(animator: Animator) {}
-            override fun onAnimationStart(animator: Animator) {
-                if (visible) { // Need to reveal view
-                    // Set visibility to VISIBLE at the beginning of animation
-                    isVisible = true
+                override fun onAnimationCancel(animator: Animator) {}
+                override fun onAnimationStart(animator: Animator) {
+                    if (visible) { // Need to reveal view
+                        // Set visibility to VISIBLE at the beginning of animation
+                        isVisible = true
+                    }
                 }
             }
-        })
+        )
 }
