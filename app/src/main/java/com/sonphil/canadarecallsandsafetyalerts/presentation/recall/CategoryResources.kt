@@ -33,6 +33,10 @@ class CategoryResources(category: Category) {
                 iconId = R.drawable.ic_shopping_cart_black_24dp
                 labelId = R.string.label_category_consumer_product
             }
+            else -> {
+                iconId = R.drawable.ic_category_miscellaneous_black_24dp
+                labelId = R.string.label_category_miscellaneous
+            }
         }
     }
 }

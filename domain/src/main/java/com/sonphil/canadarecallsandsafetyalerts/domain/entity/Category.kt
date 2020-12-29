@@ -5,6 +5,7 @@ package com.sonphil.canadarecallsandsafetyalerts.domain.entity
  */
 
 enum class Category(val value: Int) {
+    MISCELLANEOUS(0),
     FOOD(1),
     VEHICLE(2),
     HEALTH_PRODUCT(3),

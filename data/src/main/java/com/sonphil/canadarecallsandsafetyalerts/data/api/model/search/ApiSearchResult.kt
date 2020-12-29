@@ -15,6 +15,8 @@ data class ApiSearchResult(
     val recallId: String,
     @Json(name = "title")
     val title: String?,
+    @Json(name = "pageUrl")
+    val pageUrl: String?,
     @Json(name = "url")
     val url: String?
 )

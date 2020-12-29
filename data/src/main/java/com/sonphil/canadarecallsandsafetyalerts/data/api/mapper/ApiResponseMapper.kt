@@ -31,13 +31,19 @@ fun List<ApiRecall>.toRecalls() = map { it.toRecall() }
 
 fun ApiRecentRecallsResponse.toRecalls(): List<Recall> = results.all?.toRecalls().orEmpty()
 
-fun ApiSearchResult.toRecall() = Recall(
-    Category.values()[category.first() - 1],
-    datePublished?.times(1000L),
-    recallId,
-    title,
-    url
-)
+fun ApiSearchResult.toRecall(): Recall {
+    val categoryType = Category.values().find {
+        it.value == category.first()
+    } ?: Category.MISCELLANEOUS
+
+    return Recall(
+        categoryType,
+        datePublished?.times(1000L),
+        recallId,
+        title,
+        url
+    )
+}
 
 fun ApiSearchResponse.toRecalls(): List<Recall> = results.orEmpty().map { it.toRecall() }
 
