@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.data.db
 
 import androidx.room.TypeConverter
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallDetailsSectionType
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallDetailsSectionType
 
 /**
  * Created by Sonphil on 07-03-20.

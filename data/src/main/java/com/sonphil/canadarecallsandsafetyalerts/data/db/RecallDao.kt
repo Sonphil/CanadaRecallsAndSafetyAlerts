@@ -5,9 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.RecallAndBookmarkAndReadStatus
 import kotlinx.coroutines.flow.Flow
 
 /**

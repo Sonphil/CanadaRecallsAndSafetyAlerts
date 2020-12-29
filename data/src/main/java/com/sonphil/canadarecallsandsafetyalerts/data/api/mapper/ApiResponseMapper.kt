@@ -7,13 +7,13 @@ import com.sonphil.canadarecallsandsafetyalerts.data.api.model.recent.ApiRecall
 import com.sonphil.canadarecallsandsafetyalerts.data.api.model.recent.ApiRecentRecallsResponse
 import com.sonphil.canadarecallsandsafetyalerts.data.api.model.search.ApiSearchResponse
 import com.sonphil.canadarecallsandsafetyalerts.data.api.model.search.ApiSearchResult
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallDetailsBasicInformation
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallDetailsSection
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallDetailsSectionType
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallDetailsBasicInformation
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallDetailsSection
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallDetailsSectionType
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallImage
 
 /**
  * Created by Sonphil on 01-02-20.

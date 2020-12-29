@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.repository
 
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
 import kotlinx.coroutines.flow.Flow
 

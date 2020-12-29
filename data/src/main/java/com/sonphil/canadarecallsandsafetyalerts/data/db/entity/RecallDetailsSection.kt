@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.domain.entity
+package com.sonphil.canadarecallsandsafetyalerts.data.db.entity
 
 import androidx.room.Entity
 
@@ -12,7 +12,7 @@ import androidx.room.Entity
 data class RecallDetailsSection(
     val recallId: String,
     val panelName: String,
-    val type: RecallDetailsSectionType,
+    val type: String,
     val title: String,
     val text: String
 )

@@ -1,6 +1,6 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification
 
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.GetNotificationKeywordsUseCase
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.repository
 
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Bookmark
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Bookmark
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import kotlinx.coroutines.flow.Flow
 
 /**

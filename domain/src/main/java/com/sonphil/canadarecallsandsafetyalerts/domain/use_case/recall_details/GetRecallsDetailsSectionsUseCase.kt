@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details
 
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result

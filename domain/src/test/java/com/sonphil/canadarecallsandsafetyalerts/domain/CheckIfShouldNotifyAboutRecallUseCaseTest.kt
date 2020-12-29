@@ -1,7 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain
 
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification.CheckIfShouldNotifyAboutRecallUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.GetNotificationKeywordsUseCase
 import io.mockk.clearAllMocks

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.ReadStatus
 
 /**
  * Created by Sonphil on 11-02-20.

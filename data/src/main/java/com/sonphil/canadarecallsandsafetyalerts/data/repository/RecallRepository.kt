@@ -3,9 +3,12 @@ package com.sonphil.canadarecallsandsafetyalerts.data.repository
 import com.sonphil.canadarecallsandsafetyalerts.data.api.CanadaGovernmentApi
 import com.sonphil.canadarecallsandsafetyalerts.data.api.mapper.toRecalls
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDao
+import com.sonphil.canadarecallsandsafetyalerts.data.db.mapper.toDbRecallList
+import com.sonphil.canadarecallsandsafetyalerts.data.db.mapper.toRecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.data.db.mapper.toRecallAndBookmarkAndReadStatusList
 import com.sonphil.canadarecallsandsafetyalerts.data.ext.getRefreshedDatabaseFlow
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBookmarkAndReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
 import kotlinx.coroutines.flow.Flow
@@ -30,9 +33,17 @@ class RecallRepository @Inject constructor(
     override fun getRecallAndBookmarkAndReadStatus(
         lang: String
     ): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = getRefreshedDatabaseFlow(
-        initialDbCall = recallDao::getAllRecallsAndBookmarksFilteredByCategories,
+        initialDbCall = {
+            recallDao.getAllRecallsAndBookmarksFilteredByCategories().map {
+                it.toRecallAndBookmarkAndReadStatus()
+            }
+        },
         refreshCall = { refreshRecallsAndBookmarks(lang) },
-        dbFlow = recallDao::getAllRecallsAndBookmarksFilteredByCategoriesFlow
+        dbFlow = {
+            recallDao.getAllRecallsAndBookmarksFilteredByCategoriesFlow().map {
+                it.toRecallAndBookmarkAndReadStatusList()
+            }
+        }
     )
 
     override suspend fun refreshRecallsAndBookmarks(lang: String) {
@@ -40,13 +51,13 @@ class RecallRepository @Inject constructor(
             .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
             .toRecalls()
 
-        recallDao.refreshRecalls(apiValues)
+        recallDao.refreshRecalls(apiValues.toDbRecallList())
     }
 
     override fun getBookmarkedRecalls(): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = flow {
         emitAll(
             recallDao.getBookmarkedRecalls().map { recalls ->
-                Result.Success(recalls)
+                Result.Success(recalls.toRecallAndBookmarkAndReadStatusList())
             }
         )
     }
@@ -61,9 +72,12 @@ class RecallRepository @Inject constructor(
 
     override suspend fun isThereAnyRecall() = !recallDao.isEmpty()
 
-    override suspend fun recallExists(recallId: String) = recallDao.getRecallsWithIdCount(recallId) == 1
+    override suspend fun recallExists(recallId: String) =
+        recallDao.getRecallsWithIdCount(recallId) == 1
 
-    override suspend fun insertRecalls(recalls: List<Recall>) = recallDao.insertAll(recalls)
+    override suspend fun insertRecalls(recalls: List<Recall>) {
+        recallDao.insertAll(recalls.toDbRecallList())
+    }
 
     companion object {
         const val SEARCH_DEFAULT_TEXT = ""

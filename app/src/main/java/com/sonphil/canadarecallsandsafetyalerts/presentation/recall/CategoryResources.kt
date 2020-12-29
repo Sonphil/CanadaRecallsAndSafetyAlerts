@@ -3,7 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.sonphil.canadarecallsandsafetyalerts.R
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
 
 /**
  * Created by Sonphil on 11-02-20.

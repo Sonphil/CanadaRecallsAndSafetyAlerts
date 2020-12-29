@@ -20,7 +20,7 @@ import com.google.android.material.transition.MaterialContainerTransform.FADE_MO
 import com.google.android.material.transition.MaterialContainerTransformSharedElementCallback
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityRecallDetailsBinding
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsWhenAttached

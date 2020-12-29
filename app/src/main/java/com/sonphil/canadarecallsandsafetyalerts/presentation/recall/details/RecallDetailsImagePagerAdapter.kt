@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemRecallDetailsImageBinding
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallImage
 
 /**
  * Created by Sonphil on 20-06-20.

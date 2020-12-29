@@ -2,15 +2,14 @@ package com.sonphil.canadarecallsandsafetyalerts.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Bookmark
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.CategoryFilter
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.NotificationKeyword
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.ReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallDetailsBasicInformation
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallDetailsSection
-import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallImage
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.Bookmark
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.CategoryFilter
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.NotificationKeyword
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.ReadStatus
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.Recall
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.RecallDetailsBasicInformation
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.RecallDetailsSection
+import com.sonphil.canadarecallsandsafetyalerts.data.db.entity.RecallImage
 
 /**
  * Created by Sonphil on 01-02-20.
@@ -29,7 +28,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallImage
     ],
     version = 1
 )
-@TypeConverters(value = [CategoryTypeConverter::class, RecallDetailsSectionTypeConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun recallDao(): RecallDao
     abstract fun recallDetailsBasicInformationDao(): RecallDetailsBasicInformationDao

@@ -1,4 +1,4 @@
-package com.sonphil.canadarecallsandsafetyalerts.domain.entity
+package com.sonphil.canadarecallsandsafetyalerts.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,5 +10,5 @@ import androidx.room.PrimaryKey
 @Entity
 data class CategoryFilter(
     @PrimaryKey
-    val category: Category
+    val category: Int
 )

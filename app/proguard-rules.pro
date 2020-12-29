@@ -41,4 +41,4 @@
 -keepnames class androidx.navigation.fragment.NavHostFragment
 
 # Entities Classes
--keepnames class com.sonphil.canadarecallsandsafetyalerts.domain.entity.*
+-keepnames class com.sonphil.canadarecallsandsafetyalerts.domain.model.*
