@@ -1,6 +1,7 @@
 package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall
 
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNonFatalExceptionUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class RefreshRecallsUseCase @Inject constructor(
     private val localeUtils: LocaleUtils,
-    private val recallRepository: RecallRepositoryInterface
+    private val recallRepository: RecallRepositoryInterface,
+    private val recordNonFatalExceptionUseCase: RecordNonFatalExceptionUseCase
 ) {
     suspend operator fun invoke(): Flow<Result<Unit>> = flow {
         try {
@@ -23,6 +25,7 @@ class RefreshRecallsUseCase @Inject constructor(
 
             emit(Result.Success(Unit))
         } catch (t: Throwable) {
+            recordNonFatalExceptionUseCase(t)
             emit(Result.Error(Unit, t))
         }
     }

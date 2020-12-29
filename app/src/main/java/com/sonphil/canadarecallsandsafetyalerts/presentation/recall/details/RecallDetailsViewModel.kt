@@ -12,6 +12,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.entity.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.entity.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkForRecallUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNonFatalExceptionUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.GetRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.RefreshRecallsDetailsSectionsUseCase
@@ -31,7 +32,8 @@ class RecallDetailsViewModel @Inject constructor(
     private val refreshRecallsDetailsSectionsUseCase: RefreshRecallsDetailsSectionsUseCase,
     private val updateBookmarkUseCase: UpdateBookmarkUseCase,
     getBookmarkForRecallUseCase: GetBookmarkForRecallUseCase,
-    markRecallAsReadUseCase: MarkRecallAsReadUseCase
+    markRecallAsReadUseCase: MarkRecallAsReadUseCase,
+    private val recordNonFatalExceptionUseCase: RecordNonFatalExceptionUseCase
 ) : ViewModel() {
     init {
         viewModelScope.launch {
@@ -96,6 +98,7 @@ class RecallDetailsViewModel @Inject constructor(
 
             refreshRecallsDetailsSectionsUseCase(recall)
         } catch (t: Throwable) {
+            recordNonFatalExceptionUseCase(t)
             _loading.postValue(false)
             _error.postValue(t.message)
         }

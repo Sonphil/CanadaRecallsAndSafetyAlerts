@@ -8,7 +8,6 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
@@ -123,21 +122,21 @@ class RecentRecallsFragment : BaseRecallsFragment() {
     private fun subscribeUI() {
         viewModel.recentRecalls.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 adapter.submitList(it)
             }
         )
 
         viewModel.loading.observe(
             viewLifecycleOwner,
-            Observer { loading ->
+            { loading ->
                 binding.swipeRefreshLayoutRecentRecalls.isRefreshing = loading
             }
         )
 
         viewModel.genericError.observe(
             viewLifecycleOwner,
-            Observer { error ->
+            { error ->
                 error?.let {
                     Toasty.error(requireContext(), error, Toast.LENGTH_SHORT, true).show()
                 }
@@ -146,7 +145,7 @@ class RecentRecallsFragment : BaseRecallsFragment() {
 
         viewModel.networkError.observe(
             viewLifecycleOwner,
-            Observer { error ->
+            { error ->
                 error?.let {
                     val icon = requireContext().getDrawable(R.drawable.ic_cloud_off_white_24dp)
 
@@ -157,28 +156,28 @@ class RecentRecallsFragment : BaseRecallsFragment() {
 
         viewModel.emptyViewIconResId.observe(
             viewLifecycleOwner,
-            Observer { iconId ->
+            { iconId ->
                 mainActivityBinding.includeEmptyView.ivEmpty.setImageResource(iconId)
             }
         )
 
         viewModel.emptyViewTitleResId.observe(
             viewLifecycleOwner,
-            Observer { titleId ->
+            { titleId ->
                 mainActivityBinding.includeEmptyView.tvTitleEmpty.setText(titleId)
             }
         )
 
         viewModel.emptyViewRetryButtonVisible.observe(
             viewLifecycleOwner,
-            Observer { visible ->
+            { visible ->
                 mainActivityBinding.includeEmptyView.btnRetry.isVisible = visible
             }
         )
 
         viewModel.categoryFilters.observe(
             viewLifecycleOwner,
-            Observer { visibleCategories ->
+            { visibleCategories ->
                 with(categoriesFilterBinding) {
                     chipCategoryFilterFood.isChecked = Category.FOOD in visibleCategories
                     chipCategoryFilterVehicle.isChecked = Category.VEHICLE in visibleCategories
