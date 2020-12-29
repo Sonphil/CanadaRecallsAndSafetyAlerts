@@ -91,6 +91,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_category_consumer_product" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_category_filter_miscellaneous"
+                        style="@style/Widget.AppTheme.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_category_miscellaneous" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

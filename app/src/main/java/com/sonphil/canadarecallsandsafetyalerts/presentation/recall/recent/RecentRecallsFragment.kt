@@ -103,6 +103,10 @@ class RecentRecallsFragment : BaseRecallsFragment() {
                         Category.CONSUMER_PRODUCT,
                         isChecked
                     )
+                    R.id.chip_category_filter_miscellaneous -> viewModel.updateCategoryFilter(
+                        Category.MISCELLANEOUS,
+                        isChecked
+                    )
                 }
             }.let { listener ->
                 chipGroupCategoryFilter.forEach { chip ->
@@ -183,6 +187,7 @@ class RecentRecallsFragment : BaseRecallsFragment() {
                     chipCategoryFilterVehicle.isChecked = Category.VEHICLE in visibleCategories
                     chipCategoryFilterHealthProduct.isChecked = Category.HEALTH_PRODUCT in visibleCategories
                     chipCategoryFilterConsumerProduct.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
+                    chipCategoryFilterMiscellaneous.isChecked = Category.MISCELLANEOUS in visibleCategories
                 }
             }
         )
