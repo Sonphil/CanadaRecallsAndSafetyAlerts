@@ -135,6 +135,6 @@ class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceCh
         val keywordsPrefKey = getString(R.string.key_notifications_keywords_pref)
         val keywordsPref = preferenceScreen.findPreference<Preference>(keywordsPrefKey)
         val keywordValue = getString(R.string.value_notifications_pref_keyword)
-        keywordsPref?.isEnabled = notificationsPrefValue == keywordValue
+        keywordsPref?.isVisible = notificationsPrefValue == keywordValue
     }
 }

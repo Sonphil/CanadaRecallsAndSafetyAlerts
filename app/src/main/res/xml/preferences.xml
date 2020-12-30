@@ -11,6 +11,13 @@
             app:title="@string/title_notifications_pref"
             app:useSimpleSummaryProvider="true" />
 
+        <Preference
+            android:icon="@drawable/ic_word_control_normal_24dp"
+            android:key="@string/key_notifications_keywords_pref"
+            android:summary="@string/summary_notifications_keywords_pref"
+            android:title="@string/title_notifications_keywords_pref"
+            app:fragment="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsKeywordsFragment" />
+
         <ListPreference
             app:defaultValue="30"
             app:entries="@array/array_notifications_sync_frequency_pref_entries"
@@ -19,13 +26,6 @@
             app:key="@string/key_notifications_sync_frequency_in_minutes_pref"
             app:title="@string/title_notifications_sync_frequency_pref"
             app:useSimpleSummaryProvider="true" />
-
-        <Preference
-            android:icon="@drawable/ic_word_control_normal_24dp"
-            android:key="@string/key_notifications_keywords_pref"
-            android:summary="@string/summary_notifications_keywords_pref"
-            android:title="@string/title_notifications_keywords_pref"
-            app:fragment="com.sonphil.canadarecallsandsafetyalerts.presentation.notification.NotificationsKeywordsFragment" />
 
         <Preference
             android:icon="@drawable/ic_open_in_new_control_normal_24dp"
