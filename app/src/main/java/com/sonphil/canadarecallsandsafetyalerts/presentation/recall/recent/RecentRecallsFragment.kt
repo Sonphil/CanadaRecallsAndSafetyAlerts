@@ -17,6 +17,7 @@ import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentRecall
 import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
+import com.sonphil.canadarecallsandsafetyalerts.ext.getDrawableCompat
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallsFragment
@@ -151,7 +152,7 @@ class RecentRecallsFragment : BaseRecallsFragment() {
             viewLifecycleOwner,
             { error ->
                 error?.let {
-                    val icon = requireContext().getDrawable(R.drawable.ic_cloud_off_white_24dp)
+                    val icon = requireContext().getDrawableCompat(R.drawable.ic_cloud_off_white_24dp)
 
                     Toasty.normal(requireContext(), error, Toast.LENGTH_SHORT, icon).show()
                 }
