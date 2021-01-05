@@ -63,41 +63,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="16dp">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_category_filter_food"
-                        style="@style/Widget.AppTheme.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_category_food" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_category_filter_vehicle"
-                        style="@style/Widget.AppTheme.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_category_vehicle" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_category_filter_health_product"
-                        style="@style/Widget.AppTheme.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_category_health_product" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_category_filter_consumer_product"
-                        style="@style/Widget.AppTheme.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_category_consumer_product" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_category_filter_miscellaneous"
-                        style="@style/Widget.AppTheme.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_category_miscellaneous" />
+                    <!-- Added dynamically -->
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

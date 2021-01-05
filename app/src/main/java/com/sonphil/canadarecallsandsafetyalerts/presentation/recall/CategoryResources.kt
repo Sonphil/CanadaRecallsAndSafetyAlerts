@@ -9,7 +9,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
  * Created by Sonphil on 11-02-20.
  */
 
-class CategoryResources(category: Category) {
+class CategoryResources(val category: Category) {
     @DrawableRes
     val iconId: Int
     @StringRes

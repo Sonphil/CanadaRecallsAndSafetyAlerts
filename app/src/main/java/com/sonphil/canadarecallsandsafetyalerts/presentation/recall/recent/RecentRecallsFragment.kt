@@ -21,6 +21,7 @@ import com.sonphil.canadarecallsandsafetyalerts.ext.getDrawableCompat
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallsFragment
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
 import es.dmoral.toasty.Toasty
 
 class RecentRecallsFragment : BaseRecallsFragment() {
@@ -54,11 +55,11 @@ class RecentRecallsFragment : BaseRecallsFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subscribeUI()
-
         binding.swipeRefreshLayoutRecentRecalls.setupSwipeRefreshLayout()
 
         setupFilter()
+
+        subscribeUI()
 
         mainActivityBinding.includeEmptyView.btnRetry.setOnClickListener {
             viewModel.refresh()
@@ -86,33 +87,31 @@ class RecentRecallsFragment : BaseRecallsFragment() {
                 btnFilterRecalls.isExpanded = false
             }
 
-            CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-                when (buttonView.id) {
-                    R.id.chip_category_filter_food -> viewModel.updateCategoryFilter(
-                        Category.FOOD,
-                        isChecked
-                    )
-                    R.id.chip_category_filter_vehicle -> viewModel.updateCategoryFilter(
-                        Category.VEHICLE,
-                        isChecked
-                    )
-                    R.id.chip_category_filter_health_product -> viewModel.updateCategoryFilter(
-                        Category.HEALTH_PRODUCT,
-                        isChecked
-                    )
-                    R.id.chip_category_filter_consumer_product -> viewModel.updateCategoryFilter(
-                        Category.CONSUMER_PRODUCT,
-                        isChecked
-                    )
-                    R.id.chip_category_filter_miscellaneous -> viewModel.updateCategoryFilter(
-                        Category.MISCELLANEOUS,
-                        isChecked
-                    )
-                }
-            }.let { listener ->
-                chipGroupCategoryFilter.forEach { chip ->
-                    (chip as Chip).setOnCheckedChangeListener(listener)
-                }
+            val categoryResources = Category.values().map {
+                CategoryResources(it)
+            }.sortedBy { categoryResources ->
+                getString(categoryResources.labelId)
+            }
+
+            val listener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                val category = buttonView.tag as? Category ?: return@OnCheckedChangeListener
+
+                viewModel.updateCategoryFilter(category, isChecked)
+            }
+
+            categoryResources.forEach {
+                val chip = layoutInflater.inflate(
+                    R.layout.chip_category_filter,
+                    chipGroupCategoryFilter,
+                    false
+                ) as? Chip
+
+                chip?.tag = it.category
+                chip?.setText(it.labelId)
+
+                chip?.setOnCheckedChangeListener(listener)
+
+                chipGroupCategoryFilter.addView(chip)
             }
         }
     }
@@ -183,12 +182,12 @@ class RecentRecallsFragment : BaseRecallsFragment() {
         viewModel.categoryFilters.observe(
             viewLifecycleOwner,
             { visibleCategories ->
-                with(categoriesFilterBinding) {
-                    chipCategoryFilterFood.isChecked = Category.FOOD in visibleCategories
-                    chipCategoryFilterVehicle.isChecked = Category.VEHICLE in visibleCategories
-                    chipCategoryFilterHealthProduct.isChecked = Category.HEALTH_PRODUCT in visibleCategories
-                    chipCategoryFilterConsumerProduct.isChecked = Category.CONSUMER_PRODUCT in visibleCategories
-                    chipCategoryFilterMiscellaneous.isChecked = Category.MISCELLANEOUS in visibleCategories
+                categoriesFilterBinding.chipGroupCategoryFilter.forEach { view ->
+                    if (view is Chip) {
+                        val category = view.tag as? Category
+
+                        view.isChecked = category in visibleCategories
+                    }
                 }
             }
         )

@@ -3,7 +3,6 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.R
@@ -89,7 +88,7 @@ class RecentViewModel @Inject constructor(
         }
     }
 
-    val emptyViewTitleResId = emptyViewVisible.distinctUntilChanged().map {
+    val emptyViewTitleResId = emptyViewVisible.map {
         if (categoryFilters.value.isNullOrEmpty()) {
             R.string.title_empty_recent_recall_no_category_selected
         } else {
@@ -98,7 +97,6 @@ class RecentViewModel @Inject constructor(
     }
 
     val emptyViewRetryButtonVisible = emptyViewVisible
-        .distinctUntilChanged()
         .map { emptyViewVisible ->
             emptyViewVisible && !categoryFilters.value.isNullOrEmpty()
         }
