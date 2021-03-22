@@ -5,24 +5,25 @@ buildscript {
         android_ktx_version = "1.3.2"
         browser_version = "1.3.0"
         constraint_layout_version = "2.0.4"
-        coroutines_version = "1.3.8"
-        dagger_version = "2.28.3"
-        firebase_version = "26.2.0"
+        coroutines_version = "1.4.3"
+        dagger_version = "2.33"
+        firebase_version = "26.7.0"
         glide_version = "4.11.0"
-        gradle_version = '4.1.1'
-        junit_version = '4.13.1'
-        kotlin_version = "1.4.21"
+        gradle_version = '4.1.3'
+        junit_version = '4.13.2'
+        kotlin_version = "1.4.31"
         leakcanary_version = "2.4"
-        lifecycle_version = "2.2.0"
+        lifecycle_version = "2.3.0"
+        lifecycle_extensions_version = "2.2.0"
         lifecycle_viewmodel_ktx_version = "2.2.0-rc01"
-        material_components_version = "1.3.0-rc01"
-        mockk_version = "1.10.0"
+        material_components_version = "1.4.0-alpha01"
+        mockk_version = "1.11.0"
         moshi_version = "1.10.0"
-        navigation_version = "2.3.2"
+        navigation_version = "2.3.4"
         retrofit_version = "2.9.0"
-        room_version = "2.2.5"
+        room_version = "2.2.6"
         test_core_version = "1.3.0"
-        work_manager_version = "2.4.0"
+        work_manager_version = "2.5.0"
     }
 
     repositories {
@@ -36,8 +37,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:9.4.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
-        classpath "com.google.gms:google-services:4.3.4"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath "com.google.gms:google-services:4.3.5"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
