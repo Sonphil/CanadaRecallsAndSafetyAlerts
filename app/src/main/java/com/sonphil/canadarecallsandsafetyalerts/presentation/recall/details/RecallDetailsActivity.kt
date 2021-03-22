@@ -96,6 +96,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             duration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
             pathMotion = MaterialArcMotion()
             fadeMode = FADE_MODE_IN
+            isElevationShadowEnabled = false
         }
         window.sharedElementEnterTransition = transform
 
