@@ -9,6 +9,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.sonphil.canadarecallsandsafetyalerts.R
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNonFatalExceptionUseCase
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +21,8 @@ import javax.inject.Singleton
 @Singleton
 class SyncRecallsWorkerScheduler @Inject constructor(
     private val context: Context,
-    private val prefs: SharedPreferences
+    private val prefs: SharedPreferences,
+    private val recordNonFatalExceptionUseCase: RecordNonFatalExceptionUseCase
 ) {
     companion object {
         private const val UNIQUE_WORK_NAME = "SyncRecallsWork"
@@ -55,6 +57,7 @@ class SyncRecallsWorkerScheduler @Inject constructor(
                     )
                 }
             } catch (e: NumberFormatException) {
+                recordNonFatalExceptionUseCase(e)
             }
         }
     }
