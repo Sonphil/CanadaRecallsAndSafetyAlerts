@@ -1,0 +1,37 @@
+/**
+ * Created by Sonphil on 26-03-21.
+ */
+
+object Version {
+    const val AndroidKtx = "1.3.2"
+    const val Browser = "1.3.0"
+    const val ConstraintLayout = "2.0.4"
+    const val Coroutines = "1.4.3"
+    const val Dagger = "2.33"
+    const val Firebase = "26.7.0"
+    const val FirebaseGradle = "2.5.2"
+    const val Fragment = "1.3.2"
+    const val Glide = "4.11.0"
+    const val GoogleServices = "4.3.5"
+    const val Gradle = "4.1.3"
+    const val JUnit = "4.13.2"
+    const val Kotlin = "1.4.31"
+    const val KtlintGradle = "10.0.0"
+    const val LeakCanary = "2.7"
+    const val Lifecycle = "2.3.0"
+    const val LifecycleExtensions = "2.2.0"
+    const val LifecycleViewModelKtx = "2.2.0-rc01"
+    const val MaterialComponents = "1.4.0-alpha01"
+    const val MockK = "1.11.0"
+    const val Moshi = "1.10.0"
+    const val Navigation = "2.3.4"
+    const val Preference = "1.1.1"
+    const val RecyclerViewAnimators = "4.0.1"
+    const val Retrofit = "2.9.0"
+    const val Room = "2.2.6"
+    const val SwipeRefreshLayout = "1.1.0"
+    const val TestCore = "1.3.0"
+    const val Tosty = "1.5.0"
+    const val UltraViewPager = "1.0.7.8@aar"
+    const val WorkManager = "2.5.0"
+}
