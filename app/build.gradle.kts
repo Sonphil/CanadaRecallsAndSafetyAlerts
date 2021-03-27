@@ -11,7 +11,7 @@ plugins {
 }
 
 apply {
-    from("${rootDir}/android-common.gradle")
+    from("$rootDir/android-common.gradle")
 }
 
 android {
@@ -23,7 +23,7 @@ android {
 
         applicationId = "com.sonphil.canadarecallsandsafetyalerts"
         versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-        versionName = "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+        versionName = "$versionMajor.$versionMinor.$versionPatch.$versionBuild"
         println("versionName: $versionName")
     }
 

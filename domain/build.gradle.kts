@@ -7,7 +7,7 @@ plugins {
 }
 
 apply {
-    from("${rootDir}/android-common.gradle")
+    from("$rootDir/android-common.gradle")
 }
 
 dependencies {
