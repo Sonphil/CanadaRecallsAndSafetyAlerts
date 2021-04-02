@@ -28,20 +28,24 @@ jobs:
 
     - name: Copy test results
       run: |
-        mkdir -p junit
-        find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+        mkdir -p junit-results
+        find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit-results/ \;
 
     - name: Upload test results to GitHub
       uses: actions/upload-artifact@v1
       with:
         name: junit-results
-        path: junit
+        path: junit-results
+
+    - name: Copy build reports
+      id: copy-build-reports
+      run: chmod u+r+x scripts/copy-build-results.sh; scripts/copy-build-results.sh
 
     - name: Upload build reports to GitHub
       uses: actions/upload-artifact@v1
       with:
         name: build-reports
-        path: app/build/reports
+        path: ${{ steps.copy-build-reports.outputs.path }}
 
     - name: Upload debug APK to GitHub
       uses: actions/upload-artifact@v1
