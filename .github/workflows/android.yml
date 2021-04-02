@@ -26,6 +26,17 @@ jobs:
     - name: Build debug APK
       run: bash ./gradlew assembleDebug --stacktrace
 
+    - name: Copy test results
+      run: |
+        mkdir -p junit
+        find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+
+    - name: Upload test results to GitHub
+      uses: actions/upload-artifact@v1
+      with:
+        name: junit-results
+        path: junit
+
     - name: Upload build reports to GitHub
       uses: actions/upload-artifact@v1
       with:
