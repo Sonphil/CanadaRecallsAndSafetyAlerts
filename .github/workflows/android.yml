@@ -32,7 +32,7 @@ jobs:
         find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit-results/ \;
 
     - name: Upload test results to GitHub
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: junit-results
         path: junit-results
@@ -70,6 +70,7 @@ jobs:
       shell: bash
       run: chmod u+r+x scripts/decrypt_secrets.sh; scripts/decrypt_secrets.sh
       env:
+        GOOGLE_PLAY_SERVICE_ACCOUNT_ENC_PW: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_ENC_PW }}
         GOOGLE_SERVICES_ENC_PW: ${{ secrets.GOOGLE_SERVICES_ENC_PW }}
         KEYSTORE_ENC_PW: ${{ secrets.KEYSTORE_ENC_PW }}
 
@@ -77,8 +78,11 @@ jobs:
       id: create-aab
       run: chmod +x ./gradlew; chmod u+r+x scripts/create-aab.sh; scripts/create-aab.sh
 
-    - name: Upload release AAB to GitHub
-      uses: actions/upload-artifact@v1
+    - name: Upload release AAB and mapping file to GitHub
+      uses: actions/upload-artifact@v2
       with:
         name: app-release
-        path: ${{ steps.create-aab.outputs.path }}
+        retention-days: 2
+        path: |
+          ${{ steps.create-aab.outputs.aab_path }}
+          ${{ steps.create-aab.outputs.mapping_file_path }}
