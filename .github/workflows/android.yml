@@ -86,3 +86,14 @@ jobs:
         path: |
           ${{ steps.create-aab.outputs.aab_path }}
           ${{ steps.create-aab.outputs.mapping_file_path }}
+
+    - name: Publish to Play Store
+      if: github.ref == 'refs/heads/master'
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJson: ./google-play-service-account.json
+        packageName: com.sonphil.canadarecallsandsafetyalerts
+        track: beta
+        releaseFiles: ${{ steps.create-aab.outputs.aab_path }}
+        mappingFile: ${{ steps.create-aab.outputs.mapping_file_path }}
+        whatsNewDirectory: ./whatsnew
