@@ -20,7 +20,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallImage
  */
 
 fun ApiRecall.toRecall() = Recall(
-    Category.values()[category.first() - 1],
+    category.first().toCategory(),
     datePublished?.times(1000L),
     recallId,
     title,
@@ -31,19 +31,13 @@ fun List<ApiRecall>.toRecalls() = map { it.toRecall() }
 
 fun ApiRecentRecallsResponse.toRecalls(): List<Recall> = results.all?.toRecalls().orEmpty()
 
-fun ApiSearchResult.toRecall(): Recall {
-    val categoryType = Category.values().find {
-        it.value == category.first()
-    } ?: Category.MISCELLANEOUS
-
-    return Recall(
-        categoryType,
-        datePublished?.times(1000L),
-        recallId,
-        title,
-        url
-    )
-}
+fun ApiSearchResult.toRecall() = Recall(
+    category.first().toCategory(),
+    datePublished?.times(1000L),
+    recallId,
+    title,
+    url
+)
 
 fun ApiSearchResponse.toRecalls(): List<Recall> = results.orEmpty().map { it.toRecall() }
 
@@ -150,3 +144,7 @@ fun ApiRecallDetailsResponse.toRecallAndDetailsSectionsAndImages(
         detailsSections = panels.toRecallDetailsSections(recall),
         images = panels.toRecallDetailsImages(recall, apiBaseUrl)
     )
+
+private fun Int.toCategory(): Category = Category.values().find {
+    it.value == this
+} ?: Category.MISCELLANEOUS
