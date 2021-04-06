@@ -17,8 +17,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,7 +33,7 @@ class RecentViewModel @Inject constructor(
     updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : BaseRecallViewModel(updateBookmarkUseCase) {
     private val recentRecallsWithLoadResult: LiveData<LoadResult<List<RecallAndBookmarkAndReadStatus>>> =
-        getRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+        getRecallsUseCase().asLiveData(viewModelScope.coroutineContext)
 
     val recentRecalls = recentRecallsWithLoadResult.map { result ->
         result.data
@@ -104,7 +102,7 @@ class RecentViewModel @Inject constructor(
     fun refresh() {
         _loading.postValue(true)
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             refreshRecallsUseCase().onFailure { throwable ->
                 _error.postValue(throwable.message)
             }
@@ -114,10 +112,9 @@ class RecentViewModel @Inject constructor(
     }
 
     val categoryFilters: LiveData<List<Category>> = getCategoryFiltersUseCase()
-        .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
+        .asLiveData(context = viewModelScope.coroutineContext)
 
-    fun updateCategoryFilter(category: Category, checked: Boolean) = viewModelScope
-        .launch(Dispatchers.IO) {
-            updateFilterForCategoryUseCase(category, checked)
-        }
+    fun updateCategoryFilter(category: Category, checked: Boolean) = viewModelScope.launch {
+        updateFilterForCategoryUseCase(category, checked)
+    }
 }

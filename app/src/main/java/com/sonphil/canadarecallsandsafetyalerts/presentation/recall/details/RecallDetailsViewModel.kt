@@ -17,7 +17,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.G
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.RefreshRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,11 +39,11 @@ class RecallDetailsViewModel @Inject constructor(
     }
 
     private val bookmark = getBookmarkForRecallUseCase(recall)
-        .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
+        .asLiveData(context = viewModelScope.coroutineContext)
     val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
 
     private val recallAndDetailsSectionsAndImages = getRecallsDetailsSectionsUseCase(recall)
-        .asLiveData(context = viewModelScope.coroutineContext + Dispatchers.IO)
+        .asLiveData(context = viewModelScope.coroutineContext)
 
     val detailsSectionsItems = recallAndDetailsSectionsAndImages.map { result ->
         result
@@ -83,7 +82,7 @@ class RecallDetailsViewModel @Inject constructor(
     }
 
     fun clickBookmark() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val bookmarked = bookmark.value != null
 
             updateBookmarkUseCase(recall, !bookmarked)
@@ -93,7 +92,7 @@ class RecallDetailsViewModel @Inject constructor(
     fun refresh() {
         _loading.postValue(true)
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             refreshRecallsDetailsSectionsUseCase(recall).onFailure { throwable ->
                 _error.postValue(throwable.message)
             }

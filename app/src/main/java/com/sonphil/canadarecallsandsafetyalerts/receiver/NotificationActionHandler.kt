@@ -8,9 +8,9 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.CheckIf
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.CheckIfRecallHasBeenReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.ext.toast
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,6 +23,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationActionHandler @Inject constructor(
+    private val appDispatchers: AppDispatchers,
     private val notificationUtils: NotificationsUtils,
     private val updateBookmarkUseCase: UpdateBookmarkUseCase,
     private val markRecallAsReadUseCase: MarkRecallAsReadUseCase,
@@ -31,7 +32,7 @@ class NotificationActionHandler @Inject constructor(
 ) {
     fun handleRecallAction(context: Context, recall: Recall?, action: String?) {
         if (recall != null && action != null) {
-            GlobalScope.launch(Dispatchers.IO) {
+            GlobalScope.launch {
                 action.handleRecallAction(context, recall)
             }
         }
@@ -58,7 +59,7 @@ class NotificationActionHandler @Inject constructor(
     }
 
     private suspend fun showSuccessMessage(context: Context, @StringRes messageId: Int) {
-        withContext(Dispatchers.Main) {
+        withContext(appDispatchers.main) {
             context.toast(messageId)
         }
     }

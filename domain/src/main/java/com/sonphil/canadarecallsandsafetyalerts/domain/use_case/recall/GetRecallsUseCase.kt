@@ -4,8 +4,8 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAn
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 /**
  * Created by Sonphil on 12-03-20.

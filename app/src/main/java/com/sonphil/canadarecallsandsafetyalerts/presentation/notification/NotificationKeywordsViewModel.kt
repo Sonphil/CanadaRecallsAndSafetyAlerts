@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.DeleteNotificationKeywordUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.GetNotificationKeywordsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,11 +17,11 @@ import javax.inject.Inject
  */
 
 class NotificationKeywordsViewModel @Inject constructor(
-    private val getNotificationKeywordsUseCase: GetNotificationKeywordsUseCase,
+    getNotificationKeywordsUseCase: GetNotificationKeywordsUseCase,
     private val deleteNotificationKeywordUseCase: DeleteNotificationKeywordUseCase
 ) : ViewModel() {
     val keywords = getNotificationKeywordsUseCase()
-        .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+        .asLiveData(viewModelScope.coroutineContext)
 
     private val lastKeywordDeleted = MutableLiveData<String>()
 
@@ -41,7 +40,7 @@ class NotificationKeywordsViewModel @Inject constructor(
     }
 
     private fun deleteKeyword(keyword: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             deleteNotificationKeywordUseCase(keyword)
 
             lastKeywordDeleted.postValue(keyword)

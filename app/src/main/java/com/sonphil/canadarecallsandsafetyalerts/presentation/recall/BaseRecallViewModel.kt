@@ -10,7 +10,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
@@ -29,7 +28,7 @@ abstract class BaseRecallViewModel constructor(
 
     @CallSuper
     open fun updateBookmark(recall: Recall, bookmarked: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             updateBookmarkUseCase(recall, bookmarked)
         }
     }

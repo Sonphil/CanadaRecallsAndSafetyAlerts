@@ -5,8 +5,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification.GetRecallsToNotifyUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,10 +20,11 @@ class SyncRecallsWorker @Inject constructor(
     appContext: Context,
     workerParameters: WorkerParameters,
     private val getRecallsToNotifyUseCase: GetRecallsToNotifyUseCase,
-    private val notificationsUtils: NotificationsUtils
+    private val notificationsUtils: NotificationsUtils,
+    private val appDispatchers: AppDispatchers
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.Default) {
+    override suspend fun doWork(): Result = withContext(appDispatchers.default) {
         try {
             val keywordNotificationsEnabled = inputData.getBoolean(
                 SyncRecallsWorkerScheduler.KEY_KEYWORD_NOTIFICATIONS_ENABLED,
@@ -48,14 +49,16 @@ class SyncRecallsWorker @Inject constructor(
 
     class Factory @Inject constructor(
         private val recallsToNotifyUseCase: Provider<GetRecallsToNotifyUseCase>,
-        private val notificationsUtils: Provider<NotificationsUtils>
+        private val notificationsUtils: Provider<NotificationsUtils>,
+        private val appDispatchers: Provider<AppDispatchers>
     ) : ChildWorkerFactory {
         override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
             return SyncRecallsWorker(
                 appContext,
                 params,
                 recallsToNotifyUseCase.get(),
-                notificationsUtils.get()
+                notificationsUtils.get(),
+                appDispatchers.get()
             )
         }
     }

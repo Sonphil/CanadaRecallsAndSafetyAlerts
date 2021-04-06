@@ -10,11 +10,14 @@ import com.sonphil.canadarecallsandsafetyalerts.data.ext.getRefreshedDatabaseFlo
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -22,6 +25,7 @@ import javax.inject.Inject
  */
 
 class RecallRepository @Inject constructor(
+    private val appDispatchers: AppDispatchers,
     private val api: CanadaGovernmentApi,
     private val recallDao: RecallDao
 ) : RecallRepositoryInterface {
@@ -44,9 +48,9 @@ class RecallRepository @Inject constructor(
                 it.toRecallAndBookmarkAndReadStatusList()
             }
         }
-    )
+    ).flowOn(appDispatchers.io)
 
-    override suspend fun refreshRecallsAndBookmarks(lang: String) {
+    override suspend fun refreshRecallsAndBookmarks(lang: String) = withContext(appDispatchers.io) {
         val apiValues = api
             .searchRecall(SEARCH_DEFAULT_TEXT, lang, SEARCH_CATEGORY, SEARCH_LIMIT, SEARCH_OFFSET)
             .toRecalls()
@@ -60,22 +64,25 @@ class RecallRepository @Inject constructor(
                 LoadResult.Success(recalls.toRecallAndBookmarkAndReadStatusList())
             }
         )
-    }
+    }.flowOn(appDispatchers.io)
 
-    override suspend fun getNewRecalls(lang: String): List<Recall> {
-        return api.recentRecalls(lang)
+    override suspend fun getNewRecalls(lang: String): List<Recall> = withContext(appDispatchers.io) {
+        api.recentRecalls(lang)
             .results
             .all
             .orEmpty()
             .toRecalls()
     }
 
-    override suspend fun isThereAnyRecall() = !recallDao.isEmpty()
+    override suspend fun isThereAnyRecall() = withContext(appDispatchers.io) {
+        !recallDao.isEmpty()
+    }
 
-    override suspend fun recallExists(recallId: String) =
+    override suspend fun recallExists(recallId: String) = withContext(appDispatchers.io) {
         recallDao.getRecallsWithIdCount(recallId) == 1
+    }
 
-    override suspend fun insertRecalls(recalls: List<Recall>) {
+    override suspend fun insertRecalls(recalls: List<Recall>) = withContext(appDispatchers.io) {
         recallDao.insertAll(recalls.toDbRecallList())
     }
 

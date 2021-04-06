@@ -2,8 +2,6 @@ package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status
 
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.ReadStatusRepositoryInterface
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -16,10 +14,8 @@ class CheckIfRecallHasBeenReadUseCase @Inject constructor(
     suspend operator fun invoke(
         recall: Recall
     ): Boolean {
-        return withContext(Dispatchers.IO) {
-            val readStatus = readStatusRepository.getReadStatus(recall.id)
+        val readStatus = readStatusRepository.getReadStatus(recall.id)
 
-            readStatus != null
-        }
+        return readStatus != null
     }
 }

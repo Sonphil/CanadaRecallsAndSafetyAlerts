@@ -16,9 +16,12 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.di.qualifier.CanadaApiBas
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsRepositoryInterface
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -26,6 +29,7 @@ import javax.inject.Inject
  */
 
 class RecallDetailsRepository @Inject constructor(
+    private val appDispatchers: AppDispatchers,
     private val api: CanadaGovernmentApi,
     private val recallDao: RecallDao,
     private val recallDetailsBasicInformationDao: RecallDetailsBasicInformationDao,
@@ -48,9 +52,9 @@ class RecallDetailsRepository @Inject constructor(
                     it.toRecallAndBasicInformationAndDetailsSectionsAndImages()
                 }
             }
-        )
+        ).flowOn(appDispatchers.io)
 
-    override suspend fun refreshRecallAndDetailsSectionsAndImages(recall: Recall, lang: String) {
+    override suspend fun refreshRecallAndDetailsSectionsAndImages(recall: Recall, lang: String) = withContext(appDispatchers.io) {
         val apiValue = api
             .recallDetails(recall.id, lang)
             .toRecallAndDetailsSectionsAndImages(recall, apiBaseUrl)

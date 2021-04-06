@@ -11,9 +11,9 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAn
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.AddBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkedRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,12 +22,13 @@ import javax.inject.Inject
  */
 
 class MyRecallsViewModel @Inject constructor(
+    private val appDispatchers: AppDispatchers,
     getBookmarkedRecallsUseCase: GetBookmarkedRecallsUseCase,
     updateBookmarkUseCase: UpdateBookmarkUseCase,
-    private val addBookmarkUseCase: AddBookmarkUseCase
+    private val addBookmarkUseCase: AddBookmarkUseCase,
 ) : BaseRecallViewModel(updateBookmarkUseCase) {
     private val bookmarkedRecallsWithLoadResult: LiveData<LoadResult<List<RecallAndBookmarkAndReadStatus>>> =
-        getBookmarkedRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+        getBookmarkedRecallsUseCase().asLiveData(viewModelScope.coroutineContext)
 
     val bookmarkedRecalls = bookmarkedRecallsWithLoadResult.map { result ->
         result.data
@@ -42,7 +43,7 @@ class MyRecallsViewModel @Inject constructor(
     val showUndoUnbookmarkSnackbar = _showUndoUnbookmarkSnackbar
 
     override fun updateBookmark(recall: Recall, bookmarked: Boolean) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(appDispatchers.default) {
             if (!bookmarked) {
                 val bookmark = bookmarkedRecalls
                     .value
@@ -60,7 +61,7 @@ class MyRecallsViewModel @Inject constructor(
     fun undoLastUnbookmark() {
         _showUndoUnbookmarkSnackbar.value = false
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             lastBookmarkRemoved.value?.let {
                 addBookmarkUseCase(it)
             }

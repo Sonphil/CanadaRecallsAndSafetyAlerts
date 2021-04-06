@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.AddNotificationKeywordUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class AddNotificationKeywordViewModel @Inject constructor(
     val dismissDialog: LiveData<Event<Unit>> = _dismissDialog
 
     fun insertNewKeyword(keyword: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             addNotificationKeywordUseCase(keyword)
             _dismissDialog.postValue(null)
         }
