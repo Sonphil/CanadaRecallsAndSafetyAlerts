@@ -16,7 +16,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNo
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.GetRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.RefreshRecallsDetailsSectionsUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -65,7 +65,7 @@ class RecallDetailsViewModel @Inject constructor(
 
     private val _loading = MediatorLiveData<Boolean>().apply {
         val source = recallAndDetailsSectionsAndImages.map { result ->
-            result is Result.Loading
+            result is LoadResult.Loading
         }
 
         addSource(source) { loading ->
@@ -110,7 +110,7 @@ class RecallDetailsViewModel @Inject constructor(
 
     private val _navigateToUrl = MutableLiveData<Event<Uri>>()
     val navigateToUrl = _navigateToUrl
-    private inline val Result<RecallAndBasicInformationAndDetailsSectionsAndImages>.url: String?
+    private inline val LoadResult<RecallAndBasicInformationAndDetailsSectionsAndImages>.url: String?
         get() = this.data?.basicInformation?.url
 
     fun clickRecallUrl() {

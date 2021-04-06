@@ -2,7 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.domain.repository
 
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -17,11 +17,11 @@ interface RecallRepositoryInterface {
      */
     fun getRecallAndBookmarkAndReadStatus(
         lang: String
-    ): Flow<Result<List<RecallAndBookmarkAndReadStatus>>>
+    ): Flow<LoadResult<List<RecallAndBookmarkAndReadStatus>>>
 
     suspend fun refreshRecallsAndBookmarks(lang: String)
 
-    fun getBookmarkedRecalls(): Flow<Result<List<RecallAndBookmarkAndReadStatus>>>
+    fun getBookmarkedRecalls(): Flow<LoadResult<List<RecallAndBookmarkAndReadStatus>>>
 
     suspend fun getNewRecalls(lang: String): List<Recall>
 

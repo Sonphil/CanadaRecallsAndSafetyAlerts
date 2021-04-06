@@ -16,7 +16,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.di.qualifier.CanadaApiBas
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsRepositoryInterface
-import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -36,7 +36,7 @@ class RecallDetailsRepository @Inject constructor(
     override fun getRecallAndDetailsSectionsAndImages(
         recall: Recall,
         lang: String
-    ): Flow<Result<RecallAndBasicInformationAndDetailsSectionsAndImages>> =
+    ): Flow<LoadResult<RecallAndBasicInformationAndDetailsSectionsAndImages>> =
         getRefreshedDatabaseFlow(
             initialDbCall = {
                 recallDao.getRecallAndSectionsAndImagesById(recall.id)

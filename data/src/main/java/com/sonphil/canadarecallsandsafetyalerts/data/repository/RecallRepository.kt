@@ -10,7 +10,7 @@ import com.sonphil.canadarecallsandsafetyalerts.data.ext.getRefreshedDatabaseFlo
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
-import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -32,7 +32,7 @@ class RecallRepository @Inject constructor(
      */
     override fun getRecallAndBookmarkAndReadStatus(
         lang: String
-    ): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = getRefreshedDatabaseFlow(
+    ): Flow<LoadResult<List<RecallAndBookmarkAndReadStatus>>> = getRefreshedDatabaseFlow(
         initialDbCall = {
             recallDao.getAllRecallsAndBookmarksFilteredByCategories().map {
                 it.toRecallAndBookmarkAndReadStatus()
@@ -54,10 +54,10 @@ class RecallRepository @Inject constructor(
         recallDao.refreshRecalls(apiValues.toDbRecallList())
     }
 
-    override fun getBookmarkedRecalls(): Flow<Result<List<RecallAndBookmarkAndReadStatus>>> = flow {
+    override fun getBookmarkedRecalls(): Flow<LoadResult<List<RecallAndBookmarkAndReadStatus>>> = flow {
         emitAll(
             recallDao.getBookmarkedRecalls().map { recalls ->
-                Result.Success(recalls.toRecallAndBookmarkAndReadStatusList())
+                LoadResult.Success(recalls.toRecallAndBookmarkAndReadStatusList())
             }
         )
     }

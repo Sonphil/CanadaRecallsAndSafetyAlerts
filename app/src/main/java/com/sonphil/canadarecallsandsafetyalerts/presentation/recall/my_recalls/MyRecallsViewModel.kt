@@ -11,7 +11,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAn
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.AddBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkedRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class MyRecallsViewModel @Inject constructor(
     updateBookmarkUseCase: UpdateBookmarkUseCase,
     private val addBookmarkUseCase: AddBookmarkUseCase
 ) : BaseRecallViewModel(updateBookmarkUseCase) {
-    private val bookmarkedRecallsWithLoadResult: LiveData<Result<List<RecallAndBookmarkAndReadStatus>>> =
+    private val bookmarkedRecallsWithLoadResult: LiveData<LoadResult<List<RecallAndBookmarkAndReadStatus>>> =
         getBookmarkedRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
     val bookmarkedRecalls = bookmarkedRecallsWithLoadResult.map { result ->

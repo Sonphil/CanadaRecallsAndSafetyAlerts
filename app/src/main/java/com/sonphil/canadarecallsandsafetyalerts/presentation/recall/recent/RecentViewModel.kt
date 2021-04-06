@@ -13,7 +13,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.category_filter.
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.category_filter.UpdateFilterForCategoryUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall.GetRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall.RefreshRecallsUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.utils.Result
+import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
@@ -34,7 +34,7 @@ class RecentViewModel @Inject constructor(
     private val updateFilterForCategoryUseCase: UpdateFilterForCategoryUseCase,
     updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : BaseRecallViewModel(updateBookmarkUseCase) {
-    private val recentRecallsWithLoadResult: LiveData<Result<List<RecallAndBookmarkAndReadStatus>>> =
+    private val recentRecallsWithLoadResult: LiveData<LoadResult<List<RecallAndBookmarkAndReadStatus>>> =
         getRecallsUseCase().asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
     val recentRecalls = recentRecallsWithLoadResult.map { result ->
@@ -43,7 +43,7 @@ class RecentViewModel @Inject constructor(
 
     private val _loading = MediatorLiveData<Boolean>().apply {
         val source = recentRecallsWithLoadResult.map { result ->
-            result is Result.Loading
+            result is LoadResult.Loading
         }
 
         addSource(source) { loading ->
@@ -77,7 +77,7 @@ class RecentViewModel @Inject constructor(
     }
 
     override val emptyViewVisible = recentRecallsWithLoadResult.map { result ->
-        result !is Result.Loading && result.data.isNullOrEmpty()
+        result !is LoadResult.Loading && result.data.isNullOrEmpty()
     }
 
     val emptyViewIconResId = emptyViewVisible.map {
@@ -103,7 +103,7 @@ class RecentViewModel @Inject constructor(
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
         refreshRecallsUseCase().collect { result ->
-            _loading.postValue(result is Result.Loading)
+            _loading.postValue(result is LoadResult.Loading)
 
             result.throwable?.message?.let {
                 _error.postValue(it)
