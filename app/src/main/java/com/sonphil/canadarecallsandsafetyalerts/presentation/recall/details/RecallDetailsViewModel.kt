@@ -12,7 +12,6 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkForRecallUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
-import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNonFatalExceptionUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.GetRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.RefreshRecallsDetailsSectionsUseCase
@@ -32,8 +31,7 @@ class RecallDetailsViewModel @Inject constructor(
     private val refreshRecallsDetailsSectionsUseCase: RefreshRecallsDetailsSectionsUseCase,
     private val updateBookmarkUseCase: UpdateBookmarkUseCase,
     getBookmarkForRecallUseCase: GetBookmarkForRecallUseCase,
-    markRecallAsReadUseCase: MarkRecallAsReadUseCase,
-    private val recordNonFatalExceptionUseCase: RecordNonFatalExceptionUseCase
+    markRecallAsReadUseCase: MarkRecallAsReadUseCase
 ) : ViewModel() {
     init {
         viewModelScope.launch {
@@ -92,15 +90,14 @@ class RecallDetailsViewModel @Inject constructor(
         }
     }
 
-    fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            _loading.postValue(true)
+    fun refresh() {
+        _loading.postValue(true)
 
-            refreshRecallsDetailsSectionsUseCase(recall)
-        } catch (t: Throwable) {
-            recordNonFatalExceptionUseCase(t)
+        viewModelScope.launch(Dispatchers.IO) {
+            refreshRecallsDetailsSectionsUseCase(recall).onFailure { throwable ->
+                _error.postValue(throwable.message)
+            }
             _loading.postValue(false)
-            _error.postValue(t.message)
         }
     }
 

@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details
 
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsRepositoryInterface
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNonFatalExceptionUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
 import javax.inject.Inject
 
@@ -11,11 +12,18 @@ import javax.inject.Inject
 
 class RefreshRecallsDetailsSectionsUseCase @Inject constructor(
     private val localeUtils: LocaleUtils,
-    private val recallDetailsRepository: RecallDetailsRepositoryInterface
+    private val recallDetailsRepository: RecallDetailsRepositoryInterface,
+    private val recordNonFatalExceptionUseCase: RecordNonFatalExceptionUseCase
 ) {
-    suspend operator fun invoke(recall: Recall) {
+    suspend operator fun invoke(recall: Recall): Result<Unit> {
         val lang = localeUtils.getCurrentLanguage()
 
-        recallDetailsRepository.refreshRecallAndDetailsSectionsAndImages(recall, lang)
+        return try {
+            recallDetailsRepository.refreshRecallAndDetailsSectionsAndImages(recall, lang)
+            Result.success(Unit)
+        } catch (t: Throwable) {
+            recordNonFatalExceptionUseCase(t)
+            Result.failure(t)
+        }
     }
 }
