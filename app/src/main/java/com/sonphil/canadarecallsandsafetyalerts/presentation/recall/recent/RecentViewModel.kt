@@ -101,13 +101,15 @@ class RecentViewModel @Inject constructor(
             emptyViewVisible && !categoryFilters.value.isNullOrEmpty()
         }
 
-    fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        refreshRecallsUseCase().collect { result ->
-            _loading.postValue(result is LoadResult.Loading)
+    fun refresh() {
+        _loading.postValue(true)
 
-            result.throwable?.message?.let {
-                _error.postValue(it)
+        viewModelScope.launch(Dispatchers.IO) {
+            refreshRecallsUseCase().onFailure { throwable ->
+                _error.postValue(throwable.message)
             }
+
+            _loading.postValue(false)
         }
     }
 
