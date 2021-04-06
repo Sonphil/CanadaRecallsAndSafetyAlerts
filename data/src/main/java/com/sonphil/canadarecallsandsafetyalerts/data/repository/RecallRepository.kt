@@ -78,7 +78,7 @@ class RecallRepository @Inject constructor(
         !recallDao.isEmpty()
     }
 
-    override suspend fun recallExists(recallId: String) = withContext(appDispatchers.io) {
+    override suspend fun recallExistsInDatabase(recallId: String) = withContext(appDispatchers.io) {
         recallDao.getRecallsWithIdCount(recallId) == 1
     }
 

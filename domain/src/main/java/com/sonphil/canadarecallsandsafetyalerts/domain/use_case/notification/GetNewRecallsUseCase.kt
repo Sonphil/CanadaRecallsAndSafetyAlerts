@@ -3,8 +3,6 @@ package com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LocaleUtils
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -27,14 +25,10 @@ class GetNewRecallsUseCase @Inject constructor(
         val lang = localeUtils.getCurrentLanguage()
         val recentRecalls = recallRepository.getNewRecalls(lang)
         val newRecalls = recentRecalls.filter { recall ->
-            !recallRepository.recallExists(recall.id)
+            !recallRepository.recallExistsInDatabase(recall.id)
         }
 
-        coroutineScope {
-            launch {
-                recallRepository.insertRecalls(newRecalls)
-            }
-        }
+        recallRepository.insertRecalls(newRecalls)
 
         return newRecalls
     }

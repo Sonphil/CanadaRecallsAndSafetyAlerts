@@ -27,7 +27,7 @@ interface RecallRepositoryInterface {
 
     suspend fun isThereAnyRecall(): Boolean
 
-    suspend fun recallExists(recallId: String): Boolean
+    suspend fun recallExistsInDatabase(recallId: String): Boolean
 
     suspend fun insertRecalls(recalls: List<Recall>)
 }
