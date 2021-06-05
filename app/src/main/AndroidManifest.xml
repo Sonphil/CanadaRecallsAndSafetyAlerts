@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/SplashTheme">
+        android:theme="@style/Theme.App.Splash">
 
         <!-- Remove WorkerManager default initializer -->
         <provider
@@ -38,7 +38,7 @@
         <activity
             android:name=".presentation.recall.details.RecallDetailsActivity"
             android:parentActivityName=".presentation.MainActivity"
-            android:theme="@style/RecallDetailsTheme" />
+            android:theme="@style/Theme.App.RecallDetails" />
 
         <receiver android:name=".receiver.NotificationActionReceiver" />
     </application>

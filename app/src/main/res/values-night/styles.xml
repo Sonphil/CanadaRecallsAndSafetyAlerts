@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Widget.AppTheme.Main.CollapsingToolbarLayout" parent="AppTheme">
+    <style name="Widget.App.CollapsingToolbarLayout" parent="Widget.Design.CollapsingToolbar">
         <!-- Use default content scrim when dark mode is enabled -->
     </style>
 </resources>

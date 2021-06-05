@@ -50,7 +50,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setupSharedElementTransition()
         binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.Theme_App)
         setContentView(binding.root)
         setupActionBar()
         setupBottomNavigation()
@@ -70,7 +70,7 @@ class MainActivity : DaggerAppCompatActivity() {
         )
 
         applyThemePref(darkThemePrefValue)
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.Theme_App)
     }
 
     private fun setupActionBar() {

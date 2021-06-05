@@ -13,7 +13,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="@dimen/design_bottom_navigation_height"
         android:visibility="invisible"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="?colorPrimary"
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true"
         app:layout_behavior="com.google.android.material.transformation.FabTransformationSheetBehavior"
@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary">
+            android:background="?colorPrimary">
 
             <TextView
                 android:id="@+id/tv_title_categories_filter"
@@ -71,7 +71,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_filter_recalls"
-        style="@style/Widget.AppTheme.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

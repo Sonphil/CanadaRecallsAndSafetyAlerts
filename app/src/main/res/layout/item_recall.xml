@@ -8,7 +8,6 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/colorCardView"
     app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,9 +21,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:paddingTop="1dp"
-            android:tint="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tint="?colorPrimary"
             tools:src="@drawable/ic_shopping_cart_black_24dp" />
 
         <TextView
@@ -32,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?colorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/iv_recall_category_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_recall_category_icon"
             app:layout_constraintTop_toTopOf="@+id/iv_recall_category_icon"
