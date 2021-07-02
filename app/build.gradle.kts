@@ -70,7 +70,7 @@ dependencies {
     implementation("com.google.android.material:material:${Version.MaterialComponents}")
     implementation("androidx.browser:browser:${Version.Browser}")
     implementation("androidx.constraintlayout:constraintlayout:${Version.ConstraintLayout}")
-    implementation("androidx.core:core-ktx:${Version.AndroidKtx}")
+    implementation("androidx.core:core-ktx:${Version.CoreKtx}")
     implementation("androidx.fragment:fragment-ktx:${Version.Fragment}")
     implementation("androidx.preference:preference-ktx:${Version.Preference}")
     implementation("androidx.lifecycle:lifecycle-extensions:${Version.LifecycleExtensions}")

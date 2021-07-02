@@ -14,10 +14,13 @@ buildscript {
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Version.Navigation}")
         classpath("com.google.gms:google-services:${Version.GoogleServices}")
         classpath("com.google.firebase:firebase-crashlytics-gradle:${Version.FirebaseGradle}")
+        classpath("com.github.ben-manes:gradle-versions-plugin:${Version.GradleVersions}")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
+
+apply(plugin = "com.github.ben-manes.versions")
 
 allprojects {
     repositories {
