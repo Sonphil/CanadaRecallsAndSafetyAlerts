@@ -6,7 +6,7 @@ sealed class LoadResult<T>(open val data: T?, open val throwable: Throwable?) {
 
     data class Error<T>(
         override val data: T?,
-        override val throwable: Throwable?
+        override val throwable: Throwable
     ) : LoadResult<T>(data, throwable)
 
     data class Loading<T>(override val data: T?) : LoadResult<T>(data, null)

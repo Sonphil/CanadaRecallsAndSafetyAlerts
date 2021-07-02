@@ -2,6 +2,7 @@ package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification.GetRecallsToNotifyUseCase
@@ -26,13 +27,13 @@ class SyncRecallsWorker @Inject constructor(
 
     override suspend fun doWork(): Result = withContext(appDispatchers.default) {
         try {
-            val keywordNotificationsEnabled = inputData.getBoolean(
+            val isKeywordNotificationsEnabled = inputData.getBoolean(
                 SyncRecallsWorkerScheduler.KEY_KEYWORD_NOTIFICATIONS_ENABLED,
                 false
             )
 
             run loop@{
-                getRecallsToNotifyUseCase(keywordNotificationsEnabled).forEach { recall ->
+                getRecallsToNotifyUseCase(isKeywordNotificationsEnabled).forEach { recall ->
                     if (isActive) {
                         notificationsUtils.notifyRecall(recall)
                     } else {
@@ -43,7 +44,10 @@ class SyncRecallsWorker @Inject constructor(
 
             Result.success()
         } catch (e: Exception) {
-            Result.failure()
+            val data = Data.Builder()
+                .putString("Exception", e.toString())
+                .build()
+            Result.failure(data)
         }
     }
 

@@ -18,7 +18,9 @@ class GetRecallsToNotifyUseCase @Inject constructor(
             emptyList()
         } else {
             newRecalls.filter { recall ->
-                checkIfShouldNotifyAboutRecallUseCase(recall, isKeywordNotificationsEnabled)
+                runCatching {
+                    checkIfShouldNotifyAboutRecallUseCase(recall, isKeywordNotificationsEnabled)
+                }.getOrDefault(false)
             }
         }
     }

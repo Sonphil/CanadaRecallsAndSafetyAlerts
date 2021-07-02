@@ -12,8 +12,8 @@ apply {
 
 dependencies {
     // Test
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:${Version.Kotlin}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.Coroutines}")
-    testImplementation("junit:junit:${Version.JUnit}")
     testImplementation("androidx.test:core:${Version.TestCore}")
     testImplementation("io.mockk:mockk:${Version.MockK}")
 

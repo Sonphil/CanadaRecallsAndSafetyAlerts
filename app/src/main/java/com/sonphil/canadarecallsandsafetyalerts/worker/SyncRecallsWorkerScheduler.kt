@@ -46,13 +46,13 @@ class SyncRecallsWorkerScheduler @Inject constructor(
                 val repeatInterval = prefs
                     .getString(repeatIntervalPrefKey, null)
                     ?.toLong()
-                val keywordNotificationsEnabled =
+                val isKeywordNotificationsEnabled =
                     notificationsPrefValue == context.getString(R.string.value_notifications_pref_keyword)
 
                 if (repeatInterval != null) {
                     schedule(
                         context.applicationContext,
-                        keywordNotificationsEnabled,
+                        isKeywordNotificationsEnabled,
                         repeatInterval
                     )
                 }
