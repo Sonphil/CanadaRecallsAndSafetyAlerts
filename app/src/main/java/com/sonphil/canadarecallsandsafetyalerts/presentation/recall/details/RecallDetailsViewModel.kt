@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
@@ -12,37 +13,50 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBasicInformationAndDetailsSectionsAndImages
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.GetBookmarkForRecallUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.logging.RecordNonFatalExceptionUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.GetRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall_details.RefreshRecallsDetailsSectionsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 import javax.inject.Inject
 
 /**
  * Created by Sonphil on 11-02-20.
  */
 
+@HiltViewModel
 class RecallDetailsViewModel @Inject constructor(
-    private val recall: Recall,
+    savedStateHandle: SavedStateHandle,
     getRecallsDetailsSectionsUseCase: GetRecallsDetailsSectionsUseCase,
     private val refreshRecallsDetailsSectionsUseCase: RefreshRecallsDetailsSectionsUseCase,
     private val updateBookmarkUseCase: UpdateBookmarkUseCase,
     getBookmarkForRecallUseCase: GetBookmarkForRecallUseCase,
-    markRecallAsReadUseCase: MarkRecallAsReadUseCase
+    markRecallAsReadUseCase: MarkRecallAsReadUseCase,
+    recordNonFatalExceptionUseCase: RecordNonFatalExceptionUseCase
 ) : ViewModel() {
+    val recall: Recall? = savedStateHandle.get<Recall>("recall")
+    private lateinit var _recall: Recall
+
     init {
-        viewModelScope.launch {
-            markRecallAsReadUseCase(recall)
+        if (recall == null) {
+            recordNonFatalExceptionUseCase(NullPointerException("Recall argument is null"))
+        } else {
+            this._recall = recall
+            viewModelScope.launch {
+                markRecallAsReadUseCase(recall)
+            }
         }
     }
 
-    private val bookmark = getBookmarkForRecallUseCase(recall)
+    private val bookmark = getBookmarkForRecallUseCase(_recall)
         .asLiveData(context = viewModelScope.coroutineContext)
     val bookmarked: LiveData<Boolean> = bookmark.map { it != null }
 
-    private val recallAndDetailsSectionsAndImages = getRecallsDetailsSectionsUseCase(recall)
+    private val recallAndDetailsSectionsAndImages = getRecallsDetailsSectionsUseCase(_recall)
         .asLiveData(context = viewModelScope.coroutineContext)
 
     val detailsSectionsItems = recallAndDetailsSectionsAndImages.map { result ->
@@ -85,7 +99,7 @@ class RecallDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val bookmarked = bookmark.value != null
 
-            updateBookmarkUseCase(recall, !bookmarked)
+            updateBookmarkUseCase(_recall, !bookmarked)
         }
     }
 
@@ -93,7 +107,7 @@ class RecallDetailsViewModel @Inject constructor(
         _loading.postValue(true)
 
         viewModelScope.launch {
-            refreshRecallsDetailsSectionsUseCase(recall).onFailure { throwable ->
+            refreshRecallsDetailsSectionsUseCase(_recall).onFailure { throwable ->
                 _error.postValue(throwable.message)
             }
             _loading.postValue(false)

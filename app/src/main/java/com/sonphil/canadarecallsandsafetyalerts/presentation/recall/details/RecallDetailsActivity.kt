@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.transition.addListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.transition.platform.MaterialArcMotion
@@ -35,18 +36,15 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.UltraViewPagerAdapter
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DateFormat
 import javax.inject.Inject
 
-class RecallDetailsActivity : DaggerAppCompatActivity() {
+@AndroidEntryPoint
+class RecallDetailsActivity : AppCompatActivity() {
 
     private val binding: ActivityRecallDetailsBinding by viewBinding(ActivityRecallDetailsBinding::inflate)
-    private val viewModel: RecallDetailsViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(RecallDetailsViewModel::class.java)
-    }
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: RecallDetailsViewModel by viewModels()
     @Inject
     lateinit var localeUtils: LocaleUtils
     @Inject
@@ -64,7 +62,7 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             setupSharedElementTransition()
         }
 
-        val recall = getRecall()
+        val recall = viewModel.recall
 
         if (recall == null) {
             finish()
@@ -81,10 +79,6 @@ class RecallDetailsActivity : DaggerAppCompatActivity() {
             setupBottomAppBar()
             subscribeUI()
         }
-    }
-
-    fun getRecall(): Recall? = intent?.extras?.run {
-        RecallDetailsActivityArgs.fromBundle(this).recall
     }
 
     private fun setupSharedElementTransition() {

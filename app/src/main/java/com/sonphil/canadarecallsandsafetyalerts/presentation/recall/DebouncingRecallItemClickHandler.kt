@@ -1,39 +1,24 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
 import android.os.SystemClock
-import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
- * Created by Sonphil on 01-02-20.
+ * Created by Sonphil on 29-07-21.
  */
 
-abstract class BaseRecallViewModel constructor(
-    private val updateBookmarkUseCase: UpdateBookmarkUseCase
-) : ViewModel() {
-    abstract val emptyViewVisible: LiveData<Boolean>
-
+class DebouncingRecallItemClickHandler @Inject constructor() : RecallItemClickHandler {
     private val _navigateToDetails = MutableLiveData<Event<RecallAndBookmarkAndReadStatus>>()
-    val navigateToDetails = _navigateToDetails
+    override val navigateToDetails: LiveData<Event<RecallAndBookmarkAndReadStatus>>
+        get() = _navigateToDetails
 
     private var lastClickTime = 0L
 
-    @CallSuper
-    open fun updateBookmark(recall: Recall, bookmarked: Boolean) {
-        viewModelScope.launch {
-            updateBookmarkUseCase(recall, bookmarked)
-        }
-    }
-
-    fun clickRecall(recallAndBookmarkAndReadStatus: RecallAndBookmarkAndReadStatus) {
+    override fun onRecallClicked(recallAndBookmarkAndReadStatus: RecallAndBookmarkAndReadStatus) {
         if (navigateToDetails.value?.peekContent() == recallAndBookmarkAndReadStatus) {
             if (SystemClock.elapsedRealtime() - lastClickTime < DOUBLE_CLICK_MIN_DELAY_IN_MS) {
                 return

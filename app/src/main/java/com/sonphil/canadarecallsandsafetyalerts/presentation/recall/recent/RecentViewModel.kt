@@ -1,12 +1,15 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.category_filter.GetCategoryFiltersUseCase
@@ -15,8 +18,9 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall.GetRecall
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.recall.RefreshRecallsUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.LoadResult
 import com.sonphil.canadarecallsandsafetyalerts.ext.isDeviceConnected
-import com.sonphil.canadarecallsandsafetyalerts.presentation.App
-import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallViewModel
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallItemClickHandler
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,14 +28,16 @@ import javax.inject.Inject
  * Created by Sonphil on 01-02-20.
  */
 
+@HiltViewModel
 class RecentViewModel @Inject constructor(
-    private val app: App,
+    @ApplicationContext private val appContext: Context,
     getRecallsUseCase: GetRecallsUseCase,
     private val refreshRecallsUseCase: RefreshRecallsUseCase,
     getCategoryFiltersUseCase: GetCategoryFiltersUseCase,
     private val updateFilterForCategoryUseCase: UpdateFilterForCategoryUseCase,
-    updateBookmarkUseCase: UpdateBookmarkUseCase
-) : BaseRecallViewModel(updateBookmarkUseCase) {
+    private val updateBookmarkUseCase: UpdateBookmarkUseCase,
+    private val recallItemClickHandler: RecallItemClickHandler
+) : ViewModel(), RecallItemClickHandler by recallItemClickHandler {
     private val recentRecallsWithLoadResult: LiveData<LoadResult<List<RecallAndBookmarkAndReadStatus>>> =
         getRecallsUseCase().asLiveData(viewModelScope.coroutineContext)
 
@@ -60,21 +66,21 @@ class RecentViewModel @Inject constructor(
         }
     }
     val genericError: LiveData<String?> = _error.map { error ->
-        if (app.isDeviceConnected && !error.isNullOrBlank()) {
-            app.getString(R.string.error_generic)
+        if (appContext.isDeviceConnected && !error.isNullOrBlank()) {
+            appContext.getString(R.string.error_generic)
         } else {
             null
         }
     }
     val networkError: LiveData<String?> = _error.map {
-        if (!app.isDeviceConnected) {
-            app.getString(R.string.error_offline)
+        if (!appContext.isDeviceConnected) {
+            appContext.getString(R.string.error_offline)
         } else {
             null
         }
     }
 
-    override val emptyViewVisible = recentRecallsWithLoadResult.map { result ->
+    val emptyViewVisible = recentRecallsWithLoadResult.map { result ->
         result !is LoadResult.Loading && result.data.isNullOrEmpty()
     }
 
@@ -98,6 +104,12 @@ class RecentViewModel @Inject constructor(
         .map { emptyViewVisible ->
             emptyViewVisible && !categoryFilters.value.isNullOrEmpty()
         }
+
+    fun onBookmarkClicked(recall: Recall, isCurrentlyBookmarked: Boolean) {
+        viewModelScope.launch {
+            updateBookmarkUseCase(recall, !isCurrentlyBookmarked)
+        }
+    }
 
     fun refresh() {
         _loading.postValue(true)

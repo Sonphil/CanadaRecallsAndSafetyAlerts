@@ -5,6 +5,8 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.di.qualifier.CanadaApiBas
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -14,6 +16,7 @@ import javax.inject.Singleton
  * Created by Sonphil on 28-02-18.
  */
 @Module
+@InstallIn(SingletonComponent::class)
 internal open class NetworkModule {
 
     @Singleton

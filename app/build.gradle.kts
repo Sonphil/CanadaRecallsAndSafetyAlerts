@@ -8,6 +8,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("dagger.hilt.android.plugin")
 }
 
 apply {
@@ -81,6 +82,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:${Version.Navigation}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.LifecycleViewModelKtx}")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Version.Lifecycle}")
+    implementation("androidx.hilt:hilt-navigation-fragment:${Version.HiltAndroid}")
+    implementation("androidx.hilt:hilt-work:${Version.HiltAndroid}")
+    kapt("androidx.hilt:hilt-compiler:${Version.HiltAndroid}")
 
     // Test
     testImplementation("junit:junit:${Version.JUnit}")
@@ -102,12 +106,9 @@ dependencies {
         isTransitive = true
     }
 
-    // Dagger
-    implementation("com.google.dagger:dagger:${Version.Dagger}")
-    implementation("com.google.dagger:dagger-android:${Version.Dagger}")
-    implementation("com.google.dagger:dagger-android-support:${Version.Dagger}")
-    kapt("com.google.dagger:dagger-compiler:${Version.Dagger}")
-    kapt("com.google.dagger:dagger-android-processor:${Version.Dagger}")
+    // Hilt
+    implementation("com.google.dagger:hilt-android:${Version.Hilt}")
+    kapt("com.google.dagger:hilt-android-compiler:${Version.Hilt}")
 
     // LeakCanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:${Version.LeakCanary}")

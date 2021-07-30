@@ -6,8 +6,12 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.DebouncingRecallItemClickHandler
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallItemClickHandler
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
@@ -15,6 +19,7 @@ import javax.inject.Singleton
  * Created by Sonphil on 28-02-18.
  */
 @Module
+@InstallIn(SingletonComponent::class)
 internal object AppModule {
     @Singleton
     @Provides
@@ -36,4 +41,9 @@ internal object AppModule {
         default = Dispatchers.Default,
         io = Dispatchers.IO
     )
+
+    @Provides
+    fun provideRecallClickHandler(
+        debouncingRecallClickHandler: DebouncingRecallItemClickHandler
+    ): RecallItemClickHandler = debouncingRecallClickHandler
 }

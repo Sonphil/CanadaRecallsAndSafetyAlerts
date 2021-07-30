@@ -17,12 +17,9 @@ dependencies {
     testImplementation("androidx.test:core:${Version.TestCore}")
     testImplementation("io.mockk:mockk:${Version.MockK}")
 
-    // Dagger
-    api("com.google.dagger:dagger:${Version.Dagger}")
-    api("com.google.dagger:dagger-android:${Version.Dagger}")
-    api("com.google.dagger:dagger-android-support:${Version.Dagger}")
-    kapt("com.google.dagger:dagger-compiler:${Version.Dagger}")
-    kapt("com.google.dagger:dagger-android-processor:${Version.Dagger}")
+    // Hilt
+    api("com.google.dagger:hilt-android:${Version.Hilt}")
+    kapt("com.google.dagger:hilt-android-compiler:${Version.Hilt}")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:${Version.Firebase}"))

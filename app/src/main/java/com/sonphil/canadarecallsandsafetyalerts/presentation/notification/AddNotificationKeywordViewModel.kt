@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification_keyword.AddNotificationKeywordUseCase
 import com.sonphil.canadarecallsandsafetyalerts.utils.Event
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,6 +14,7 @@ import javax.inject.Inject
  * Created by Sonphil on 20-02-20.
  */
 
+@HiltViewModel
 class AddNotificationKeywordViewModel @Inject constructor(
     private val addNotificationKeywordUseCase: AddNotificationKeywordUseCase
 ) : ViewModel() {

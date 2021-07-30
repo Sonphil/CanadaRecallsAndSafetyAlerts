@@ -6,26 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentDialogAddNotificationKeywordBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddNotificationKeywordDialogFragment : BottomSheetDialogFragment() {
     private var binding: FragmentDialogAddNotificationKeywordBinding by viewLifecycle()
-    private val viewModel: AddNotificationKeywordViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(AddNotificationKeywordViewModel::class.java)
-    }
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: AddNotificationKeywordViewModel by viewModels()
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-
         super.onAttach(context)
     }
 

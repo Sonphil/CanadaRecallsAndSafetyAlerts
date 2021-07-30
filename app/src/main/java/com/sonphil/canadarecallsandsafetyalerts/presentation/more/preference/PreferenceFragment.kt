@@ -14,19 +14,14 @@ import androidx.preference.PreferenceFragmentCompat
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
-import dagger.android.support.AndroidSupportInjection
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PreferenceFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
 
     @Inject
     lateinit var syncRecallsWorkerScheduler: SyncRecallsWorkerScheduler
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-
-        super.onAttach(context)
-    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE

@@ -1,22 +1,22 @@
 package com.sonphil.canadarecallsandsafetyalerts.receiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.details.RecallDetailsActivityArgs
-import dagger.android.DaggerBroadcastReceiver
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Created by Sonphil on 26-02-20.
  */
 
-class NotificationActionReceiver : DaggerBroadcastReceiver() {
+@AndroidEntryPoint
+class NotificationActionReceiver : BroadcastReceiver() {
     @Inject
     lateinit var notificationActionHandler: NotificationActionHandler
 
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-
         val action = intent.action
 
         val recall = intent.extras?.run {

@@ -8,7 +8,8 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.Chip
 import com.sonphil.canadarecallsandsafetyalerts.R
@@ -16,30 +17,34 @@ import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentRecentRecallsBinding
 import com.sonphil.canadarecallsandsafetyalerts.databinding.IncludeCategoriesFilterBinding
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
+import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
 import com.sonphil.canadarecallsandsafetyalerts.ext.getDrawableCompat
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.BaseRecallsFragment
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.CategoryResources
+import com.sonphil.canadarecallsandsafetyalerts.utils.Event
+import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 
+@AndroidEntryPoint
 class RecentRecallsFragment : BaseRecallsFragment() {
+
     private var binding: FragmentRecentRecallsBinding by viewLifecycle()
     private lateinit var mainActivityBinding: ActivityMainBinding
     private var _categoriesFilterBinding: IncludeCategoriesFilterBinding? = null
     private val categoriesFilterBinding get() = _categoriesFilterBinding!!
 
     override val currentDestinationId = R.id.fragment_recent
-    override val viewModel: RecentViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(RecentViewModel::class.java)
-    }
+    val viewModel: RecentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRecentRecallsBinding.inflate(layoutInflater, container, false)
 
         mainActivityBinding = (requireActivity() as MainActivity).binding
@@ -75,7 +80,19 @@ class RecentRecallsFragment : BaseRecallsFragment() {
 
     override fun getRecyclerView() = binding.rvRecentRecalls
 
-    override fun getEmptyView() = mainActivityBinding.includeEmptyView.emptyView
+    override fun getNavigateToDetailsEventLiveData(): LiveData<Event<RecallAndBookmarkAndReadStatus>> {
+        return viewModel.navigateToDetails
+    }
+
+    override fun onItemClicked(item: RecallAndBookmarkAndReadStatus) {
+        viewModel.onRecallClicked(item)
+    }
+
+    override fun onBookmarkClicked(recall: Recall, isCurrentlyBookmarked: Boolean) {
+        viewModel.onBookmarkClicked(recall, isCurrentlyBookmarked)
+    }
+
+    private fun getEmptyView() = mainActivityBinding.includeEmptyView.emptyView
 
     private fun setupFilter() {
         with(categoriesFilterBinding) {
@@ -124,6 +141,14 @@ class RecentRecallsFragment : BaseRecallsFragment() {
     }
 
     private fun subscribeUI() {
+        viewModel.emptyViewVisible.observe(
+            viewLifecycleOwner,
+            { visible ->
+                getRecyclerView().isVisible = !visible
+                getEmptyView().isVisible = visible
+            }
+        )
+
         viewModel.recentRecalls.observe(
             viewLifecycleOwner,
             {

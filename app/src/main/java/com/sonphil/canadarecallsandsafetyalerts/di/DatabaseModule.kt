@@ -13,12 +13,15 @@ import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsImageDao
 import com.sonphil.canadarecallsandsafetyalerts.data.db.RecallDetailsSectionDao
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
  * Created by Sonphil on 28-02-18.
  */
 @Module
+@InstallIn(SingletonComponent::class)
 internal open class DatabaseModule {
 
     @Singleton

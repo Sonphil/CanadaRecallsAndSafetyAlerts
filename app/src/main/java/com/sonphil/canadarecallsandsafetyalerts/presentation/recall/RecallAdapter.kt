@@ -25,8 +25,9 @@ import java.text.DateFormat
  */
 
 class RecallAdapter(
-    private val viewModel: BaseRecallViewModel,
-    dateUtils: DateUtils
+    dateUtils: DateUtils,
+    private val onItemClicked: (item: RecallAndBookmarkAndReadStatus) -> Unit,
+    private val onBookmarkClicked: (recall: Recall, isCurrentlyBookmarked: Boolean) -> Unit
 ) : ListAdapter<RecallAndBookmarkAndReadStatus, RecallAdapter.RecallViewHolder>(
     DiffCallback()
 ) {
@@ -40,7 +41,7 @@ class RecallAdapter(
 
         holder.itemView.setOnClickListener {
             val item = getItem(holder.adapterPosition)
-            viewModel.clickRecall(item)
+            onItemClicked(item)
         }
 
         binding.btnRecallBookmark.setOnClickListener {
@@ -48,7 +49,7 @@ class RecallAdapter(
             val isCurrentlyBookmarked = item.bookmark != null
 
             holder.bindBookmark(!isCurrentlyBookmarked)
-            viewModel.updateBookmark(item.recall, !isCurrentlyBookmarked)
+            onBookmarkClicked(item.recall, isCurrentlyBookmarked)
         }
 
         return holder

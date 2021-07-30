@@ -1,25 +1,26 @@
 package com.sonphil.canadarecallsandsafetyalerts.worker
 
 import android.content.Context
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Data
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.notification.GetRecallsToNotifyUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
-import javax.inject.Provider
 
 /**
  * Created by Sonphil on 12-02-20.
  */
 
-class SyncRecallsWorker @Inject constructor(
-    appContext: Context,
-    workerParameters: WorkerParameters,
+@HiltWorker
+class SyncRecallsWorker @AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParameters: WorkerParameters,
     private val getRecallsToNotifyUseCase: GetRecallsToNotifyUseCase,
     private val notificationsUtils: NotificationsUtils,
     private val appDispatchers: AppDispatchers
@@ -48,22 +49,6 @@ class SyncRecallsWorker @Inject constructor(
                 .putString("Exception", e.toString())
                 .build()
             Result.failure(data)
-        }
-    }
-
-    class Factory @Inject constructor(
-        private val recallsToNotifyUseCase: Provider<GetRecallsToNotifyUseCase>,
-        private val notificationsUtils: Provider<NotificationsUtils>,
-        private val appDispatchers: Provider<AppDispatchers>
-    ) : ChildWorkerFactory {
-        override fun create(appContext: Context, params: WorkerParameters): ListenableWorker {
-            return SyncRecallsWorker(
-                appContext,
-                params,
-                recallsToNotifyUseCase.get(),
-                notificationsUtils.get(),
-                appDispatchers.get()
-            )
         }
     }
 }

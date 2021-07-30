@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.getResourceIdOrThrow
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +14,11 @@ import com.sonphil.canadarecallsandsafetyalerts.databinding.FragmentMoreBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrl
 import com.sonphil.canadarecallsandsafetyalerts.ext.openUrlExternal
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
-class MoreFragment : DaggerFragment() {
+@AndroidEntryPoint
+class MoreFragment : Fragment() {
     private var binding: FragmentMoreBinding by viewLifecycle()
 
     override fun onCreateView(

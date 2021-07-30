@@ -3,6 +3,7 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.LiveData
@@ -21,10 +22,11 @@ import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWh
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
     val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
     @Inject
     lateinit var sharedPreferences: SharedPreferences

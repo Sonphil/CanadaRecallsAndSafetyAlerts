@@ -14,12 +14,15 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallDetailsR
 import com.sonphil.canadarecallsandsafetyalerts.domain.repository.RecallRepositoryInterface
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 /**
  * Created by Sonphil on 15-08-20.
  */
 
 @Module
+@InstallIn(SingletonComponent::class)
 interface RepositoryModule {
     @Binds
     fun provideBookmarkRepository(
