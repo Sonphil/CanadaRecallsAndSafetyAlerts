@@ -3,7 +3,9 @@
  */
 
 object Version {
+    const val AppCompat = "1.3.1"
     const val Browser = "1.3.0"
+    const val Compose = "1.0.0"
     const val ConstraintLayout = "2.0.4"
     const val CoreKtx = "1.6.0"
     const val Coroutines = "1.5.0"
@@ -17,7 +19,7 @@ object Version {
     const val Hilt = "2.38.1"
     const val HiltAndroid = "1.0.0"
     const val JUnit = "4.13.2"
-    const val Kotlin = "1.5.21"
+    const val Kotlin = "1.5.10"
     const val KtlintGradle = "10.1.0"
     const val LeakCanary = "2.7"
     const val Lifecycle = "2.3.1"

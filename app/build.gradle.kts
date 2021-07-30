@@ -64,11 +64,17 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.Compose
     }
 }
 
 dependencies {
     implementation("com.google.android.material:material:${Version.MaterialComponents}")
+    implementation("androidx.appcompat:appcompat:${Version.AppCompat}")
     implementation("androidx.browser:browser:${Version.Browser}")
     implementation("androidx.constraintlayout:constraintlayout:${Version.ConstraintLayout}")
     implementation("androidx.core:core-ktx:${Version.CoreKtx}")
@@ -85,6 +91,15 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-fragment:${Version.HiltAndroid}")
     implementation("androidx.hilt:hilt-work:${Version.HiltAndroid}")
     kapt("androidx.hilt:hilt-compiler:${Version.HiltAndroid}")
+
+    // Compose
+    implementation("androidx.compose.ui:ui:${Version.Compose}")
+    implementation("androidx.compose.ui:ui-tooling:${Version.Compose}")
+    implementation("androidx.compose.material:material:${Version.Compose}")
+    implementation("androidx.compose.material:material-icons-core:${Version.Compose}")
+    implementation("androidx.compose.material:material-icons-extended:${Version.Compose}")
+    implementation("androidx.compose.runtime:runtime-livedata:${Version.Compose}")
+    implementation("androidx.compose.ui:ui-viewbinding:${Version.Compose}")
 
     // Test
     testImplementation("junit:junit:${Version.JUnit}")
