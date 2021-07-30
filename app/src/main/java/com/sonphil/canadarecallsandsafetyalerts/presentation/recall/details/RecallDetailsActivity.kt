@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.transition.addListener
@@ -12,7 +13,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.transition.platform.MaterialArcMotion
@@ -37,6 +37,7 @@ import com.sonphil.canadarecallsandsafetyalerts.utils.EventObserver
 import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.UltraViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import java.text.DateFormat
 import javax.inject.Inject
 
@@ -45,8 +46,10 @@ class RecallDetailsActivity : AppCompatActivity() {
 
     private val binding: ActivityRecallDetailsBinding by viewBinding(ActivityRecallDetailsBinding::inflate)
     private val viewModel: RecallDetailsViewModel by viewModels()
+
     @Inject
     lateinit var localeUtils: LocaleUtils
+
     @Inject
     lateinit var dateUtils: DateUtils
 
@@ -62,23 +65,17 @@ class RecallDetailsActivity : AppCompatActivity() {
             setupSharedElementTransition()
         }
 
-        val recall = viewModel.recall
-
-        if (recall == null) {
-            finish()
-        } else {
-            setupWindow()
-            bindRecallCategory(recall)
-            binding.tvRecallTitle.text = recall.title
-            bindRecallPublicationDate(recall)
-            setupBackButton()
-            setupUltraViewPager()
-            binding.btnRecallBookmark.setOnClickListener { viewModel.clickBookmark() }
-            binding.swipeRefreshLayoutRecallDetails.setupSwipeRefreshLayout()
-            setupRecyclerView()
-            setupBottomAppBar()
-            subscribeUI()
-        }
+        setupWindow()
+        setupBackButton()
+        setupUltraViewPager()
+        binding.btnRecallBookmark.setOnClickListener { viewModel.clickBookmark() }
+        binding.swipeRefreshLayoutRecallDetails.setupSwipeRefreshLayout()
+        setupRecyclerView()
+        setupBottomAppBar()
+        bindRecallCategory(viewModel.recall)
+        binding.tvRecallTitle.text = viewModel.recall.title
+        bindRecallPublicationDate(viewModel.recall)
+        subscribeUI()
     }
 
     private fun setupSharedElementTransition() {
@@ -196,9 +193,10 @@ class RecallDetailsActivity : AppCompatActivity() {
     }
 
     private fun subscribeUI() {
+
         viewModel.bookmarked.observe(
             this,
-            Observer { bookmarked ->
+            { bookmarked ->
                 if (bookmarked) {
                     binding.btnRecallBookmark.setImageResource(R.drawable.ic_bookmark_red_24dp)
                 } else {
@@ -209,7 +207,7 @@ class RecallDetailsActivity : AppCompatActivity() {
 
         viewModel.loading.observe(
             this,
-            Observer { loading ->
+            { loading ->
                 binding.swipeRefreshLayoutRecallDetails.isRefreshing = loading
             }
         )
@@ -238,7 +236,7 @@ class RecallDetailsActivity : AppCompatActivity() {
 
         viewModel.images.observe(
             this,
-            Observer { images ->
+            { images ->
                 if (!images.isNullOrEmpty()) {
                     recallDetailsImagePagerAdapter.recallImages = images
                     val viewPager = binding.ultraViewpagerRecallDetailsImages
@@ -257,7 +255,7 @@ class RecallDetailsActivity : AppCompatActivity() {
 
         viewModel.galleryVisible.observe(
             this,
-            Observer { visible ->
+            { visible ->
                 binding.ultraViewpagerRecallDetailsImages.isVisible = visible
 
                 binding.constraintLayoutRecallDetails.doApplyInsetsWhenAttached { view, windowInsets ->
@@ -274,15 +272,24 @@ class RecallDetailsActivity : AppCompatActivity() {
 
         viewModel.menuItemsVisible.observe(
             this,
-            Observer { visible ->
+            { visible ->
                 binding.bottomAppBar.menu.children.forEach { it.isVisible = visible }
             }
         )
 
         viewModel.detailsSectionsItems.observe(
             this,
-            Observer { sections ->
+            { sections ->
                 adapter.submitList(sections)
+            }
+        )
+
+        viewModel.error.observe(
+            this,
+            { error: String? ->
+                error?.let {
+                    Toasty.normal(this, it, Toast.LENGTH_SHORT).show()
+                }
             }
         )
     }
