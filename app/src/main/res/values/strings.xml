@@ -23,6 +23,8 @@
     <string name="label_action_mark_recall_as_read">Mark as Read</string>
     <string name="message_recall_marked_as_read">Marked as Read</string>
     <string name="label_action_bookmark_recall">Save</string>
+    <string name="label_action_bookmark_recall_add_to_my_recalls">Add to My Recalls</string>
+    <string name="label_action_unbookmark_recall_remove_from_my_recalls">Remove from My Recalls</string>
     <string name="message_recall_bookmarked">Saved</string>
 
     <!-- My Recalls -->

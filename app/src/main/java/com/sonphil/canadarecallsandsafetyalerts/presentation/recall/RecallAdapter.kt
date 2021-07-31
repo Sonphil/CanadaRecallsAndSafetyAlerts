@@ -1,21 +1,18 @@
 package com.sonphil.canadarecallsandsafetyalerts.presentation.recall
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ItemRecallBinding
-import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
-import com.sonphil.canadarecallsandsafetyalerts.domain.model.ReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
-import com.sonphil.canadarecallsandsafetyalerts.ext.formatUTC
+import com.sonphil.canadarecallsandsafetyalerts.presentation.AppTheme
+import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.recent.RecallItem
 import com.sonphil.canadarecallsandsafetyalerts.utils.DateUtils
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import java.text.DateFormat
@@ -36,69 +33,28 @@ class RecallAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecallViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemRecallBinding.inflate(inflater, parent, false)
-
         val holder = RecallViewHolder(binding)
 
-        holder.itemView.setOnClickListener {
-            val item = getItem(holder.adapterPosition)
-            onItemClicked(item)
-        }
-
-        binding.btnRecallBookmark.setOnClickListener {
-            val item = getItem(holder.adapterPosition)
-            val isCurrentlyBookmarked = item.bookmark != null
-
-            holder.bindBookmark(!isCurrentlyBookmarked)
-            onBookmarkClicked(item.recall, isCurrentlyBookmarked)
+        binding.composeViewItemRecall.setContent {
+            AppTheme {
+                RecallItem(
+                    holder.itemLiveData,
+                    dateFormat,
+                    onItemClicked = { item: RecallAndBookmarkAndReadStatus ->
+                        onItemClicked(item)
+                    },
+                    onBookmarkClicked = { recall: Recall, isCurrentlyBookmarked: Boolean ->
+                        onBookmarkClicked(recall, isCurrentlyBookmarked)
+                    }
+                )
+            }
         }
 
         return holder
     }
 
     override fun onBindViewHolder(holder: RecallViewHolder, position: Int) {
-        val item = getItem(position)
-        val recall = item.recall
-        val bookmark = item.bookmark
-
-        with(holder) {
-            bindCategory(recall.category)
-            bindTitle(recall, item.readStatus)
-            bindBookmark(bookmark != null)
-            bindDate(recall.datePublished)
-        }
-    }
-
-    private fun RecallViewHolder.bindCategory(category: Category) {
-        val res = CategoryResources(category)
-
-        binding.ivRecallCategoryIcon.setImageResource(res.iconId)
-        binding.tvCategory.setText(res.labelId)
-    }
-
-    private fun RecallViewHolder.bindTitle(recall: Recall, readStatus: ReadStatus?) {
-        binding.tvRecallTitle.text = recall.title
-        val read = readStatus != null
-        val typeface = if (read) Typeface.NORMAL else Typeface.BOLD
-        binding.tvRecallTitle.setTypeface(null, typeface)
-    }
-
-    private fun RecallViewHolder.bindBookmark(bookmarked: Boolean) {
-        val bookmarkDrawableRes = if (bookmarked) {
-            R.drawable.ic_bookmark_red_24dp
-        } else {
-            R.drawable.ic_bookmark_border_control_normal_24dp
-        }
-
-        binding.btnRecallBookmark.setImageResource(bookmarkDrawableRes)
-    }
-
-    private fun RecallViewHolder.bindDate(date: Long?) {
-        if (date == null) {
-            binding.tvRecallDate.isVisible = false
-        } else {
-            binding.tvRecallDate.text = dateFormat.formatUTC(date)
-            binding.tvRecallDate.isVisible = true
-        }
+        holder.itemLiveData.value = getItem(position)
     }
 
     fun setupRecyclerView(context: Context, recyclerView: RecyclerView) {
@@ -134,6 +90,9 @@ class RecallAdapter(
         ): Boolean = oldItem == newItem
     }
 
-    inner class RecallViewHolder(val binding: ItemRecallBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class RecallViewHolder(
+        val binding: ItemRecallBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        val itemLiveData = MutableLiveData<RecallAndBookmarkAndReadStatus>()
+    }
 }

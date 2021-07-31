@@ -24,6 +24,8 @@
     <string name="label_action_mark_recall_as_read">Marquer comme lu</string>
     <string name="message_recall_marked_as_read">Marqué comme lu</string>
     <string name="label_action_bookmark_recall">Sauvegarder</string>
+    <string name="label_action_bookmark_recall_add_to_my_recalls">Ajouter à Mes rappels</string>
+    <string name="label_action_unbookmark_recall_remove_from_my_recalls">Retirer de Mes rappels</string>
     <string name="message_recall_bookmarked">Sauvegardé</string>
 
     <!-- My Recalls -->
