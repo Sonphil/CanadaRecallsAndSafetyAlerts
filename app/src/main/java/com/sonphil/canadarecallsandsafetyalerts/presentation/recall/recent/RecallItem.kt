@@ -71,7 +71,7 @@ private fun RecallItemCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 2.dp)
             .clickable {
                 onItemClicked(item)
             },
