@@ -32,19 +32,13 @@ class NotificationKeywordsFragment : Fragment() {
     private lateinit var mainActivityBinding: ActivityMainBinding
     private val viewModel: NotificationKeywordsViewModel by viewModels()
     private val adapter by lazy { NotificationKeywordsAdapter(viewModel) }
-    private val keywordDeletedSnackBar by lazy {
-        Snackbar.make(
-            binding.layoutNotificationKeywords,
-            R.string.message_notification_keyword_deleted,
-            Snackbar.LENGTH_LONG
-        )
-    }
+    private var keywordDeletedSnackBar: Snackbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentNotificationKeywordsBinding.inflate(inflater, container, false)
 
         mainActivityBinding = (requireActivity() as MainActivity).binding
@@ -107,7 +101,15 @@ class NotificationKeywordsFragment : Fragment() {
             viewLifecycleOwner,
             EventObserver { show ->
                 if (show) {
-                    keywordDeletedSnackBar.show()
+                    if (keywordDeletedSnackBar == null) {
+                        keywordDeletedSnackBar = Snackbar.make(
+                            binding.layoutNotificationKeywords,
+                            R.string.message_notification_keyword_deleted,
+                            Snackbar.LENGTH_LONG
+                        )
+                    }
+
+                    keywordDeletedSnackBar?.show()
                 }
             }
         )
@@ -134,7 +136,7 @@ class NotificationKeywordsFragment : Fragment() {
                     if (destination.id != R.id.fragment_notification_keywords) {
                         navController.removeOnDestinationChangedListener(this)
 
-                        keywordDeletedSnackBar.dismiss()
+                        keywordDeletedSnackBar?.dismiss()
 
                         mainActivityBinding.root.removeView(addBtnBinding.btnAddNotificationKeyword)
 
@@ -143,5 +145,11 @@ class NotificationKeywordsFragment : Fragment() {
                 }
             }
         )
+    }
+
+    override fun onDestroyView() {
+        keywordDeletedSnackBar = null
+
+        super.onDestroyView()
     }
 }
