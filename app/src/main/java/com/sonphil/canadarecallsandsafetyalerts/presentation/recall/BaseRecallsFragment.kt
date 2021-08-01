@@ -27,17 +27,17 @@ abstract class BaseRecallsFragment : Fragment() {
     lateinit var dateUtils: DateUtils
 
     protected abstract val currentDestinationId: Int
-    protected val adapter by lazy {
-        RecallAdapter(
-            dateUtils = dateUtils,
-            onItemClicked = this::onItemClicked,
-            onBookmarkClicked = this::onBookmarkClicked
-        )
-    }
+    protected val adapter: RecallAdapter
+        get() = getRecyclerView().adapter as RecallAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = RecallAdapter(
+            dateUtils = dateUtils,
+            onItemClicked = this::onItemClicked,
+            onBookmarkClicked = this::onBookmarkClicked
+        )
         adapter.setupRecyclerView(requireContext(), getRecyclerView())
 
         subscribeUI()
