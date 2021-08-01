@@ -29,14 +29,7 @@ class MyRecallsFragment : BaseRecallsFragment() {
     override val currentDestinationId = R.id.fragment_my_recalls
     val viewModel: MyRecallsViewModel by viewModels()
 
-    private val unbookmarkSnackbar by lazy {
-        Snackbar.make(mainActivityBinding.root, R.string.message_unbookmark, Snackbar.LENGTH_LONG)
-            .setAnchorView(mainActivityBinding.bottomNavigationView)
-            .setAction(R.string.label_undo_unbookmark) {
-                viewModel.undoLastUnbookmark()
-            }
-            .setActionTextColor(requireContext().getColor(R.color.colorPrimary))
-    }
+    private var unbookmarkSnackbar: Snackbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +52,7 @@ class MyRecallsFragment : BaseRecallsFragment() {
     }
 
     override fun onOtherDestinationSelected() {
-        unbookmarkSnackbar.dismiss()
+        unbookmarkSnackbar?.dismiss()
     }
 
     override fun getRecyclerView(): RecyclerView = binding.rvBookmarkedRecalls
@@ -105,11 +98,26 @@ class MyRecallsFragment : BaseRecallsFragment() {
             viewLifecycleOwner,
             { show ->
                 if (show) {
-                    unbookmarkSnackbar.show()
+                    if (unbookmarkSnackbar == null) {
+                        unbookmarkSnackbar = Snackbar.make(mainActivityBinding.root, R.string.message_unbookmark, Snackbar.LENGTH_LONG)
+                            .setAnchorView(mainActivityBinding.bottomNavigationView)
+                            .setAction(R.string.label_undo_unbookmark) {
+                                viewModel.undoLastUnbookmark()
+                            }
+                            .setActionTextColor(requireContext().getColor(R.color.colorPrimary))
+                    }
+
+                    unbookmarkSnackbar?.show()
                 } else {
-                    unbookmarkSnackbar.dismiss()
+                    unbookmarkSnackbar?.dismiss()
                 }
             }
         )
+    }
+
+    override fun onDestroyView() {
+        unbookmarkSnackbar = null
+
+        super.onDestroyView()
     }
 }
