@@ -13,6 +13,8 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSurface">@color/colorSurface</item>
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
+        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
     </style>
 
     <style name="Theme.App.Splash">

@@ -104,7 +104,6 @@ class MyRecallsFragment : BaseRecallsFragment() {
                             .setAction(R.string.label_undo_unbookmark) {
                                 viewModel.undoLastUnbookmark()
                             }
-                            .setActionTextColor(requireContext().getColor(R.color.colorPrimary))
                     }
 
                     unbookmarkSnackbar?.show()
