@@ -19,8 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -30,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Bookmark
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
@@ -49,21 +46,7 @@ import java.text.SimpleDateFormat
  */
 
 @Composable
-fun RecallItem(
-    itemLiveData: LiveData<RecallAndBookmarkAndReadStatus>,
-    dateFormat: DateFormat,
-    onItemClicked: (item: RecallAndBookmarkAndReadStatus) -> Unit,
-    onBookmarkClicked: (recall: Recall, isCurrentlyBookmarked: Boolean) -> Unit
-) {
-    val item by itemLiveData.observeAsState()
-
-    item?.let {
-        RecallItemCard(it, dateFormat, onItemClicked, onBookmarkClicked)
-    }
-}
-
-@Composable
-private fun RecallItemCard(
+fun RecallItemCard(
     item: RecallAndBookmarkAndReadStatus,
     dateFormat: DateFormat,
     onItemClicked: (item: RecallAndBookmarkAndReadStatus) -> Unit,
