@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.StringRes
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import com.sonphil.canadarecallsandsafetyalerts.R
@@ -14,8 +15,12 @@ import com.sonphil.canadarecallsandsafetyalerts.R
 
 fun Uri.open(context: Context) {
     try {
-        val customTabsIntent = CustomTabsIntent.Builder()
+        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(context.getColorCompat(R.color.colorPrimary))
+            .build()
+
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setDefaultColorSchemeParams(colorSchemeParams)
             .build()
 
         customTabsIntent.launchUrl(context, this)
