@@ -1,9 +1,8 @@
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 31
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -29,7 +28,6 @@ dependencies {
 
     // Kotlin
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$Version.Kotlin"))
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$Version.Coroutines"
 
     // Room
