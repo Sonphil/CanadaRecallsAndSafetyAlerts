@@ -20,6 +20,7 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.model.Category
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.Recall
 import com.sonphil.canadarecallsandsafetyalerts.domain.model.RecallAndBookmarkAndReadStatus
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyAppTheme
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyBottomInsetToBottomMargin
 import com.sonphil.canadarecallsandsafetyalerts.ext.getDrawableCompat
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewLifecycle
 import com.sonphil.canadarecallsandsafetyalerts.presentation.MainActivity
@@ -52,7 +53,10 @@ class RecentRecallsFragment : BaseRecallsFragment() {
         _categoriesFilterBinding = IncludeCategoriesFilterBinding.inflate(
             layoutInflater,
             mainActivityBinding.root
-        )
+        ).apply {
+            cardViewCategoriesFilter.doApplyBottomInsetToBottomMargin()
+            btnFilterRecalls.doApplyBottomInsetToBottomMargin()
+        }
 
         return binding.root
     }

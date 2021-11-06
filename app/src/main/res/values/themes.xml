@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowActivityTransitions">true</item>
-        <item name="android:windowLightStatusBar">@bool/light_status_bar</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bar</item>
         <item name="chipStyle">@style/Widget.App.Chip.Filter</item>
         <item name="collapsingToolbarLayoutStyle">@style/Widget.App.CollapsingToolbarLayout</item>
         <item name="colorOnPrimary">@android:color/white</item>
@@ -17,14 +17,20 @@
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
     </style>
 
+    <style name="Theme.App" parent="Base.Theme.App">
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <style name="Theme.App.Splash">
-        <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:navigationBarColor">?colorSurface</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="colorSurface">@color/colorSplashBackground</item>
     </style>
 
     <style name="Theme.App.RecallDetails">
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">

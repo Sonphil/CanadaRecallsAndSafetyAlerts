@@ -4,10 +4,16 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.CheckIfRecallIsBookmarkedUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.bookmark.UpdateBookmarkUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.CheckIfRecallHasBeenReadUseCase
+import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.MarkRecallAsReadUseCase
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.presentation.App
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.DebouncingRecallItemClickHandler
 import com.sonphil.canadarecallsandsafetyalerts.presentation.recall.RecallItemClickHandler
+import com.sonphil.canadarecallsandsafetyalerts.receiver.NotificationActionHandler
+import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +52,22 @@ internal object AppModule {
     fun provideRecallClickHandler(
         debouncingRecallClickHandler: DebouncingRecallItemClickHandler
     ): RecallItemClickHandler = debouncingRecallClickHandler
+
+    @Singleton
+    @Provides
+    fun provideNotificationActionHandler(
+        appDispatchers: AppDispatchers,
+        notificationUtils: NotificationsUtils,
+        updateBookmarkUseCase: UpdateBookmarkUseCase,
+        markRecallAsReadUseCase: MarkRecallAsReadUseCase,
+        checkIfRecallHasBeenReadUseCase: CheckIfRecallHasBeenReadUseCase,
+        checkIfRecallIsBookmarkedUseCase: CheckIfRecallIsBookmarkedUseCase,
+    ) = NotificationActionHandler(
+        appDispatchers = appDispatchers,
+        notificationUtils = notificationUtils,
+        updateBookmarkUseCase = updateBookmarkUseCase,
+        markRecallAsReadUseCase = markRecallAsReadUseCase,
+        checkIfRecallHasBeenReadUseCase = checkIfRecallHasBeenReadUseCase,
+        checkIfRecallIsBookmarkedUseCase = checkIfRecallIsBookmarkedUseCase
+    )
 }

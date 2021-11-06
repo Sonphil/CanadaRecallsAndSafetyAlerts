@@ -2,8 +2,10 @@ package com.sonphil.canadarecallsandsafetyalerts.presentation
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.LiveData
@@ -17,8 +19,9 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.sonphil.canadarecallsandsafetyalerts.R
 import com.sonphil.canadarecallsandsafetyalerts.databinding.ActivityMainBinding
 import com.sonphil.canadarecallsandsafetyalerts.ext.applyThemePref
-import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsWhenAttached
-import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMarginWhenAttached
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyInsetsToBottomPadding
+import com.sonphil.canadarecallsandsafetyalerts.ext.doApplyTopInsetToTopMargin
+import com.sonphil.canadarecallsandsafetyalerts.ext.doOnApplyWindowInsets
 import com.sonphil.canadarecallsandsafetyalerts.ext.setVisible
 import com.sonphil.canadarecallsandsafetyalerts.ext.viewBinding
 import com.sonphil.canadarecallsandsafetyalerts.worker.SyncRecallsWorkerScheduler
@@ -50,10 +53,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setupTheme()
         setupSharedElementTransition()
-        binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         setTheme(R.style.Theme_App)
         setContentView(binding.root)
+        setupWindow()
+
+        // Workaround for the following issue: https://github.com/material-components/material-components-android/issues/1310
+        // [CollapsingToolbarLayout] Consuming system window insets blocks sibling views from receiving insets
+        ViewCompat.setOnApplyWindowInsetsListener(binding.collapsingToolbarLayout, null)
+
         setupActionBar()
         setupBottomNavigation()
         syncRecallsWorkerScheduler.scheduleAccordingToPreferences()
@@ -75,6 +82,10 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_App)
     }
 
+    private fun setupWindow() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
+
     private fun setupActionBar() {
         val appBarConfiguration = AppBarConfiguration(topLevelDestinations)
 
@@ -85,10 +96,8 @@ class MainActivity : AppCompatActivity() {
             appBarConfiguration
         )
 
-        binding.appBarLayout.doApplyTopInsetToTopMarginWhenAttached()
-        binding.fragmentNavHostMain.doApplyInsetsWhenAttached { view, windowInsets ->
-            view.updatePadding(bottom = view.paddingBottom + windowInsets.systemWindowInsetTop)
-        }
+        binding.appBarLayout.doApplyTopInsetToTopMargin()
+        binding.fragmentNavHostMain.doApplyInsetsToBottomPadding()
     }
 
     private fun resetEmptyView() {
@@ -100,8 +109,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNavigationView.setupWithNavController(navController)
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        val navigationView = binding.bottomNavigationView
+
+        navigationView.setupWithNavController(navController)
+        navigationView.setOnItemSelectedListener { item ->
             _selectedTopLevelDestinationId.value = item.itemId
 
             if (item.itemId == navController.currentDestination?.id) {
@@ -120,7 +131,13 @@ class MainActivity : AppCompatActivity() {
 
             val shouldShowBottomNavigationView = destination.id in topLevelDestinations
 
-            binding.bottomNavigationView.setVisible(shouldShowBottomNavigationView)
+            navigationView.setVisible(shouldShowBottomNavigationView)
+        }
+
+        navigationView.doOnApplyWindowInsets { view, windowInsets, initialPadding, _ ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            view.updatePadding(bottom = initialPadding.bottom + insets.bottom)
         }
     }
 }

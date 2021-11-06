@@ -11,6 +11,8 @@ import com.sonphil.canadarecallsandsafetyalerts.domain.use_case.read_status.Mark
 import com.sonphil.canadarecallsandsafetyalerts.domain.utils.AppDispatchers
 import com.sonphil.canadarecallsandsafetyalerts.ext.toast
 import com.sonphil.canadarecallsandsafetyalerts.utils.NotificationsUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,17 +24,19 @@ import javax.inject.Singleton
  */
 
 @Singleton
+@OptIn(DelicateCoroutinesApi::class)
 class NotificationActionHandler @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val notificationUtils: NotificationsUtils,
     private val updateBookmarkUseCase: UpdateBookmarkUseCase,
     private val markRecallAsReadUseCase: MarkRecallAsReadUseCase,
     private val checkIfRecallHasBeenReadUseCase: CheckIfRecallHasBeenReadUseCase,
-    private val checkIfRecallIsBookmarkedUseCase: CheckIfRecallIsBookmarkedUseCase
+    private val checkIfRecallIsBookmarkedUseCase: CheckIfRecallIsBookmarkedUseCase,
+    private val coroutineScope: CoroutineScope = GlobalScope
 ) {
     fun handleRecallAction(context: Context, recall: Recall?, action: String?) {
         if (recall != null && action != null) {
-            GlobalScope.launch {
+            coroutineScope.launch {
                 action.handleRecallAction(context, recall)
             }
         }
