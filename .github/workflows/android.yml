@@ -91,7 +91,7 @@ jobs:
 
     - name: Publish to Play Store
       if: github.ref == 'refs/heads/master'
-      uses: r0adkll/upload-google-play@v1
+      uses: r0adkll/upload-google-play@v1.0.15
       with:
         serviceAccountJson: ./google-play-service-account.json
         packageName: com.sonphil.canadarecallsandsafetyalerts
