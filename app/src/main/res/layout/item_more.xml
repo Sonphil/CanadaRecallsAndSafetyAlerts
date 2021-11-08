@@ -21,11 +21,12 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorControlNormal"
-            tools:src="@drawable/ic_settings_black_24dp" />
+            tools:src="@drawable/ic_car_black_24dp" />
 
         <TextView
             android:id="@+id/tv_item_more_label"
@@ -37,10 +38,11 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_item_more_description"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_item_more_icon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@string/title_settings" />
+            tools:text="@string/title_motor_vehicle_safety_recalls_database" />
 
         <TextView
             android:id="@+id/tv_item_more_description"
@@ -53,6 +55,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_item_more_label"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_more_label"
-            tools:text="@string/text_description_settings" />
+            tools:text="@string/text_description_motor_vehicle_safety_recalls_database" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
